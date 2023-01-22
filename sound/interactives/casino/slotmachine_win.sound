@@ -9,7 +9,7 @@
 		SelectionMode = "Random"
 		Sounds = 
 		[
-			resource:"sound/interactives/casino/slotmachine_win.vsnd",
+			resource:"sound/raw/slotmachine_win.vsnd",
 		]
 		MaximumDistance = 3299.7227
 		MinimumDistance = 164.98613

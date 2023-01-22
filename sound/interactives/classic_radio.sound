@@ -3,17 +3,15 @@
 	data = 
 	{
 		UI = false
-		Volume = 1
-		VolumeRandom = 0
-		Pitch = 1
-		PitchRandom = 0
+		Volume = "1.00,1.00,0"
+		Pitch = "1.00,1.00,0"
 		Decibels = 85
+		SelectionMode = "Random"
 		Sounds = 
 		[
-			resource:"sound/interactives/classic_radio.vsnd",
-			resource:"sound/interactives/classic_radio_2.vsnd",
+			resource:"sound/raw/placeholder/classic_radio.vsnd",
+			resource:"sound/raw/placeholder/classic_radio_2.vsnd",
 		]
-		SelectionMode = "Random"
 		MaximumDistance = 1671.5345
 		MinimumDistance = 83.57673
 	}
