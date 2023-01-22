@@ -10,12 +10,12 @@ Layer0
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
 	g_flAmbientOcclusionDirectSpecular "0.000"
-	TextureAmbientOcclusion "materials/condo/pooltile/pooltile_ao.tga"
+	TextureAmbientOcclusion "materials/condo/pooltile/pooltile_ao.png"
 
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "materials/condo/pooltile/pooltile_color.tga"
+	TextureColor "materials/condo/pooltile/pooltile_color.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -31,10 +31,10 @@ Layer0
 	g_flMetalness "0.000"
 
 	//---- Normal ----
-	TextureNormal "materials/condo/pooltile/pooltile_normal.tga"
+	TextureNormal "materials/condo/pooltile/pooltile_normal.png"
 
 	//---- Roughness ----
-	TextureRoughness "materials/condo/pooltile/pooltile_rough.tga"
+	TextureRoughness "materials/condo/pooltile/pooltile_rough.png"
 
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"
