@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Achievements;
+namespace TowerResort.Achievements;
 
 public class AchTracker : EntityComponent<MainPawn>, ISingletonComponent
 {
@@ -49,7 +49,7 @@ public class AchTracker : EntityComponent<MainPawn>, ISingletonComponent
 		Entity.AddCredits( ach.RewardCredits );
 		CompletedAchList.Add( ach );
 
-		MainGame.ServerAnnouncement($"{Entity.Client.Name} has obtained the achievement: {ach.Name}");
+		TRGame.ServerAnnouncement($"{Entity.Client.Name} has obtained the achievement: {ach.Name}");
 	}
 
 	protected override void OnDeactivate()

@@ -1,7 +1,7 @@
 ﻿using System.Buffers;
 using System;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public struct BallVelocityClipPlanes : IDisposable
 {

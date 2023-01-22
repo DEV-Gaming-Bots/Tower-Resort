@@ -8,7 +8,7 @@ using Sandbox.UI;
 using Components.SBOXTower;
 using Components.BaseGamesUi;
 using Components.NotificationManager;
-using TheHub.UI;
+using TowerResort.UI;
 
 public class BaseHud : RootPanel
 {

@@ -1,7 +1,7 @@
-﻿using TheHub;
+﻿using TowerResort;
 using Sandbox;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public class DuckController 
 {

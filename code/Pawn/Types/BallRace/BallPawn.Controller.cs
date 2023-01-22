@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Sandbox;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class BallController : StandardController
 {

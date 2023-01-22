@@ -1,8 +1,8 @@
 ﻿using System;
 using Sandbox;
-using TheHub.Entities.Weapons;
+using TowerResort.Entities.Weapons;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class LobbyPawn
 {

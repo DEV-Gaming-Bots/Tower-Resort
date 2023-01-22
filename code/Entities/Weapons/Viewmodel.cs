@@ -1,5 +1,5 @@
 ﻿using Sandbox;
-using TheHub.Entities.Base;
+using TowerResort.Entities.Base;
 
 public partial class WeaponViewModel : AnimatedEntity
 {

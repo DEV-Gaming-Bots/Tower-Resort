@@ -1,11 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using TheHub;
+using TowerResort;
 using Sandbox;
-using TheHub.Achievements;
+using TowerResort.Achievements;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class StandardController : BaseNetworkable
 {

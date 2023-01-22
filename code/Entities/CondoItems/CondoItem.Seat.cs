@@ -1,6 +1,6 @@
-﻿using TheHub;
-using TheHub.Entities.CondoItems;
-using TheHub.Player;
+﻿using TowerResort;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-namespace TheHub.Entities.CondoItems;
+namespace TowerResort.Entities.CondoItems;
 
 public partial class CondoItemBase : AnimatedEntity, IUse
 {

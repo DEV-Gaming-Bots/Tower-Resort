@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Components.SBOXTower;
 using Sandbox;
 using Editor;
-using TheHub.Player;
+using TowerResort.Player;
 
 //Interactable NPCs
 public partial class InteractNPCBase : BaseNPC, IUse

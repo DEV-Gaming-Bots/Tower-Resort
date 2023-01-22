@@ -1,14 +1,14 @@
 ﻿using Sandbox;
 using System;
 using System.Linq;
-using TheHub.Entities.Base;
-using TheHub.Entities.CondoItems;
-using TheHub.Player;
-using TheHub.GameComponents;
+using TowerResort.Entities.Base;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Player;
+using TowerResort.GameComponents;
 
-namespace TheHub;
+namespace TowerResort;
 
-public partial class MainGame
+public partial class TRGame
 {
 	//Hardcoded way of doing an admin check
 	//We should figure out a better way of doing this
@@ -18,19 +18,15 @@ public partial class MainGame
 		76561197972285500,
 		//AlexVeeBee
 		76561198294665561,
-		//BigJuicyBoy69 / Nick
-		76561197983459752,
 		//Xenthio
 		76561198231234036,
 		//Baik
 		76561197991940798,
 		//trende2001
 		76561198043979097,
-		//Spooky Bone
-		76561198028265128,
 	};
 
-	[ConCmd.Server( "hub.dueling.admin.stop" )]
+	[ConCmd.Server( "tr.dueling.admin.stop" )]
 	public static void duelingForceStop()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -38,7 +34,7 @@ public partial class MainGame
 		Instance.ResetDuelToIdle();
 
 	}
-	[ConCmd.Server( "hub.entity.spawn.condo" )]
+	[ConCmd.Server( "tr.entity.spawn.condo" )]
 	public static void SpawnCondoItemCMD( string entName )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -55,7 +51,7 @@ public partial class MainGame
 		}
 	}
 
-	[ConCmd.Server( "hub.entity.spawn.lobby" )]
+	[ConCmd.Server( "tr.entity.spawn.lobby" )]
 	public static void SpawnLobbyItemCMD( string entName )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -70,7 +66,7 @@ public partial class MainGame
 		ent.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
 	}
 
-	[ConCmd.Server( "hub.weapon.spawn" )]
+	[ConCmd.Server( "tr.weapon.spawn" )]
 	public static void SpawnWeapon( string wepName, bool inInv = false )
 	{
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
@@ -85,7 +81,7 @@ public partial class MainGame
 			wep.Position = player.GetEyeTrace( 999.0f ).EndPosition;
 	}
 
-	[ConCmd.Server( "hub.entity.delete" )]
+	[ConCmd.Server( "tr.entity.delete" )]
 	public static void DeleteEntityCMD()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -100,7 +96,7 @@ public partial class MainGame
 		ent.Delete();
 	}
 
-	[ConCmd.Server( "hub.player.give.credits" )]
+	[ConCmd.Server( "tr.player.give.credits" )]
 	public static void GiveCreditsCMD( int amt, string targetName = "" )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -131,7 +127,7 @@ public partial class MainGame
 		}
 	}
 
-	[ConCmd.Server( "hub.game.poker.setcard" )]
+	[ConCmd.Server( "tr.game.poker.setcard" )]
 	public static void SetCards( int card, int number, int suit )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -157,17 +153,12 @@ public partial class MainGame
 		player.UpdateCardHandUI( player.CardOne.Number, player.CardOne.Suit, player.CardTwo.Number, player.CardTwo.Suit );
 	}
 
-	[ConCmd.Server( "hub.game.reset" )]
+	[ConCmd.Server( "tr.game.reset" )]
 	public static void ResetGame()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
-		/*if ( !ConsoleSystem.Caller.HasPermission( "admin" ) )
-		{
-			Log.Info( "No permission: reset_game" );
-			return;
-		}*/
-		// Delete everything except the clients and the world
-		var ents = Entity.All.ToList();
+
+		var ents = All.ToList();
 		ents.RemoveAll( e => e is IClient );
 		ents.RemoveAll( e => e is WorldEntity );
 		foreach ( Entity ent in ents )
@@ -176,28 +167,27 @@ public partial class MainGame
 		}
 
 		// Reset the map
-		//Map.Reset( DefaultCleanupFilter );
 		Game.ResetMap( Entity.All.Where( x => x is LobbyPawn || x is MainPawn ).ToArray() );
 
 		// Tell our new game that all clients have just left.
 		foreach ( IClient cl in Game.Clients )
 		{
 			cl.Components.RemoveAll();
-			(MainGame.Current as MainGame).ClientDisconnect( cl, NetworkDisconnectionReason.DISCONNECT_BY_USER );
+			(TRGame.Current as TRGame).ClientDisconnect( cl, NetworkDisconnectionReason.DISCONNECT_BY_USER );
 		}
 
 		// Create a brand new game
-		MainGame.Current = new MainGame();
+		TRGame.Current = new TRGame();
 
 		// Tell our new game that all clients have just joined to set them all back up.
 		foreach ( IClient cl in Game.Clients )
 		{
 			cl.Components.RemoveAll();
-			(MainGame.Current as MainGame).ClientJoined( cl );
+			(TRGame.Current as TRGame).ClientJoined( cl );
 		}
 	}
 
-	[ConCmd.Server( "hub.player.pawn.set" )]
+	[ConCmd.Server( "tr.player.pawn.set" )]
 	public static void SetPawnCMD( int type, string targetName = "" )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -252,7 +242,7 @@ public partial class MainGame
 		}
 	}
 
-	[ConCmd.Server( "hub.data.connect" )]
+	[ConCmd.Server( "tr.data.connect" )]
 	public static void DataTest()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -260,7 +250,7 @@ public partial class MainGame
 		_ = Instance.StartSocket();
 	}
 
-	[ConCmd.Server( "hub.data.reset" )]
+	[ConCmd.Server( "tr.data.reset" )]
 	public static void DataCheck()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -268,7 +258,7 @@ public partial class MainGame
 		Instance.DataSocket.Dispose();
 	}
 
-	[ConCmd.Server( "hub.data.save" )]
+	[ConCmd.Server( "tr.data.save" )]
 	public static void DataSaveCMD()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -276,7 +266,7 @@ public partial class MainGame
 		Instance.DoSave(ConsoleSystem.Caller);
 	}
 
-	[ConCmd.Admin( "hub.poker.admin.start" )]
+	[ConCmd.Admin( "tr.poker.admin.start" )]
 	public static void PokerAdminStart()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -293,7 +283,7 @@ public partial class MainGame
 	}
 
 
-	[ConCmd.Admin( "hub.poker.admin.update" )]
+	[ConCmd.Admin( "tr.poker.admin.update" )]
 	public static void PokerAdminNextState()
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;

@@ -1,13 +1,13 @@
 ﻿using Sandbox;
 using Editor;
 using System.Linq;
-using TheHub.Player;
+using TowerResort.Player;
 using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
-using TheHub.Entities.CondoItems;
+using TowerResort.Entities.CondoItems;
 
-namespace TheHub.Entities.Hammer;
+namespace TowerResort.Entities.Hammer;
 
 [Library( "hub_condo_room" )]
 [Title( "Condo Room" ), Description( "Defines a condo room" ), Category( "Condo" )]
@@ -116,10 +116,10 @@ public class CondoRoom : Entity
 		}
 	}
 
-	[ConCmd.Server( "hub.condo.assign" )]
+	[ConCmd.Server( "tr.condo.assign" )]
 	public static void CondoAssignCMD()
 	{
-		if ( !MainGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -130,10 +130,10 @@ public class CondoRoom : Entity
 		Log.Info( $"{pawn.Name} assigned to {StaticCondo}" );
 	}
 
-	[ConCmd.Server("hub.condo.save")]
+	[ConCmd.Server("tr.condo.save")]
 	public static void CondoSaveCMD()
 	{
-		if ( !MainGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -143,10 +143,10 @@ public class CondoRoom : Entity
 		pawn.AssignedCondo.SaveCondoContents();
 	}
 
-	[ConCmd.Server( "hub.condo.load" )]
+	[ConCmd.Server( "tr.condo.load" )]
 	public static void CondoLoadCMD()
 	{
-		if ( !MainGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -156,10 +156,10 @@ public class CondoRoom : Entity
 		pawn.AssignedCondo.LoadCondo();
 	}
 
-	[ConCmd.Server( "hub.condo.clear" )]
+	[ConCmd.Server( "tr.condo.clear" )]
 	public static void CondoClearCMD(bool shouldRemove = false)
 	{
-		if ( !MainGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;

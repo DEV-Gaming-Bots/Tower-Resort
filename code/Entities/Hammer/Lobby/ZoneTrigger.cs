@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheHub.Player;
-using TheHub.UI;
+using TowerResort.Player;
+using TowerResort.UI;
 
-namespace TheHub.Entities.Hammer;
+namespace TowerResort.Entities.Hammer;
 
 [Library( "hub_trigger_zone" )]
 [Title( "Zone" ), Description( "Defines the area for the hud tracker" ), Category( "Trigger" )]

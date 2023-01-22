@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Achievements;
+namespace TowerResort.Achievements;
 
 public class Gambler : AchBase
 {

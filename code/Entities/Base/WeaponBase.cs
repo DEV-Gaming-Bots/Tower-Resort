@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Sandbox;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Entities.Base;
+namespace TowerResort.Entities.Base;
 
 public partial class WeaponBase : CarriableEntityBase, IUse
 {

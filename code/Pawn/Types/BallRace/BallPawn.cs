@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-using TheHub.Entities.Hammer;
+using TowerResort.Entities.Hammer;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class BallPawn : MainPawn
 {

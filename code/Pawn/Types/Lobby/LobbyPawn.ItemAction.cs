@@ -5,9 +5,9 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-using TheHub.Entities.CondoItems;
+using TowerResort.Entities.CondoItems;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class LobbyPawn : MainPawn
 {

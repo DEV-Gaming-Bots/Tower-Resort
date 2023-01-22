@@ -1,9 +1,9 @@
 ﻿using Sandbox;
 using System;
-using TheHub.Entities.Base;
-using TheHub.Player;
+using TowerResort.Entities.Base;
+using TowerResort.Player;
 
-namespace TheHub.Entities.Weapons;
+namespace TowerResort.Entities.Weapons;
 
 public partial class PhysGun : WeaponBase
 {

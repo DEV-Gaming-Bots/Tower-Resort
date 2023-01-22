@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-namespace TheHub.Entities.Base;
+namespace TowerResort.Entities.Base;
 
 public class CarriableEntityBase : AnimatedEntity
 {

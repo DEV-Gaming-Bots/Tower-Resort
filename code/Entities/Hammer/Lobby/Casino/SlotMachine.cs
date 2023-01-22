@@ -2,9 +2,9 @@
 using Editor;
 using Sandbox;
 using System.Threading.Tasks;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Entities.Lobby;
+namespace TowerResort.Entities.Lobby;
 
 [Library( "hub_lobby_casino_slotmachine" ), HammerEntity]
 [Title( "Slot Machine" ), Category( "Lobby" )]

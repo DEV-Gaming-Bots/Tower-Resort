@@ -1,9 +1,9 @@
 ﻿using Sandbox;
 using Sandbox.Component;
 using System.Linq;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Entities.Weapons;
+namespace TowerResort.Entities.Weapons;
 public partial class PhysGun
 {
 	Particles Beam;

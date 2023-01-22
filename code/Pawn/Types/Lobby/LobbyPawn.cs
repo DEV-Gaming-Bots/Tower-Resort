@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-using TheHub.Achievements;
-using TheHub.Entities.Hammer;
-using TheHub.UI;
+using TowerResort.Achievements;
+using TowerResort.Entities.Hammer;
+using TowerResort.UI;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class LobbyPawn : MainPawn
 {

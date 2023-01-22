@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Sandbox;
 
-namespace TheHub;
+namespace TowerResort;
 
 public interface IPlayerData
 {
@@ -24,7 +24,7 @@ public class PlayerData : IPlayerData
 	public int Credits { get; set; }
 }
 
-public partial class MainGame 
+public partial class TRGame 
 {
 	public enum DataSaveEnum
 	{
