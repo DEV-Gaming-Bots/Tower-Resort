@@ -75,30 +75,11 @@ public partial class PokerTable : ModelEntity, IUse
 		{
 			if ( gameComponent.Players.Contains( player ) )
 			{
-				foreach ( var chair in PokerChairs )
-				{
-					if ( chair.Sitter != null && chair.Sitter == player )
-					{
-						chair.RemoveSittingPlayer( player );
-						player.Position = chair.OrgPos;
-						break;
-					}
-				}
-
 				gameComponent.LeaveTable( player );
 			}
 			else
 			{
 				if ( !gameComponent.CanJoinTable( player ) ) return false;
-
-				foreach ( var chair in PokerChairs )
-				{
-					if ( chair.Sitter == null )
-					{
-						chair.Sitdown( user );
-						break;
-					}
-				}
 
 				gameComponent.JoinTable( player );
 			}
@@ -234,7 +215,7 @@ public class PokerChair : ModelEntity
 		if ( !Game.IsServer )
 			return;
 
-		Sitter?.SetAnimParameter( "sit", 0 );
+		player.SetAnimParameter( "sit", 0 );
 
 		Sitter = null;
 

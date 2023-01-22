@@ -147,6 +147,18 @@ public partial class PokerGame : EntityComponent, ISingletonComponent
 		newPlayer.FreezeMovement = MainPawn.FreezeEnum.Movement;
 		newPlayer.SetUpPoker( Entity );
 		Players.Add( newPlayer );
+
+		if ( Entity is PokerTable )
+		{
+			foreach ( var chair in (Entity as PokerTable).PokerChairs )
+			{
+				if ( chair.Sitter == null )
+				{
+					chair.Sitdown( entity );
+					break;
+				}
+			}
+		}
 	}
 
 	public void SetUpPlayers()
@@ -162,6 +174,18 @@ public partial class PokerGame : EntityComponent, ISingletonComponent
 		leaver.FreezeMovement = MainPawn.FreezeEnum.None;
 		leaver.FocusedEntity = null;
 		Players.Remove( leaver );
+
+		if(Entity is PokerTable)
+		{
+			foreach ( var chair in (Entity as PokerTable).PokerChairs )
+			{
+				if ( chair.Sitter == leaver )
+				{
+					chair.RemoveSittingPlayer( leaver );
+					break;
+				}
+			}
+		}
 	}
 
 	public void KickLosers()
