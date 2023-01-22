@@ -1,0 +1,139 @@
+﻿using Sandbox;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using TheHub.Achievements;
+using TheHub.Entities.CondoItems;
+using TheHub.Player;
+using TheHub.UI;
+
+namespace TheHub;
+
+public partial class MainGame : GameManager
+{
+	public static MainGame Instance => Current as MainGame;
+
+	[ConVar.Replicated( "hub.devmode" )]
+	public static bool DevMode { get; set; }
+	public static bool IsDevMode { get; set; }
+
+	public MainGame()
+	{
+		IsDevMode = DevMode;
+
+		if (Game.IsServer)
+		{
+			
+		}
+
+		if ( Game.IsClient )
+		{
+			_ = new BaseHud();
+		}
+	}
+
+	[Event.Hotload]
+	public void HotloadGame()
+	{
+		if ( Game.IsServer )
+		{
+
+		}
+
+		if ( Game.IsClient )
+		{
+			_ = new BaseHud();
+		}
+	}
+
+	public override void DoPlayerDevCam( IClient client )
+	{
+		Game.AssertServer();
+
+		if ( !AdminIDs.Contains( client.SteamId ) )
+			return;
+
+		var player = client.Pawn as MainPawn;
+
+		var camera = client.Components.Get<DevCamera>( true );
+
+		if ( camera == null )
+		{
+			camera = new DevCamera();
+			client.Components.Add( camera );
+			return;
+		}
+
+		camera.Enabled = !camera.Enabled;
+	}
+
+	public async Task WaitDelay(float seconds)
+	{
+		await Task.DelayRealtimeSeconds( seconds );
+	}
+
+	//Since games can't be set to dedicated servers only YET
+	//we'll kick anyone who tries to host this unofficially or not in dev mode
+	public async void ForceShutdown()
+	{
+		HubChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "GAME", 
+			"You are hosting this unofficially, please play the official servers" );
+
+		await WaitDelay( 8.0f );
+
+		if ( Game.IsServerHost )
+			Game.Clients.First().Kick();
+	}
+
+	public override void PostLevelLoaded()
+	{
+		base.PostLevelLoaded();
+	}
+
+	public override void ClientJoined( IClient cl )
+	{
+		base.ClientJoined( cl );
+
+		var pawn = new LobbyPawn();
+		cl.Pawn = pawn;
+		pawn.SetUpPlayerStats();
+
+		/*if ( !LoadSave( cl ) )
+		{
+			pawn.NewStats();
+			//DoSave( cl );
+		}*/
+
+		if(!Game.IsDedicatedServer && !DevMode)
+			ForceShutdown();
+	}
+
+	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )
+	{
+		DoSave( cl );
+
+		base.ClientDisconnect( cl, reason );
+	}
+
+	public override void Shutdown()
+	{
+		foreach ( IClient client in Game.Clients )
+			DoSave( client );
+
+		if( DataSocket != null && DataSocket.IsConnected )
+			DataSocket.Dispose();
+
+		base.Shutdown();
+	}
+
+	public static void ServerAnnouncement(string message)
+	{
+		HubChat.AddChatEntryStatic( To.Everyone, "SERVER", message );
+	}
+
+	[ClientRpc]
+	public void PlaySoundOnClient(string path)
+	{
+		Sound.FromScreen( path );
+	}
+}

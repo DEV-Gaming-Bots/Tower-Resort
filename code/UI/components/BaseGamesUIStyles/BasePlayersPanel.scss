@@ -1,0 +1,46 @@
+PlayersPanel {
+    border-radius: 5px;
+    width: 100%;
+    overflow: auto;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    playerEntry {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #ccc;
+        padding: 10px;
+        margin: 10px;
+        min-width: 100px;
+        overflow: auto;
+        position: relative;
+        float: left;
+        justify-content: center;
+        flex-direction: column;
+        &.playerturn {
+            background-color: rgb(179, 255, 197);
+            border: 1px solid rgb(10, 117, 35);
+        }
+        .player-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .player-score {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .player-score-input {
+            width: 50px;
+            height: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .player-score-button {
+            width: 50px;
+            height: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		Name = "Small can"
+		Description = "Delicious soda can"
+		Icon = null
+		BaseCost = 100
+		ShopKeeper = "Generic"
+		Type = "Drinkable"
+		ModelPath = resource:"models/food/smallcan/smallcan.vmdl"
+		IsInteractable = true
+		Toggable = false
+		InteractCooldown = 1
+		InteractSound = null
+		AnimatingSound = null
+		UnboxSound = null
+		InteractAnimBool = ""
+		ScreenScale = 1
+		ScreenCenterPoint = "0,0,0"
+		ScreenRotation = "-0.000001116595,1,-0.000001116595,0.000000000001246784"
+		LootItems = null
+		ParticleName = null
+		GameType = "Unspecified"
+		SitHeight = 0
+		Seats = 
+		{
+		}
+		IsAlcohol = false
+		TotalDrinkUses = 1
+		DrinkSound = resource:"sound/interactives/gift_reveal.sound"
+	}
+}

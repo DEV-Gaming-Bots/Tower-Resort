@@ -1,0 +1,105 @@
+@import "vars.scss";
+
+CondosReceptionists {
+    .shop {
+        padding-bottom: 12px;
+        flex-wrap: wrap;
+        overflow: scroll;
+    }
+
+    .iteminfo {
+    }
+}
+CondoItem {
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px;
+    margin-bottom: 0px;
+    width: 100%;
+    background-color: $main-color-1-bkg;
+    border: 1px solid $main-color-1-border;
+    flex-direction: column;
+    color: white;
+
+    &.active {
+        background-color: $main-color-1-c-light-bkg;
+        border: 1px solid $main-color-1-c-light-border;
+    }
+
+    .title {
+        font-size: 48px;
+    }
+
+    .description {
+        font-size: 32px;
+    }
+}
+CondoFullInfo {
+    margin: 12px;
+    width: 80%;
+    color: white;
+    background-color: $main-color-1-bkg;
+    flex-direction: column;
+
+    .iteminfo {
+        width: 100%;
+        flex-direction: column;
+        padding: 32px 24px;
+
+        .title {
+            width: 100%;
+            font-size: 64px;
+        }
+
+        .description {
+            width: 100%;
+            font-size: 32px;
+        }
+
+        .jeff {
+            width: 100%;
+            font-size: 16px;
+        }
+    }
+
+    .itemImage {
+        width: 100%;
+        height: 400px;
+        background-image: url("ui/default-shop-bkg.png");
+        background-position: center;
+        background-size: cover;
+        border: 1px solid $main-color-1-border;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    .itemContent {
+
+        .footer {
+            padding: 32px;
+            padding-top: 0px;
+
+            PrimaryTRButton,
+            TRButton {
+                button {
+                    padding: 12px 32px;
+                    width: 100%;
+                    margin-right: 12px;
+                }
+
+                &:last-child {
+                    button {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+
+        height: 100%;
+        border: 1px solid $main-color-1-border;
+        border-top: none;
+        position: relative;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}

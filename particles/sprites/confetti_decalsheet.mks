@@ -1,0 +1,13 @@
+
+
+SEQUENCE 0
+loop
+frame confetti_1.tga 1
+
+SEQUENCE 1
+loop
+frame confetti_2.tga 1
+
+SEQUENCE 2
+loop
+frame confetti_3.tga 1

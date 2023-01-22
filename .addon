@@ -1,0 +1,86 @@
+{
+  "Title": "Tower Resort",
+  "Type": "game",
+  "Org": "devbots",
+  "Ident": "towerresort",
+  "Tags": "",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": [
+    "/ui/*",
+    "/fonts/*"
+  ],
+  "HasCode": true,
+  "CodePath": "/code/",
+  "Metadata": {
+    "MaxPlayers": 64,
+    "MinPlayers": 1,
+    "GameNetworkType": "Multiplayer",
+    "MapSelect": "Unrestricted",
+    "MapList": [
+      "facepunch.flatgrass"
+    ],
+    "RankType": "None",
+    "PerMapRanking": false,
+    "LeaderboardType": "None",
+    "ProjectTemplate": null,
+    "DefaultLeaderboards": null,
+    "Summary": "",
+    "Description": "W.I.P Game",
+    "ReplaceTags": "",
+    "Public": false,
+    "Collision": {
+      "Defaults": {
+        "solid": "Collide",
+        "trigger": "Trigger",
+        "ladder": "Ignore",
+        "water": "Trigger",
+        "ball": "Collide",
+        "player": "Collide"
+      },
+      "Pairs": [
+        {
+          "a": "solid",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "trigger",
+          "b": "playerclip",
+          "r": "Ignore"
+        },
+        {
+          "a": "trigger",
+          "b": "solid",
+          "r": "Trigger"
+        },
+        {
+          "a": "solid",
+          "b": "trigger",
+          "r": "Collide"
+        },
+        {
+          "a": "playerclip",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "ball",
+          "b": "ball",
+          "r": "Ignore"
+        },
+        {
+          "a": "player",
+          "b": "player",
+          "r": "Ignore"
+        },
+        {
+          "a": "ball",
+          "b": "player",
+          "r": "Ignore"
+        }
+      ]
+    }
+  }
+}

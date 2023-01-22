@@ -1,0 +1,38 @@
+BaseTabletopLayout {
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+
+    .mainbaselayout {
+        &.top, &.middle, &.bottom {
+            // background-color: rgba(59, 2, 2, 0.637);
+            min-height: 24px;
+        }
+
+        &.column {
+            flex-direction: column;
+
+            &.reverse {
+                flex-direction: column-reverse;
+            }
+
+            &.center {
+                align-items: center;
+            }
+        }
+    }
+    // .top {
+    //     padding: 12px;
+    //     background-color: white;
+    // }
+    // .middle {
+    //     padding: 12px;
+    //     background-color: white;
+    // }
+    // .bottom {
+    //     padding: 12px;
+    //     background-color: white;
+    // }
+}

@@ -1,0 +1,157 @@
+@import "vars.scss";
+
+.icon {
+    font-family: MaterialIconsTwoTone;
+}
+Window {
+    pointer-events: all;
+    position: absolute;
+    min-width: 400px;
+    min-height: 200px;
+    flex-direction: column;
+    .Window-titlebar {
+        min-height: 48px;
+        max-height: 40px;
+        border-bottom: none;
+        justify-content: space-between;
+        .tr {
+            justify-content: right;
+            align-items: center;
+            .closeBtn {
+                color: white;
+                font-size: 32px;
+            }
+        }
+    }
+    .content {
+        height: 100%;
+        width: 100%;
+        background-color: $main-color-1-bkg;
+        border: 1px solid $main-color-1-border;
+    }
+}
+CondoTower {
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .Window {
+        background-color: $main-color-1-bkg;
+        border: 1px solid $main-color-1-border;
+    }
+
+    .Window-titlebar {
+        padding: 4px;
+        width: 100%;
+        border-bottom: none;
+
+        .title {
+            font-size: 32px;
+            color: white;
+        }
+    }
+}
+.CondoTowerMenu {
+    max-width: 1700px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease, top 0.8s ease-in;
+
+    &:intro {
+        opacity: 1;
+        top: -00%;
+    }
+
+    &:outro {
+        opacity: 0;
+        top: -50%;
+    }
+
+    &.open {
+        transition: opacity 0.5s ease, top 0.8s ease-out;
+
+        &:intro {
+            opacity: 0;
+            top: -50%;
+        }
+
+        &:outro {
+            opacity: 1;
+            top: -0%;
+        }
+
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .Window-titlebar-condomenu {
+        padding: 32px;
+        border-bottom: none;
+        justify-content: center;
+
+        .title {
+            font-size: 64px;
+        }
+    }
+
+    .Window-menu-condos {
+        background: linear-gradient(0deg, #2E5463 0%, #132F3A 100%);
+        padding: 32px;
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .menubutton {
+        flex-direction: column;
+        align-items: center;
+        min-height: 40%;
+        margin: 12px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.25);
+        color: white;
+
+        .title {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50%;
+            font-family: Poppins;
+            font-weight: 800;
+        }
+
+        .footer {
+            font-size: 21%;
+            position: absolute;
+            top: 60%;
+        }
+
+        font-size: 30%;
+
+        &:hover {
+            z-index: 2;
+            border: 2px solid $main-color-1-border;
+            bottom: 8px;
+        }
+
+        &.op1 {
+            color: black;
+            background: linear-gradient(to top, #5AE1FF, #00809C);
+        }
+
+        &.op2 {
+            background: linear-gradient(to top, #0A9FBF, #004C5C);
+        }
+
+        &.op3 {
+            background: linear-gradient(to top, #1F709D, #003F62);
+        }
+    }
+}

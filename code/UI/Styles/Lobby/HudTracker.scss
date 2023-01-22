@@ -1,0 +1,151 @@
+﻿HudTracker {
+    min-width: 300px;
+    position: absolute;
+    bottom: 48px;
+    left: 34px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    font-size: 32px;
+    color: rgb(255, 195, 60);
+    color: white;
+    text-shadow: 2px, 4px, 0px, 0px, black;
+    //background: linear-gradient(to right, #049DC4, #049DC400);
+    opacity: 0;
+
+    &.active {
+        opacity: 1;
+    }
+
+    .gradiant-coins {
+        padding: 20px;
+        background-image: url(ui/playhome_coins.png);
+        background-repeat: no-repeat;
+        background-position: left;
+        background-size: cover;
+    }
+
+    .keyAction {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        //justify-content: center;
+        padding: 8px;
+        font-size: 24px;
+
+        .key {
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            //justify-items: center;
+            margin-right: 8px;
+            font-size: 28px;
+            width: 42px;
+            height: 42px;
+            background-color: #00FFEE;
+        }
+    }
+
+    .hud {
+        border-radius: 8px;
+        box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.6);
+        border: 3px solid #2384E5;
+        background-image: linear-gradient(to right, rgb(90, 173, 255), rgb(55, 137, 219));
+
+        .main-cointracker {
+            width: 100%;
+        }
+
+        .logo {
+            position: absolute;
+            transform: translateY(-50%);
+            margin-left: -32px;
+            border: 3px solid #2384E5;
+            width: 98px;
+            height: 98px;
+            //background-image: url("https://media.discordapp.net/attachments/985936389793255484/986021866646958192/Discord_GnEJ8H3HBS.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 50%;
+        }
+
+        .coinTracker {
+            position: relative;
+            margin-left: 78px;
+            display: flex;
+            flex-direction: column;
+            //z-index: 2;
+            z-index: 2;
+            font-family: Oswald-Medium;
+            //font-weight: 500;
+
+            .coins {
+                margin: 6px 0px;
+                display: flex;
+                align-items: center;
+
+                .html_coin {
+                    width: 1px;
+                    height: 1px;
+                    border: 3px solid gold;
+                    background-color: rgb(218, 197, 74);
+                    padding: 8px;
+                    border-radius: 50%;
+                }
+
+                .amount {
+                    margin-left: 12px;
+                    font-size: 28px;
+                    font-weight: 600;
+                }
+            }
+
+            .username {
+                margin: 8px 0px;
+
+                .name {
+                    background-color: rgb(0, 0, 0, 0.45);
+                    border-radius: 5px;
+                    font-size: 26px;
+                    font-weight: 600;
+                    right: 58px;
+                }
+            }
+
+            .zone {
+                margin: 8px 0px;
+
+                .name {
+                    background-color: rgb(0, 0, 0, 0.45);
+                    border-radius: 5px;
+                    font-size: 18px;
+                    font-weight: 600;
+                    right: 32px;
+                }
+            }
+        }
+        /*.gradient_topright {
+            border-top-right-radius: 4px;
+            width: 118px;
+            height: 81px;
+            top: 0px;
+            right: 0px;
+            background-image: url(ui/light_gradient_topright.png);
+            background-size: contain;
+            position: absolute;
+        }
+
+        .gradient_bottomleft {
+            border-bottom-left-radius: 4px;
+            z-index: 0;
+            width: 297px;
+            height: 84px;
+            transform: translateY(0px);
+            background-image: url(ui/light_gradient_bottomleft.png);
+            position: absolute;
+            bottom: 0px;
+        }*/
+    }
+}

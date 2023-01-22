@@ -1,0 +1,56 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/glass.shader"
+
+	//---- Glass ----
+	F_BLUR 1
+	F_REFRACTION 1
+
+	g_flDirectionalLightmapMinZ "0.050"
+	g_flDirectionalLightmapStrength "1.000"
+
+	//---- Blur ----
+	g_flBlurAmount "1.000"
+	GlassBlurMask "materials/default/default.tga"
+
+	//---- Color ----
+	g_flModelTintAmount "1.000"
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	TextureAmbientOcclusion "materials/gamemodes/bowling/bowlingball/bowlingball_ao.png"
+	TextureColor "materials/gamemodes/bowling/bowlingball/skins/bowlingball_grey.png"
+	TextureMetalness "[1.000000 1.000000 1.000000 0.000000]"
+	TextureNormal "materials/gamemodes/bowling/bowlingball/bowlingball_normal.png"
+	TextureRoughness "materials/gamemodes/bowling/bowlingball/bowlingball_rough.png"
+	TextureTranslucency "[0.505000 0.505000 0.505000 0.000000]"
+
+	//---- Fade ----
+	g_flFadeExponent "1.000"
+
+	//---- Fresnel ----
+	g_bFresnel "1"
+	g_flEdgeColorFalloff "3.455"
+	g_flEdgeColorMaxOpacity "1.000"
+	g_flEdgeColorThickness "0.455"
+	g_vEdgeColor "[0.000000 0.000000 0.000000 0.000000]"
+
+	//---- Glass ----
+	g_bMultiplyTintColor "1"
+	g_flAlphaTestReference "0.542"
+	g_flOpacity "0.711"
+	GlassNormal "materials/gamemodes/bowling/bowlingball/bowlingball_normal.png"
+	GlassRoughness "materials/gamemodes/bowling/bowlingball/bowlingball_rough.png"
+	GlassTintColor "materials/gamemodes/bowling/bowlingball/bowlingball_color.png"
+
+	//---- Refraction ----
+	g_flRefractionStrength "0.060"
+	RefractionNormal "materials/gamemodes/bowling/bowlingball/bowlingball_normal.png"
+
+	//---- Texture Coordinates ----
+	g_nScaleTexCoordUByModelScaleAxis "0"
+	g_nScaleTexCoordVByModelScaleAxis "0"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
+}

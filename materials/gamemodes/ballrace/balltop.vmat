@@ -1,0 +1,49 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "glass.shader"
+
+	g_flDirectionalLightmapMinZ "0.050"
+	g_flDirectionalLightmapStrength "1.000"
+
+	//---- Color ----
+	g_flModelTintAmount "1.000"
+	g_vColorTint "[1.000000 1.000000 1.000000 1.000000]"
+	TextureAmbientOcclusion "materials/default/default_ao.tga"
+	TextureColor "[1.000000 1.000000 1.000000 0.000000]"
+	TextureMetalness "materials/default/default_metal.tga"
+	TextureNormal "materials/default/default_normal.tga"
+	TextureRoughness "[0.150000 0.150000 0.150000 0.000000]"
+	TextureTranslucency "[0.350000 0.350000 0.350000 0.000000]"
+
+	//---- Fade ----
+	g_flFadeExponent "1.000"
+
+	//---- Fresnel ----
+	g_bFresnel "1"
+	g_flEdgeColorFalloff "3.000"
+	g_flEdgeColorMaxOpacity "0.300"
+	g_flEdgeColorThickness "0.250"
+	g_vEdgeColor "[1.000000 1.000000 1.000000 0.000000]"
+
+	//---- Glass ----
+	g_flAlphaTestReference "0.500"
+	g_flOpacity "0.200"
+	GlassNormal "materials/default/default_normal.tga"
+	GlassRoughness "materials/default/default_rough.tga"
+	GlassTintColor "[1.000000 1.000000 1.000000 0.000000]"
+
+	//---- Texture Coordinates ----
+	g_nScaleTexCoordUByModelScaleAxis "0"
+	g_nScaleTexCoordVByModelScaleAxis "0"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
+
+	DynamicParams
+	{
+		g_vColorTint "tint\n"
+		g_vEdgeColor "tint"
+	}
+}

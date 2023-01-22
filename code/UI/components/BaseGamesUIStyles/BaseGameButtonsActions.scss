@@ -1,0 +1,41 @@
+ButtonActions {
+    pointer-events: all;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+
+    ButtonAction {
+        font-size: 20px;
+        font-family: Inter-Medium;
+        color: white;
+        text-stroke: 3px rgb(49, 49, 49);
+
+        border-radius: 5px;
+        padding: 12px;
+        background-color: rgb(43, 136, 120);
+        margin: 0px 12px;
+
+        min-width: 162px;
+        justify-content: center;
+
+        transition: all 200ms cubic-bezier(0.2, 0, 0, 0.8);
+
+        &.disabled {
+            background-color: rgb(49, 49, 49);
+            pointer-events: none;
+        }
+    }
+    ButtonAction:hover {
+        background-color: rgb(31, 176, 152);
+        transition: opacity 0.15s ease;
+    }
+    ButtonAction:active {
+        transform: scale(1.1);
+        transition: background-color 50ms cubic-bezier(0.2, 0, 0, 0.8);
+        background-color: rgb(49, 184, 162);
+    }
+}

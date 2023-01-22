@@ -1,0 +1,17 @@
+
+
+SEQUENCE 0
+loop
+frame d_arrow.tga 1
+
+SEQUENCE 1
+loop
+frame d_circle.tga 1
+
+SEQUENCE 2
+loop
+frame d_quad.tga 1
+
+SEQUENCE 3
+loop
+frame d_arrow_2.tga 1

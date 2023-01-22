@@ -1,0 +1,28 @@
+BaseGameValues {
+    width: 100%;
+    gap: 8px;
+    /**/
+    BaseGameValueEntry {
+        width: 100%;
+        font-size: 20px;
+        font-family: Inter-Medium;
+        color: white;
+        text-stroke: 3px rgb(49, 49, 49);
+        border-radius: 6px;
+        background-color: rgb(32, 118, 104);
+        border: 2px solid rgb(32, 96, 85);
+        justify-content: space-between;
+
+        label {
+            padding: 6px 24px;
+        }
+
+        label.background {
+            border-radius: 3px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            // background-color: rgb(32, 96, 185);
+            background-color: rgb(43, 136, 120);
+        }
+    }
+}

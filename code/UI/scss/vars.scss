@@ -1,0 +1,28 @@
+// Main Colors
+$main-color-1-bkg: #2E5463;
+$main-color-1-light-bkg: #326A80;
+$main-color-1-c-light-bkg: #1F709D;
+$main-color-1-border: #2289C0;
+$main-color-1-c-light-border: #0094FF;
+
+// Button color normal
+$button-color-normal: #326A80;
+$button-color-normal-border: #297B9B;
+// Button color normal hover
+$button-color-normal-hover: #2289C0;
+$button-color-normal-hover-border: #199FE6;
+
+// Button color primary
+$button-color-primary: #2289C0;
+$button-color-primary-border: #2289C0;
+// Button color primary hover
+$button-color-primary-hover: #199FE6;
+$button-color-primary-hover-border: #199FE6;
+
+
+
+.items {
+    background-color: red;
+    padding: 12px;
+    flex-wrap: wrap;
+}
