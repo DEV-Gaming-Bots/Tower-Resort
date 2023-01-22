@@ -125,6 +125,8 @@ public class ArmWrestle : EntityComponent, ISingletonComponent
 
 		(Entity as ArmWrestleTable).DisplayMessage( clients, winner == WinnerEnum.PlayerOne ?
 			$"{PlayerOne.Client.Name} won the arm wrestle!" : $"{PlayerTwo.Client.Name} has won the arm wrestle!");
+
+		KickPlayers();
 	}
 
 	const float dist = 64.0f;
