@@ -76,7 +76,7 @@ public partial class TRGame : GameManager
 	//we'll kick anyone who tries to host this unofficially or not in dev mode
 	public async void ForceShutdown()
 	{
-		HubChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "GAME", 
+		HubChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "SERVER", 
 			"You are hosting this unofficially, please play the official servers" );
 
 		await WaitDelay( 8.0f );
