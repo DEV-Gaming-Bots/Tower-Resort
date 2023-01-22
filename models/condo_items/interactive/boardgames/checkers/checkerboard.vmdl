@@ -48,7 +48,13 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = [  ]
+						remaps = 
+						[
+							{
+								from = "checkerboard.vmat"
+								to = "materials/interactive/boardgames/checkers/checkerboard.vmat"
+							},
+						]
 						use_global_default = false
 						global_default_material = ""
 					},
