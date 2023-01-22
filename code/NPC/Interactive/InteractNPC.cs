@@ -44,7 +44,7 @@ public partial class InteractNPCBase : BaseNPC, IUse
 	}
 }
 
-[Library("hub_condo_receptionist")]
+[Library("tr_condo_receptionist")]
 [Title("Condo Receptionist"), Category("Condo")]
 [EditorModel("models/citizen/citizen.vmdl")]
 [HammerEntity]

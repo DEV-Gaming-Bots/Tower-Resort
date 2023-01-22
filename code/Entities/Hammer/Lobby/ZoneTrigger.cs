@@ -10,7 +10,7 @@ using TowerResort.UI;
 
 namespace TowerResort.Entities.Hammer;
 
-[Library( "hub_trigger_zone" )]
+[Library( "tr_trigger_zone" )]
 [Title( "Zone" ), Description( "Defines the area for the hud tracker" ), Category( "Trigger" )]
 [SupportsSolid]
 [HammerEntity]

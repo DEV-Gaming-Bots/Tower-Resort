@@ -9,7 +9,7 @@ using TowerResort.Entities.CondoItems;
 
 namespace TowerResort.Entities.Hammer;
 
-[Library( "hub_condo_room" )]
+[Library( "tr_condo_room" )]
 [Title( "Condo Room" ), Description( "Defines a condo room" ), Category( "Condo" )]
 [BoundsHelper( "MinRoomBox", "MaxRoomBox" )]
 [HammerEntity]
@@ -170,7 +170,7 @@ public class CondoRoom : Entity
 	}
 }
 
-[Library( "hub_condo_boundaries" )]
+[Library( "tr_condo_boundaries" )]
 [Title( "Condo Boundaries" ), Description( "Defines the condo's boundaries" ), Category( "Condo" )]
 [HammerEntity, Solid]
 public class CondoBoundaries : ModelEntity

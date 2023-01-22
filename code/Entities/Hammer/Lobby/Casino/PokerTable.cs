@@ -8,11 +8,14 @@ using TowerResort.GameComponents;
 
 namespace TowerResort.Entities.Lobby;
 
-[Library( "hub_lobby_casino_pokertable" ), HammerEntity]
+[Library( "tr_casino_pokertable" ), HammerEntity]
 [Title( "Poker Table" ), Category( "Lobby" )]
 [EditorModel( "models/gamemodes/poker/table/big/big_pokertable.vmdl" )]
 public partial class PokerTable : ModelEntity, IUse
 {
+	[Property, ResourceType( "vmdl" )]
+	public string WorldModel { get; set; } = "";
+
 	[Property, Description( "How much does it cost for players to join" )]
 	[Net] public int EntryFee { get; set; } = 0;
 
@@ -73,7 +76,11 @@ public partial class PokerTable : ModelEntity, IUse
 	{
 		base.Spawn();
 
-		SetModel( "models/gamemodes/poker/table/big/big_pokertable.vmdl" );
+		if ( string.IsNullOrEmpty( WorldModel ) )
+			SetModel( "models/gamemodes/poker/table/big/big_pokertable.vmdl" );
+		else
+			SetModel( WorldModel );
+
 		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
 
 		gameComponent = Components.Create<PokerGame>();

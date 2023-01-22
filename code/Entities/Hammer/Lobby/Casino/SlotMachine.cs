@@ -6,7 +6,7 @@ using TowerResort.Player;
 
 namespace TowerResort.Entities.Lobby;
 
-[Library( "hub_lobby_casino_slotmachine" ), HammerEntity]
+[Library( "tr_lobby_casino_slotmachine" ), HammerEntity]
 [Title( "Slot Machine" ), Category( "Lobby" )]
 [EditorModel( "models/3t/casino/slots/treasure/slots_treasure_machine.vmdl" )]
 public partial class SlotMachine : ModelEntity, IUse
