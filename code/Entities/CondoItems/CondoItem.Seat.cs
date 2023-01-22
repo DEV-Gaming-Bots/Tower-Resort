@@ -35,7 +35,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			//player.Position = Position;
 			player.Rotation = Rotation;
 			player.SetViewAngles( Rotation.Angles() );
-
+			player.IsSitting = true;
 			player.FreezeMovement = MainPawn.FreezeEnum.MoveAndAnim;
 		}
 	}
@@ -54,7 +54,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			return;
 
 		player.FreezeMovement = MainPawn.FreezeEnum.None;
-		
+		player.IsSitting = false;
 		player.ResetCamera();
 		player.Rotation = Rotation.Identity;
 

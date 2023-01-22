@@ -116,6 +116,8 @@ public partial class PokerGame : EntityComponent, ISingletonComponent
 	{
 		if ( Game.IsClient ) return false;
 
+		if ( Players.Count() >= 5 ) return false;
+
 		if ( joiner is not LobbyPawn ) return false;
 
 		if ( CurGameStatus != GameStatus.Idle )

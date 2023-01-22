@@ -28,6 +28,8 @@ public partial class PokerTable : ModelEntity, IUse
 	PokerGame gameComponent;
 	PokerTablePanel panel;
 
+	public List<PokerChair> PokerChairs;
+
 	public void DisplayMessage( List<IClient> clients, string msg, float time = 5.0f )
 	{
 		ClientMessage( To.Multiple( clients ), msg, time );
@@ -54,6 +56,12 @@ public partial class PokerTable : ModelEntity, IUse
 		panel?.Delete();
 		panel = null;
 
+		if( PokerChairs != null )
+		{
+			foreach ( var chair in PokerChairs.ToArray() )
+				chair.Delete();
+		}
+
 		base.OnDestroy();
 	}
 
@@ -61,15 +69,77 @@ public partial class PokerTable : ModelEntity, IUse
 	{
 		if ( !IsUsable( user ) ) return false;
 
+		if ( Game.IsClient ) return false;
+
 		if ( user is LobbyPawn player )
 		{
 			if ( gameComponent.Players.Contains( player ) )
+			{
+				foreach ( var chair in PokerChairs )
+				{
+					if ( chair.Sitter != null && chair.Sitter == player )
+					{
+						chair.RemoveSittingPlayer( player );
+						player.Position = chair.OrgPos;
+						break;
+					}
+				}
+
 				gameComponent.LeaveTable( player );
+			}
 			else
+			{
+				if ( !gameComponent.CanJoinTable( player ) ) return false;
+
+				foreach ( var chair in PokerChairs )
+				{
+					if ( chair.Sitter == null )
+					{
+						chair.Sitdown( user );
+						break;
+					}
+				}
+
 				gameComponent.JoinTable( player );
+			}
 		}
 
 		return false;
+	}
+
+	int yPos = 32;
+
+	public PokerChair CreateChair(int index)
+	{
+		PokerChair chair = new PokerChair();
+		chair.SetParent( this );
+
+		switch (index)
+		{
+			case 0:
+				chair.LocalPosition = new Vector3(-28, 62, 0);
+				chair.LocalRotation = Rotation.FromYaw( -45 );
+				break;
+
+			case 1:
+				chair.LocalPosition = new Vector3( -42, yPos, 0 );
+				break;
+
+			case 2:
+				chair.LocalPosition = new Vector3( -42, yPos - 32, 0 );
+				break;
+
+			case 3:
+				chair.LocalPosition = new Vector3( -42, yPos - 64, 0 );
+				break;
+
+			case 4:
+				chair.LocalPosition = new Vector3( -28, yPos - 92, 0 );
+				chair.LocalRotation = Rotation.FromYaw( 45 );
+				break;
+		}
+
+		return chair;
 	}
 
 	public override void Spawn()
@@ -82,6 +152,11 @@ public partial class PokerTable : ModelEntity, IUse
 			SetModel( WorldModel );
 
 		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+
+		PokerChairs = new List<PokerChair>();
+
+		for ( int i = 0; i < 5; i++ )
+			PokerChairs.Add( CreateChair( i ) );
 
 		gameComponent = Components.Create<PokerGame>();
 
@@ -115,5 +190,75 @@ public partial class PokerTable : ModelEntity, IUse
 
 		panel.Position = Position + Vector3.Up * 64;
 		panel.Rotation = Rotation.LookAt( Camera.Rotation.Backward, Vector3.Up );
+	}
+}
+
+public class PokerChair : ModelEntity
+{
+	public LobbyPawn Sitter { get; private set; }
+
+	public Vector3 OrgPos;
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		SetModel( "models/furniture/bar_stool/bar_stool.vmdl" );
+		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+	}
+
+	public void Sitdown( Entity user )
+{
+		var player = user as LobbyPawn;
+
+		if ( player == null )
+			return;
+
+		OrgPos = player.Position;
+
+		if ( Input.Down( InputButton.Duck ) )
+			Input.SuppressButton( InputButton.Duck );
+
+		Sitter = player;
+
+		Sitter?.SetAnimParameter( "sit", 1 );
+
+		player.Position = Position + Vector3.Up * 10;
+		player.Rotation = Rotation;
+		player.SetViewAngles( Rotation.Angles() );
+		player.IsSitting = true;
+	}
+
+	public void RemoveSittingPlayer( LobbyPawn player )
+	{
+		if ( !Game.IsServer )
+			return;
+
+		Sitter?.SetAnimParameter( "sit", 0 );
+
+		Sitter = null;
+
+		if ( !player.IsValid() )
+			return;
+
+		player.FreezeMovement = MainPawn.FreezeEnum.None;
+		player.IsSitting = false;
+		player.ResetCamera();
+		player.Rotation = Rotation.Identity;
+
+		if ( Rotation.Roll() < 0.0f )
+			player.Position += Rotation.Up * 24;
+		else
+			player.Position += player.Rotation.Up * 20;
+
+	}
+
+	[Event.Tick.Server]
+	protected void SitTick()
+	{
+		if ( Sitter is LobbyPawn player && player.LifeState != LifeState.Alive )
+		{
+			RemoveSittingPlayer( player );
+		}
 	}
 }

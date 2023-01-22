@@ -29,8 +29,7 @@ public class AchBase
 
 		if ( Progress % PerUpdateNotify == 0 && !IsSecret )
 		{
-			Log.Info( "NOTIFY MOMENT" );
-			Log.Info( $"{Name} - {Progress}");
+			//TODO: achievement notifications
 		}
 
 		if ( Progress == Goal )

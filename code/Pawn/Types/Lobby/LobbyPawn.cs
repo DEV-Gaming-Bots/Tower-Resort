@@ -18,6 +18,8 @@ public partial class LobbyPawn : MainPawn
 	public TimeSince TimeDrank;
 	[Net] public Entity FocusedEntity { get; set; }
 
+	public bool IsSitting;
+
 	[ConCmd.Server( "kill" )]
 	public static void DoSuicide()
 	{

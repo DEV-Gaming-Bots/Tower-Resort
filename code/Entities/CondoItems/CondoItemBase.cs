@@ -19,6 +19,8 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	TimeUntil cooldown;
 	int totalUses;
 
+	[Net] bool IsPreviewing { get; set; } = false;
+
 	public void SpawnFromAsset( CondoAssetBase asset )
 	{
 		Asset = asset;
@@ -79,7 +81,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	{
 		if ( Asset == null ) return;
 
-		if(Asset.Type == CondoAssetBase.ItemEnum.Sittable)
+		if(Asset.Type == CondoAssetBase.ItemEnum.Sittable && IsPreviewing )
 		{
 			Transform bone = GetBoneTransform( "lookdir" );
 			Vector3 pos = bone.Position + bone.Rotation.Forward * 500;

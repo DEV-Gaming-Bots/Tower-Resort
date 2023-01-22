@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TowerResort;
 using Sandbox;
 using TowerResort.Achievements;
+using System.Numerics;
 
 namespace TowerResort.Player;
 
@@ -111,6 +112,9 @@ public partial class StandardController : BaseNetworkable
 
 		if ( Owner.FreezeMovement != MainPawn.FreezeEnum.Movement && Owner.FreezeMovement != MainPawn.FreezeEnum.MoveAndAnim )
 		{
+			if ( (Owner as LobbyPawn).IsSitting )
+				return;
+
 			if ( Unstuck.TestAndFix() )
 				return;
 		}
