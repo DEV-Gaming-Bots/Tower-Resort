@@ -90,7 +90,7 @@
 						[
 							{
 								from = "tavern_stool.vmat"
-								to = "materials/items/condo/furniture/tavern_stool/tavern_stool.vmat"
+								to = "materials/furniture/tavern_stool/tavern_stool.vmat"
 							},
 						]
 						use_global_default = false
