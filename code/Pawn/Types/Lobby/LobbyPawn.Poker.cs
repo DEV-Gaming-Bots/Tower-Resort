@@ -1,12 +1,12 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using System;
-using TheHub.Entities.CondoItems;
-using TheHub.Entities.Lobby;
-using TheHub.GameComponents;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Entities.Lobby;
+using TowerResort.GameComponents;
 using static Components.BaseGamesUi.BaseGamesUi;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public class PokerCard
 {
@@ -173,15 +173,15 @@ public partial class LobbyPawn : MainPawn
 		GameStats.AddValue( playerchips );
 
 		var fold = pokerButtons.AddButton( "fold", "Fold" );
-		fold.action = () => { ConsoleSystem.Run( "hub.game.poker.fold" ); };
+		fold.action = () => { ConsoleSystem.Run( "tr.game.poker.fold" ); };
 		var check = pokerButtons.AddButton( "check", "Check" );
-		check.action = () => { ConsoleSystem.Run( "hub.game.poker.check" ); };
+		check.action = () => { ConsoleSystem.Run( "tr.game.poker.check" ); };
 		var betRaise = pokerButtons.AddButton( "betraise", "Bet | Raise" );
-		betRaise.action = () => { ConsoleSystem.Run( "hub.game.poker.betraise" ); };
+		betRaise.action = () => { ConsoleSystem.Run( "tr.game.poker.betraise" ); };
 		var call = pokerButtons.AddButton( "call", "Call" );
-		call.action = () => { ConsoleSystem.Run( "hub.game.poker.call" ); };
+		call.action = () => { ConsoleSystem.Run( "tr.game.poker.call" ); };
 		var leave = pokerButtons.AddButton( "leave", "Leave" );
-		leave.action = () => { ConsoleSystem.Run( "hub.game.poker.leave" ); };
+		leave.action = () => { ConsoleSystem.Run( "tr.game.poker.leave" ); };
 
 		foreach ( var player in CurPokerTable.Components.Get<PokerGame>().Players )
 			playersPanel.AddPlayer( new PlayerEntry( player.Client.Name ) );
@@ -320,7 +320,7 @@ public partial class LobbyPawn : MainPawn
 		cardPanel?.ClearCardsPanel();
 	}
 
-	[ConCmd.Server( "hub.game.poker.check" )]
+	[ConCmd.Server( "tr.game.poker.check" )]
 	public static void PokerCheck()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -336,7 +336,7 @@ public partial class LobbyPawn : MainPawn
 		c.DoPokerAction( player, PokerGame.PokerActionEnum.Check);
 	}
 
-	[ConCmd.Server( "hub.game.poker.leave" )]
+	[ConCmd.Server( "tr.game.poker.leave" )]
 	public static void PokerLeave()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -352,7 +352,7 @@ public partial class LobbyPawn : MainPawn
 		c.DoPokerAction( player, PokerGame.PokerActionEnum.Leave );
 	}
 
-	[ConCmd.Server( "hub.game.poker.fold" )]
+	[ConCmd.Server( "tr.game.poker.fold" )]
 	public static void PokerFold()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -368,7 +368,7 @@ public partial class LobbyPawn : MainPawn
 		c.DoPokerAction( player, PokerGame.PokerActionEnum.Fold );
 	}
 
-	[ConCmd.Server( "hub.game.poker.betraise" )]
+	[ConCmd.Server( "tr.game.poker.betraise" )]
 	public static void PokerRaiseOrBet()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -388,7 +388,7 @@ public partial class LobbyPawn : MainPawn
 		c.DoPokerAction( player, PokerGame.PokerActionEnum.BetRaise, bet );
 	}
 
-	[ConCmd.Server( "hub.game.poker.call" )]
+	[ConCmd.Server( "tr.game.poker.call" )]
 	public static void PokerCall()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;

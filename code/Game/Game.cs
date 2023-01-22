@@ -2,22 +2,22 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using TheHub.Achievements;
-using TheHub.Entities.CondoItems;
-using TheHub.Player;
-using TheHub.UI;
+using TowerResort.Achievements;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Player;
+using TowerResort.UI;
 
-namespace TheHub;
+namespace TowerResort;
 
-public partial class MainGame : GameManager
+public partial class TRGame : GameManager
 {
-	public static MainGame Instance => Current as MainGame;
+	public static TRGame Instance => Current as TRGame;
 
-	[ConVar.Replicated( "hub.devmode" )]
+	[ConVar.Replicated( "tr.devmode" )]
 	public static bool DevMode { get; set; }
 	public static bool IsDevMode { get; set; }
 
-	public MainGame()
+	public TRGame()
 	{
 		IsDevMode = DevMode;
 

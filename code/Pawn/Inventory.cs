@@ -1,9 +1,9 @@
-﻿using TheHub.Entities.Base;
+﻿using TowerResort.Entities.Base;
 using Sandbox;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class Inventory : EntityComponent<MainPawn>, ISingletonComponent
 {

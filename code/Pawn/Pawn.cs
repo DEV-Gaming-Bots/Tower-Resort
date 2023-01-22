@@ -2,13 +2,13 @@
 using Sandbox.UI;
 using System;
 using System.Linq;
-using TheHub.Achievements;
-using TheHub.Entities.Base;
-using TheHub.Entities.Hammer;
-using TheHub.Entities.Weapons;
-using TheHub.Weapons;
+using TowerResort.Achievements;
+using TowerResort.Entities.Base;
+using TowerResort.Entities.Hammer;
+using TowerResort.Entities.Weapons;
+using TowerResort.Weapons;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class MainPawn : AnimatedEntity, IPlayerData
 {
@@ -64,7 +64,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	[ConCmd.Server( "noclip" )]
 	public static void DoNoclip()
 	{
-		if ( !MainGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) )
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) )
 			return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
@@ -130,7 +130,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		FreezeMovement = FreezeEnum.None;
 
-		if ( MainGame.AdminIDs.Contains( Client.SteamId ) )
+		if ( TRGame.AdminIDs.Contains( Client.SteamId ) )
 			SetUpAdmin();
 	}
 

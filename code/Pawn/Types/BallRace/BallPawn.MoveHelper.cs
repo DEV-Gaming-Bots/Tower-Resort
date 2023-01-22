@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public struct BallMoveHelper
 {

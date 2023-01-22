@@ -1,10 +1,10 @@
 using Sandbox;
 
-namespace TheHub.UI;
+namespace TowerResort.UI;
 
 public partial class HubChat
 {
-	[ConCmd.Client( "hub.chat.add", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "tr.chat.add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string playerId = "0", bool isInfo = false )
 	{
 		Current?.AddEntry( name, message, long.Parse( playerId ), isInfo );
@@ -21,13 +21,13 @@ public partial class HubChat
 		AddChatEntry( target, name, message, playerId.ToString(), isInfo );
 	}
 
-	[ConCmd.Client( "hub.addinfo", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "tr.addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message )
 	{
 		Current?.AddEntry( null, message );
 	}
 
-	[ConCmd.Server( "hub.say" )]
+	[ConCmd.Server( "tr.say" )]
 	public static void Say( string message )
 	{
 		// todo - reject more stuff

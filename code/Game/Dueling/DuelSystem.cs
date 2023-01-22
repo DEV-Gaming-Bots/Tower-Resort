@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheHub.Entities.Base;
-using TheHub.Player;
-using TheHub.UI;
-using TheHub.Weapons;
+using TowerResort.Entities.Base;
+using TowerResort.Player;
+using TowerResort.UI;
+using TowerResort.Weapons;
 
-namespace TheHub;
+namespace TowerResort;
 
-public partial class MainGame
+public partial class TRGame
 {
 	public enum DuelEnum
 	{
@@ -135,7 +135,7 @@ public partial class MainGame
 		DuelStatus = DuelEnum.Idle;
 	}
 
-	[ConCmd.Server("hub.dueling.duel")]
+	[ConCmd.Server("tr.dueling.duel")]
 	public static void SendDuel(string targetName)
 	{
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
@@ -152,7 +152,7 @@ public partial class MainGame
 		HubChat.AddChatEntryStatic( To.Single( target ), "DUEL", $"{player.Client.Name} has challenged you to a duel" );
 	}
 
-	[ConCmd.Server("hub.dueling.respond")]
+	[ConCmd.Server("tr.dueling.respond")]
 	public static void RespondToDuel(bool accepted)
 	{
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;

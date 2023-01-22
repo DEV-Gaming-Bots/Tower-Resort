@@ -1,10 +1,10 @@
 ﻿using System;
 using Sandbox;
 using Sandbox.UI;
-using TheHub.Player;
-using TheHub.Entities.Base;
+using TowerResort.Player;
+using TowerResort.Entities.Base;
 
-namespace TheHub.Weapons;
+namespace TowerResort.Weapons;
 
 public partial class Pistol : WeaponBase
 {

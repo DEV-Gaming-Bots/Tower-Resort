@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheHub.GameComponents;
+namespace TowerResort.GameComponents;
 
 public partial class Tetris : EntityComponent, ISingletonComponent
 {

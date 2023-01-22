@@ -1,5 +1,5 @@
-﻿using TheHub;
-using TheHub.Player;
+﻿using TowerResort;
+using TowerResort.Player;
 using Sandbox;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheHub.Entities.CondoItems;
+namespace TowerResort.Entities.CondoItems;
 
 public struct SitSlots
 {
@@ -144,7 +144,7 @@ public class CondoAssetBase : GameResource
 			_CondoItems.Add( this );
 	}
 
-	[ConCmd.Server("hub.item.buy")]
+	[ConCmd.Server("tr.item.buy")]
 	public static void BuyItem(string itemName, long id = -1)
 	{
 		var caller = ConsoleSystem.Caller.Pawn as MainPawn;

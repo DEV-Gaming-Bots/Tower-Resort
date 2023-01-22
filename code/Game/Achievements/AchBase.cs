@@ -1,8 +1,8 @@
 ﻿using Sandbox;
 using System;
-using TheHub.Player;
+using TowerResort.Player;
 
-namespace TheHub.Achievements;
+namespace TowerResort.Achievements;
 
 public class AchBase
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public partial class Ball : ModelEntity
 {

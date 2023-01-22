@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using TheHub.Achievements;
-using TheHub.Entities.CondoItems;
-using TheHub.Entities.Lobby;
-using TheHub.Player;
+using TowerResort.Achievements;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Entities.Lobby;
+using TowerResort.Player;
 
-namespace TheHub.GameComponents;
+namespace TowerResort.GameComponents;
 
 public partial class PokerGame : EntityComponent, ISingletonComponent
 {

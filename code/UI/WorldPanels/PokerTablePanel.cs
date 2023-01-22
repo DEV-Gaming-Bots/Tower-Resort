@@ -7,7 +7,7 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-namespace TheHub.UI;
+namespace TowerResort.UI;
 
 public class PokerTablePanel : WorldPanel
 {

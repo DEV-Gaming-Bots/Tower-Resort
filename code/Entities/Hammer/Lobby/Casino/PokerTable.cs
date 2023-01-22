@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Sandbox;
 using Editor;
-using TheHub.Player;
+using TowerResort.Player;
 using Components.NotificationManager;
-using TheHub.UI;
-using TheHub.GameComponents;
+using TowerResort.UI;
+using TowerResort.GameComponents;
 
-namespace TheHub.Entities.Lobby;
+namespace TowerResort.Entities.Lobby;
 
 [Library( "hub_lobby_casino_pokertable" ), HammerEntity]
 [Title( "Poker Table" ), Category( "Lobby" )]

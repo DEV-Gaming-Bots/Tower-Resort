@@ -3,11 +3,11 @@ using Sandbox;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using TheHub.Entities.Base;
-using TheHub.Player;
-using TheHub.GameComponents;
+using TowerResort.Entities.Base;
+using TowerResort.Player;
+using TowerResort.GameComponents;
 
-namespace TheHub.Entities.CondoItems;
+namespace TowerResort.Entities.CondoItems;
 
 public partial class CondoItemBase : AnimatedEntity, IUse
 {
@@ -220,7 +220,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		{
 			if ( Asset.GameType == CondoAssetBase.GameEnum.Unspecified )
 			{
-				Log.Warning( "TheHub - This playable item has no specified game" );
+				Log.Warning( "TowerResort - This playable item has no specified game" );
 				return false;
 			}
 

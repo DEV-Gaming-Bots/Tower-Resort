@@ -1,7 +1,7 @@
 ﻿
 using Sandbox;
 
-namespace TheHub.Player;
+namespace TowerResort.Player;
 
 public class Unstuck
 {
