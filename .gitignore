@@ -10,11 +10,12 @@
 *.userosscache
 *.sln.docstates
 
+
 # S&Box files
 *.csproj
 *.*_c
 *.clothing_c
-code/towerresort.csproj
+*.generated.vtex_c
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
