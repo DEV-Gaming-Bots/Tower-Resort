@@ -10,6 +10,13 @@
 *.userosscache
 *.sln.docstates
 
+# S&Box files
+*.csproj
+*.*_c
+*.clothing_c
+code/towerresort.csproj
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -395,4 +402,3 @@ FodyWeavers.xsd
 *.msp
 
 # JetBrains Rider
-*.sln.iml

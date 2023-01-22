@@ -100,7 +100,7 @@
 						[
 							{
 								from = "materials/gamemodes/bowling/bowlingball/bowlingball.vmat"
-								to = "materials/gamemodes/bowling/bowlingball/bowlingball.vmat"
+								to = "materials/gamemodes/bowling/bowlingball/bowlingball_grey.vmat"
 							},
 						]
 					},
