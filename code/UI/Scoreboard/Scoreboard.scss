@@ -1,0 +1,50 @@
+﻿Scoreboard {
+    opacity: 0;
+    height: 500px;
+    width: 700px;
+    margin: auto;
+    background-color: #0096C7;
+    border-radius: 25px;
+    color: whitesmoke;
+    flex-direction: column;
+    transition: all 0.1s ease-out;
+    pointer-events: none;
+    border-start-end-radius: 50px;
+
+    &.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    & > panel {
+        width: 100%;
+    }
+
+    .open-sub {
+        opacity: 1;
+        height: 100%;
+        width: 100%;
+    }
+
+    .top {
+        border-radius: 25px 25px 0 0;
+        height: 60px;
+        min-height: 60px;
+        background-color: #0077B6;
+        font-size: 22px;
+        font-weight: 700;
+
+        .title {
+            margin-right: auto;
+        }
+
+        & > panel {
+            margin: auto;
+            gap: 10px;
+
+            & > button:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
