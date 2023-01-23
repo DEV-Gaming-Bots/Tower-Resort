@@ -74,6 +74,7 @@
         .coinTracker {
             position: relative;
             margin-left: 78px;
+            display: flex;
             flex-direction: column;
             //z-index: 2;
             z-index: 2;
@@ -103,29 +104,25 @@
 
             .username {
                 margin: 8px 0px;
-                right: 58px;
 
                 .name {
                     background-color: rgb(0, 0, 0, 0.45);
                     border-radius: 5px;
                     font-size: 26px;
                     font-weight: 600;
-                }
-
-                &.column {
-                    flex-direction: column;
+                    right: 58px;
                 }
             }
 
             .zone {
-                margin-bottom: 8px;
-                right: 58px;
+                margin: 8px 0px;
 
                 .name {
                     background-color: rgb(0, 0, 0, 0.45);
                     border-radius: 5px;
                     font-size: 18px;
                     font-weight: 600;
+                    right: 32px;
                 }
             }
         }

@@ -95,23 +95,11 @@ public partial class StandardController : BaseNetworkable
 
 	public virtual void FrameSimulate()
 	{
-		if ( Owner.FreezeMovement != MainPawn.FreezeEnum.Movement && Owner.FreezeMovement != MainPawn.FreezeEnum.MoveAndAnim )
-		{
-			Owner.EyeRotation = Owner.ViewAngles.ToRotation();
-		}
+		Owner.EyeRotation = Owner.ViewAngles.ToRotation();
 	}
 
 	public virtual void Simulate()
 	{
-		if ( Owner.FreezeMovement != MainPawn.FreezeEnum.Movement && Owner.FreezeMovement != MainPawn.FreezeEnum.MoveAndAnim )
-		{
-			if ( (Owner as LobbyPawn).IsSitting )
-				return;
-
-			if ( Unstuck.TestAndFix() )
-				return;
-		}
-
 		Owner.EyeLocalPosition = Vector3.Up * (EyeHeight * Owner.Scale);
 		UpdateCollisions();
 
@@ -122,6 +110,14 @@ public partial class StandardController : BaseNetworkable
 		else
 			Owner.EyeRotation = Owner.ViewAngles.ToRotation();
 
+		if ( Owner.FreezeMovement != MainPawn.FreezeEnum.Movement && Owner.FreezeMovement != MainPawn.FreezeEnum.MoveAndAnim )
+		{
+			if ( (Owner as LobbyPawn).IsSitting )
+				return;
+
+			if ( Unstuck.TestAndFix() )
+				return;
+		}
 
 		CheckLadder();
 		Swimming = Owner.GetWaterLevel() > 0.5f;

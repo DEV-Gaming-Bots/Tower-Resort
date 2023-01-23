@@ -9,8 +9,8 @@
 		SelectionMode = "Random"
 		Sounds = 
 		[
-			resource:"sound/raw/carpet_hit1.vsnd",
-			resource:"sound/raw/carpet_hit2.vsnd",
+			resource:"sound/carpet/carpet_hit1.vsnd",
+			resource:"sound/carpet/carpet_hit2.vsnd",
 		]
 		MaximumDistance = 1484.3214
 		MinimumDistance = 74.21607

@@ -76,15 +76,6 @@ public class CondoAssetBase : GameResource
 	[Category( "Interaction" ), ShowIf("IsInteractable", true)]
 	public double InteractCooldown { get; set; } = 1.0f;
 
-	[Category( "Interaction" ), ShowIf( "Toggable", true )]
-	public int InteractionBodyGroup { get; set; } = -1;
-
-	[Category( "Interaction" ), Description("Used to revert back to original material after use"), ShowIf( "Toggable", true ), ResourceType( "vmat" )]
-	public string InteractionMaterial { get; set; } = "";
-
-	[Category( "Interaction" ), Description( "Used to change material when used" ), ShowIf( "Toggable", true ), ResourceType("vmat")]
-	public string InteractionMaterialOverride { get; set; } = "";
-
 	[Category( "Sounds" ), ResourceType( "sound" ), ShowIf("Type", ItemEnum.Sound)]
 	public string InteractSound { get; set; }
 

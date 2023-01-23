@@ -57,7 +57,7 @@ public class ArmWrestle : EntityComponent, ISingletonComponent
 		if ( PlayerOne == null )
 			PlayerOne = joiner;
 
-		if ( PlayerTwo == null && PlayerOne != null )
+		if ( PlayerTwo == null )
 			PlayerTwo = joiner;
 
 		joiner.FreezeMovement = MainPawn.FreezeEnum.Movement;
@@ -84,12 +84,7 @@ public class ArmWrestle : EntityComponent, ISingletonComponent
 	public void KickPlayers()
 	{
 		PlayerOne.FocusedEntity = null;
-		PlayerOne.FreezeMovement = MainPawn.FreezeEnum.None;
-		
 		PlayerTwo.FocusedEntity = null;
-		PlayerTwo.FreezeMovement = MainPawn.FreezeEnum.None;
-
-		curWrestlePoints = 0;
 	}
 
 	int curWrestlePoints;
@@ -98,19 +93,17 @@ public class ArmWrestle : EntityComponent, ISingletonComponent
 	{
 		if( CurGameStatus == GameStatus.Active )
 		{
-			if (Input.Pressed(InputButton.PrimaryAttack))
+			if(Input.Pressed(InputButton.PrimaryAttack))
 			{
 				if ( PlayerOne == player )
 					curWrestlePoints++;
-				else
+				else if ( PlayerTwo == player )
 					curWrestlePoints--;
 
-				Log.Info( curWrestlePoints );
-
-				if ( curWrestlePoints <= -10 )
+				if ( curWrestlePoints <= -15 )
 					DeclareWinner( WinnerEnum.PlayerTwo );
-				else if ( curWrestlePoints >= 10 )
-					DeclareWinner( WinnerEnum.PlayerOne );
+				else if ( curWrestlePoints >= 15 )
+					DeclareWinner( WinnerEnum.PlayerTwo);
 			}
 		}
 	}

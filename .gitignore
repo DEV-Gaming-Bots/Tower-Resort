@@ -13,7 +13,6 @@
 
 # S&Box files
 *.csproj
-code/towerresort.csproj
 *.*_c
 *.clothing_c
 *.generated.vtex_c

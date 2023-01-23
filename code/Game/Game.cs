@@ -1,11 +1,11 @@
-﻿global using Sandbox;
-global using System;
-global using System.Linq;
-global using System.Threading.Tasks;
-global using TowerResort.Achievements;
-global using TowerResort.Entities.CondoItems;
-global using TowerResort.Player;
-global using TowerResort.UI;
+﻿using Sandbox;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using TowerResort.Achievements;
+using TowerResort.Entities.CondoItems;
+using TowerResort.Player;
+using TowerResort.UI;
 
 namespace TowerResort;
 

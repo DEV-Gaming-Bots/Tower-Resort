@@ -48,8 +48,7 @@ public partial class PokerTable : ModelEntity, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return gameComponent.CurGameStatus == PokerGame.GameStatus.Idle
-				|| gameComponent.CurGameStatus == PokerGame.GameStatus.Starting;
+		return gameComponent.CurGameStatus != PokerGame.GameStatus.Active;
 	}
 
 	protected override void OnDestroy()
