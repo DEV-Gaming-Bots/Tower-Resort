@@ -92,12 +92,9 @@ namespace Components.BaseGamesUi
 			public List<PlayerEntry> playerslist = new List<PlayerEntry>();
 
 			public Panel players;
-			public PlayersPanel( bool disableStyleSheet = false )
+			public PlayersPanel( )
 			{
-				if ( !disableStyleSheet )
-				{
-					StyleSheet.Load( "UI/Components/BaseGamesUIStyles/BasePlayersPanel.scss" );
-				}
+
 			}
 
 			public PlayerItem AddPlayer( Panel panel )

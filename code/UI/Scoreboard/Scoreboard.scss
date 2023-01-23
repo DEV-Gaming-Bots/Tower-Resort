@@ -3,6 +3,7 @@
     height: 500px;
     width: 700px;
     margin: auto;
+    //margin-left: 70px;
     background-color: #0096C7;
     border-radius: 25px;
     color: whitesmoke;
@@ -10,6 +11,9 @@
     transition: all 0.1s ease-out;
     pointer-events: none;
     border-start-end-radius: 50px;
+
+
+    font-family: Oswald-Regular;
 
     &.open {
         opacity: 1;

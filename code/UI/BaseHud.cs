@@ -7,7 +7,6 @@ public class BaseHud : RootPanel
 {
 	public static BaseHud Current;
 	public NotificationManagerUI NotificationManager;
-	public BaseGamesUi.PlayersPanel playersPanel;
 	/*public BaseGamesUi.CardsPanel TestCardsPanel;*/
 
 	public BaseHud()
@@ -18,10 +17,8 @@ public class BaseHud : RootPanel
 			Current = null;
 		}
 
-		//playersPanel = new();
-		//NotificationManager = new();
-		//AddChild( playersPanel );
-		//AddChild( NotificationManager );
+		NotificationManager = new();
+		AddChild( NotificationManager );
 
 		Current = this;
 		StyleSheet.Load( "/UI/Styles/HubHud.scss" );
