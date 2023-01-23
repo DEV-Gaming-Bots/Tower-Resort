@@ -75,9 +75,9 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ 177.765839, 70.035545, -0.021378 ]
+						origin = [ 177.765839, 69.90921, -0.021378 ]
 						angles = [ -0.0, 90.0, 0.0 ]
-						dimensions = [ 7.407364, 83.503174, 119.615868 ]
+						dimensions = [ 7.659939, 83.503174, 119.615868 ]
 					},
 					{
 						_class = "PhysicsShapeBox"
@@ -96,7 +96,7 @@
 						surface_prop = "default"
 						collision_tags = "solid"
 						origin = [ 219.8125, 118.748924, -0.021378 ]
-						angles = [ -0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 7.407364, 136.593842, 119.615868 ]
 					},
 					{
@@ -216,8 +216,28 @@
 						surface_prop = "default"
 						collision_tags = "solid"
 						origin = [ -159.546661, -30.279823, 47.998074 ]
-						angles = [ -0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 7.886837, 57.008499, 24.773581 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						name = "wall18"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -118.687042, 81.395866, -0.021378 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 68.704117, 8.473923, 119.615868 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						name = "wall19"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 6.759644, 81.395866, -0.021378 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 68.704117, 8.473923, 119.615868 ]
 					},
 				]
 			},

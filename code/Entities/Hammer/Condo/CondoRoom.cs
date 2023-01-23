@@ -1,45 +1,45 @@
 ﻿using Sandbox;
 using Editor;
-using System.Linq;
-using TowerResort.Player;
-using System.Runtime.CompilerServices;
-using System;
 using System.Collections.Generic;
 using TowerResort.Entities.CondoItems;
+using TowerResort.Entities.Condos;
 
 namespace TowerResort.Entities.Hammer;
 
-[Library( "tr_condo_room" )]
-[Title( "Condo Room" ), Description( "Defines a condo room" ), Category( "Condo" )]
-[BoundsHelper( "MinRoomBox", "MaxRoomBox" )]
+[Library( "tr_condo_logic" )]
+[Title( "Condo Logic" ), Description( "The condo's logic which can load and save condos" ) , Category( "Condo" )]
 [HammerEntity]
 
-public class CondoRoom : Entity
+public partial class CondoRoom : Entity
 {
-	public static CondoRoom StaticCondo;
+	public BasicCondo Condo;
 
-	[Property]
-	public Vector3 MinRoomBox { get; set; }
+	static CondoRoom testCondo;
 
-	[Property]
-	public Vector3 MaxRoomBox { get; set; }
-
-	CondoBoundaries Condo;
+	List<Entity> entities;
 
 	BBox condoBox;
 
-	List<CondoItemBase> test;
 	List<(Vector3 Pos, Rotation Rot)> EntityInfo;
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		StaticCondo = this;
-		condoBox = new BBox( WorldSpaceBounds.Mins + MinRoomBox, WorldSpaceBounds.Maxs + MaxRoomBox );
+		entities = new();
 
-		var ents = FindInBox( condoBox );
+		foreach ( var ent in FindInBox(WorldSpaceBounds) )
+		{
+			Log.Info( ent );
+		}
 
-		test = new();
+		testCondo = this;
+	}
+
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+
+		condoLights = new();
 	}
 
 	public bool FilterCheck(Entity ent)
@@ -53,19 +53,42 @@ public class CondoRoom : Entity
 		if ( ent is CondoRoom )
 			return false;
 
+		if ( ent == Condo ) 
+			return false;
+
 		return true;
 	}
 
 	public void LoadCondo()
 	{
+		Condo = new BasicCondo();
+		Condo.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		Condo.Position = Position;
+		Condo.Rotation = Rotation;
+
 		int index = 0;
 
-		//Condo.Position = Position;
+		foreach ( var lightPos in Condo.LightPositions )
+		{
+			PlaceLights( To.Everyone, Condo.Position + lightPos, Condo.LightRadius[index], Condo.LightColor[index] );
+			index++;
+		}
 
-		Log.Info( Condo );
+		//condoBox = new BBox( Condo.WorldSpaceBounds.Mins, Condo.WorldSpaceBounds.Maxs );
 
+		//Log.Info( Condo.Model.HasData<LightComponent>() );
+		/*if( Condo.Model.GetAllData<LightComponent>() != null)
+		{
+			var test = Condo.Model.TryGetData<LightComponent>( out LightComponent data );
 
-		foreach ( var entity in test )
+			Log.Info( test );
+
+			//Decorate(To.Everyone, Condo.Model.GetData<LightComponent>() );
+		}*/
+
+		//var ents = FindInBox( condoBox );
+
+		/*foreach ( var entity in test )
 		{
 			var ent = CreateByName( entity.ClassName );
 
@@ -77,43 +100,65 @@ public class CondoRoom : Entity
 			ent.Spawn();
 			Log.Info( $"Loaded {ent.Name}" );
 			index++;
-		}
+		}*/
 
 		//test.Clear();
 		//EntityInfo.Clear();
 	}
 
-	public void SaveCondoContents()
+	List<SceneLight> condoLights;
+
+	[ClientRpc]
+	public void PlaceLights( Vector3 pos, float radius, Color colour )
 	{
-		DebugOverlay.Box( condoBox, Color.Green, 5);
-		EntityInfo = new();
+		SceneLight light = new SceneLight( Scene, pos, radius, colour );
+		condoLights.Add( light );
+	}
 
-		foreach ( var entity in FindInBox( condoBox ) )
+	[ClientRpc]
+	public void DestroyLights()
+	{
+		foreach ( var light in condoLights.ToArray() )
 		{
-			if ( !FilterCheck( entity ) )
-				continue;
-
-			EntityInfo.Add( (entity.Position, entity.Rotation) );
-
-			test.Add( entity as CondoItemBase );
-			Log.Info($"Saving {entity.Name}");
+			light?.Delete();
 		}
 
-		Log.Info( "Saved Condo" );
+		condoLights.Clear();
 	}
-	public void ClearCondo(bool despawnCondo = false)
+
+	public void SaveCondoContents()
+	{
+		//Log.Info( Condo.Model.GetData<LightComponent>());
+
+		DebugOverlay.Box( Condo.WorldSpaceBounds, Color.Green, 5);
+		EntityInfo = new();
+
+		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
+		{
+			if ( !FilterCheck( entity ) )
+				continue;
+
+			//EntityInfo.Add( (entity.Position, entity.Rotation) );
+
+			Log.Info($"Saving {entity.Name}");
+		}
+	}
+
+	public void ClearCondo()
 	{
 		foreach ( var entity in FindInBox( condoBox ) )
 		{
 			if ( !FilterCheck( entity ) )
 				continue;
 
-			EntityInfo.Add( (entity.Position, entity.Rotation) );
-			test.Add( entity as CondoItemBase );
+			//EntityInfo.Add( (entity.Position, entity.Rotation) );
 
 			Log.Info( $"Deleting {entity.Name}" );
 			entity.Delete();
 		}
+
+		DestroyLights( To.Everyone );
+		Condo.Delete();
 	}
 
 	[ConCmd.Server( "tr.condo.assign" )]
@@ -126,8 +171,8 @@ public class CondoRoom : Entity
 
 		if ( pawn.AssignedCondo != null ) return;
 
-		pawn.AssignedCondo = StaticCondo;
-		Log.Info( $"{pawn.Name} assigned to {StaticCondo}" );
+		pawn.AssignedCondo = testCondo;
+		Log.Info( $"{pawn.Name} assigned to {testCondo}" );
 	}
 
 	[ConCmd.Server("tr.condo.save")]
@@ -157,7 +202,7 @@ public class CondoRoom : Entity
 	}
 
 	[ConCmd.Server( "tr.condo.clear" )]
-	public static void CondoClearCMD(bool shouldRemove = false)
+	public static void CondoClearCMD()
 	{
 		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
@@ -166,20 +211,6 @@ public class CondoRoom : Entity
 
 		if ( pawn.AssignedCondo == null ) return;
 
-		pawn.AssignedCondo.ClearCondo( shouldRemove );
+		pawn.AssignedCondo.ClearCondo();
 	}
 }
-
-[Library( "tr_condo_boundaries" )]
-[Title( "Condo Boundaries" ), Description( "Defines the condo's boundaries" ), Category( "Condo" )]
-[HammerEntity, Solid]
-public class CondoBoundaries : ModelEntity
-{
-	public override void Spawn()
-	{
-		base.Spawn();
-
-		SetupPhysicsFromModel( PhysicsMotionType.Static );
-	}
-}
-

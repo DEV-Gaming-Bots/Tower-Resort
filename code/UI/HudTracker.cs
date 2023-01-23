@@ -67,7 +67,7 @@ public partial class HudTracker : Panel
 		if ( player == null )
 			return;
 
-		if(Game.IsDedicatedServer)
+		if( TRGame.Instance.RunningDedi )
 			CoinLbl.Text = $"{player.Credits:C0}";
 		else
 		{

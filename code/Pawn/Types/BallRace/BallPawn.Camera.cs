@@ -22,7 +22,7 @@ public partial class BallPawn
 	[ClientRpc]
 	public void ResetCamera()
 	{
-		Camera.Rotation = EyeRotation;
+		Camera.Rotation = Rotation.Identity;
 	}
 
 	public void FrameCamera()

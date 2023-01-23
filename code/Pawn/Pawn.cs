@@ -103,12 +103,6 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	public virtual void SetUpAdmin()
 	{
-		if( Inventory != null )
-		{
-			Inventory.RemoveAllWeapons();
-			Inventory.AddWeapon( new PhysGun(), true );
-		}
-
 		Clothing glasses = ResourceLibrary.Get<Clothing>( "models/cloth/dealwithitglass/dealwithitglass.clothing" );
 		if( !clothingContainer.Has(glasses))
 			clothingContainer.Clothing.Add( glasses );

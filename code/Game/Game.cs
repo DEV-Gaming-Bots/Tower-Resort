@@ -17,9 +17,12 @@ public partial class TRGame : GameManager
 	public static bool DevMode { get; set; }
 	public static bool IsDevMode { get; set; }
 
+	[Net] public bool RunningDedi { get; private set; }
+
 	public TRGame()
 	{
 		IsDevMode = DevMode;
+		RunningDedi = Game.IsDedicatedServer;
 
 		if (Game.IsServer)
 		{

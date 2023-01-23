@@ -180,6 +180,7 @@ public class PokerChair : ModelEntity
 	public LobbyPawn Sitter { get; private set; }
 
 	public Vector3 OrgPos;
+	public Rotation OrgRot;
 
 	public override void Spawn()
 	{
@@ -197,6 +198,7 @@ public class PokerChair : ModelEntity
 			return;
 
 		OrgPos = player.Position;
+		OrgRot = player.EyeRotation;
 
 		if ( Input.Down( InputButton.Duck ) )
 			Input.SuppressButton( InputButton.Duck );
@@ -225,8 +227,9 @@ public class PokerChair : ModelEntity
 
 		player.FreezeMovement = MainPawn.FreezeEnum.None;
 		player.IsSitting = false;
-		player.ResetCamera();
+		player.SetViewAngles( OrgRot.Angles() );
 		player.Rotation = Rotation.Identity;
+		player.EyeRotation = OrgRot;
 
 		if ( Rotation.Roll() < 0.0f )
 			player.Position += Rotation.Up * 24;

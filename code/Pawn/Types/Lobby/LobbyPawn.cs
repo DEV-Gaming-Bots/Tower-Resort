@@ -12,9 +12,10 @@ namespace TowerResort.Player;
 
 public partial class LobbyPawn : MainPawn
 {
-	public CondoRoom AssignedCondo;
+	public CondoRoom AssignedCondo { get; set; }
 
 	[Net] public float Drunkiness { get; set; }
+
 	public TimeSince TimeDrank;
 	[Net] public Entity FocusedEntity { get; set; }
 

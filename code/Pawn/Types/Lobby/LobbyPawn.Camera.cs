@@ -49,7 +49,7 @@ public partial class LobbyPawn
 	[ClientRpc]
 	public void ResetCamera()
 	{
-		Camera.Rotation = EyeRotation;
+		Camera.Rotation = Rotation.Identity;
 	}
 
 	float speed = 175;
