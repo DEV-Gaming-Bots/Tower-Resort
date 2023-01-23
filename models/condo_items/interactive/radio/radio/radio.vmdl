@@ -11,7 +11,25 @@
 				[
 					{
 						_class = "RenderMeshFile"
+						name = "lod_0"
 						filename = "models/condo_items/interactive/radio/radio/radio.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "lod_1"
+						filename = "models/condo_items/interactive/radio/radio/radio_lod1.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -48,6 +66,7 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
+						name = "off"
 						remaps = 
 						[
 							{
@@ -57,6 +76,17 @@
 						]
 						use_global_default = false
 						global_default_material = ""
+					},
+					{
+						_class = "MaterialGroup"
+						name = "on"
+						remaps = 
+						[
+							{
+								from = "materials/interactive/radio/radio/radio.vmat"
+								to = "materials/interactive/radio/radio/radio_on.vmat"
+							},
+						]
 					},
 				]
 			},
@@ -69,9 +99,31 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ 1.375986, 0.006266, 9.263702 ]
+						origin = [ -0.002527, -0.022778, 17.102518 ]
 						angles = [ 0.0, 0.0, 0.0 ]
-						dimensions = [ 13.156158, 36.912426, 18.635315 ]
+						dimensions = [ 23.504436, 65.8974, 34.312946 ]
+					},
+				]
+			},
+			{
+				_class = "LODGroupList"
+				children = 
+				[
+					{
+						_class = "LODGroup"
+						switch_threshold = 0.0
+						meshes = 
+						[
+							"lod_0",
+						]
+					},
+					{
+						_class = "LODGroup"
+						switch_threshold = 40.0
+						meshes = 
+						[
+							"lod_1",
+						]
 					},
 				]
 			},

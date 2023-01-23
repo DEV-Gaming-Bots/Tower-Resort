@@ -160,8 +160,6 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	{
 		if ( Asset.Toggable )
 		{
-			isToggled = !isToggled;
-
 			if ( !isToggled )
 			{
 				curSound.Stop();
@@ -207,6 +205,9 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		if ( !IsUsable( user ) )
 			return false;
 
+		if ( Asset.Toggable )
+			isToggled = !isToggled;
+
 		if ( Game.IsClient ) return false;
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Drinkable )
@@ -230,7 +231,6 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 			switch (Asset.GameType)
 			{
-
 				case CondoAssetBase.GameEnum.Poker:
 					var c = Components.GetOrCreate<PokerGame>();
 					if ( !c.Players.Contains( player ) && player.FocusedEntity == null )
@@ -243,6 +243,23 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			Sitdown( user );
+
+		if( isToggled )
+		{
+			if ( Asset.InteractionBodyGroup != -1 )
+				SetBodyGroup( Asset.InteractionBodyGroup, 1 );
+
+			if ( !string.IsNullOrEmpty( Asset.InteractionMaterialOverride ) )
+				SetMaterialOverride( Asset.InteractionMaterialOverride );
+		} 
+		else if( !isToggled )
+		{
+			if ( Asset.InteractionBodyGroup != -1 )
+				SetBodyGroup( Asset.InteractionBodyGroup, 0 );
+
+			if ( !string.IsNullOrEmpty( Asset.InteractionMaterial ) )
+				SetMaterialOverride( Asset.InteractionMaterial );
+		}
 
 		cooldown = (float)Asset.InteractCooldown;
 		var pawn = user as MainPawn;

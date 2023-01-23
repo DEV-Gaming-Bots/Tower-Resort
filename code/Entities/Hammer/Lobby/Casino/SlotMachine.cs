@@ -8,7 +8,7 @@ namespace TowerResort.Entities.Lobby;
 
 [Library( "tr_lobby_casino_slotmachine" ), HammerEntity]
 [Title( "Slot Machine" ), Category( "Lobby" )]
-[EditorModel( "models/3t/casino/slots/treasure/slots_treasure_machine.vmdl" )]
+[EditorModel( "models/sbox_props/wooden_crate/wooden_crate.vmdl_c" )]
 public partial class SlotMachine : ModelEntity, IUse
 {
 	[Property, Title( "Machine Variant" ), MinMax( 0, 1 )]
@@ -66,9 +66,9 @@ public partial class SlotMachine : ModelEntity, IUse
 		SecondSlot = DetermineChance();
 		ThirdSlot = DetermineChance();
 
-		SlotOne.SetMaterialGroup( 1 );
-		SlotTwo.SetMaterialGroup( 1 );
-		SlotThree.SetMaterialGroup( 1 );
+		//SlotOne.SetMaterialGroup( 1 );
+		//SlotTwo.SetMaterialGroup( 1 );
+		//SlotThree.SetMaterialGroup( 1 );
 
 		IsActive = true;
 		await SpinSlots();
@@ -149,17 +149,17 @@ public partial class SlotMachine : ModelEntity, IUse
 	{
 		await Task.DelayRealtimeSeconds( 3.0f );
 
-		SlotOne.SetMaterialGroup( ShowWinningGroup( FirstSlot ) );
+		//SlotOne.SetMaterialGroup( ShowWinningGroup( FirstSlot ) );
 		PlaySound( "slotmachine_stop" );
 
 		await Task.DelayRealtimeSeconds( 0.5f + Game.Random.Float( -0.08f, 0.24f ) );
 
-		SlotTwo.SetMaterialGroup( ShowWinningGroup( SecondSlot ) );
+		//SlotTwo.SetMaterialGroup( ShowWinningGroup( SecondSlot ) );
 		PlaySound( "slotmachine_stop" );
 
 		await Task.DelayRealtimeSeconds( 0.5f + Game.Random.Float( -0.16f, 0.50f ) );
 
-		SlotThree.SetMaterialGroup( ShowWinningGroup( ThirdSlot ) );
+		//SlotThree.SetMaterialGroup( ShowWinningGroup( ThirdSlot ) );
 		PlaySound( "slotmachine_stop" );
 	}
 
@@ -311,12 +311,12 @@ public partial class SlotMachine : ModelEntity, IUse
 	{
 		base.Spawn();
 
-		SetModel( "models/3t/casino/slots/treasure/slots_treasure_machine.vmdl" );
+		SetModel( "models/sbox_props/wooden_crate/wooden_crate.vmdl_c" );
 		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 
-		SlotOne = new AnimatedEntity( "models/3t/casino/slots/treasure/slots_treasure_slot1.vmdl" );
-		SlotTwo = new AnimatedEntity( "models/3t/casino/slots/treasure/slots_treasure_slot1.vmdl" );
-		SlotThree = new AnimatedEntity( "models/3t/casino/slots/treasure/slots_treasure_slot1.vmdl" );
+		/*SlotOne = new AnimatedEntity( "" );
+		SlotTwo = new AnimatedEntity( "" );
+		SlotThree = new AnimatedEntity( "" );
 
 		SlotOne.Position = Position;
 		SlotTwo.Position = Position;
@@ -331,7 +331,7 @@ public partial class SlotMachine : ModelEntity, IUse
 		SlotThree.SetParent( this );
 
 		SlotOne.LocalPosition += new Vector3( 0, -5, 0 );
-		SlotThree.LocalPosition += new Vector3( 0, 5, 0 );
+		SlotThree.LocalPosition += new Vector3( 0, 5, 0 );*/
 
 		IsActive = false;
 
