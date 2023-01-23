@@ -19,7 +19,7 @@ public partial class PlayerEntry : Panel
 
 		PlayerPicture = Add.Image( "", "image" );
 		PlayerName = Add.Label( "" );
-		Value = Add.Label( "", "value" );
+		Value = Add.Label( "", "location" );
 		Ping = Add.Label( "", "ping" );
 	}
 
@@ -47,7 +47,7 @@ public partial class PlayerEntry : Panel
 		MainPawn player = Client.Pawn as MainPawn;
 
 		PlayerName.Text = Client.Name;
-		Value.Text = player.Credits.ToString() + " $";
+		Value.Text = "Somewhere";
 		Ping.Text = Client.Ping.ToString();
 		PlayerPicture.SetTexture( $"avatar:{Client.SteamId}" );
 		SetClass( "me", Client == Sandbox.Game.LocalClient );

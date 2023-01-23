@@ -13,64 +13,55 @@
         opacity: 0;
         height: 0;
         width: 0;
+        width: 100%;
+        border-radius: 0 0 15px 15px;
+        font-size: 18px;
+        font-weight: 300;
+        flex-direction: column;
+        padding: 15px;
 
-        .left, .right {
-            padding: 10px;
+        .name
+        {
+            margin-left: 45px;
         }
 
-        .left {
-            width: 100px;
-            flex-direction: column;
-            border-radius: 0 0 0 15px;
+        .location {
+            margin-left: auto;
         }
 
-        .right {
-            width: 100%;
-            border-radius: 0 0 15px 0;
-            font-size: 18px;
-            font-weight: 300;
+        .location, .ping {
+            width: 120px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .image {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .canvas {
             flex-direction: column;
 
-            .name {
-                margin-left: 45px;
-            }
+            .entry
+            {
+                align-items: center;
+                margin-bottom: 2px;
 
-            .value {
-                margin-left: auto;
-            }
+                &.me
+                {
+                    color: #b6ff00;
+                }
 
-            .value, .ping {
-                width: 120px;
-                justify-content: center;
-                text-align: center;
-            }
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(rgb(100, 100, 100) .2);
+                }
 
-            .image {
-                width: 30px;
-                height: 30px;
-                border-radius: 5px;
-                margin-right: 15px;
-            }
-
-            .canvas {
-                flex-direction: column;
-
-                .entry {
-                    align-items: center;
-                    margin-bottom: 2px;
-
-                    &.me {
-                        color: #b6ff00;
-                    }
-
-                    &:hover {
-                        cursor: pointer;
-                        background-color: rgba(rgb(100, 100, 100) .2);
-                    }
-
-                    &:active {
-                        background-color: rgba(rgb(100, 100, 100) .4);
-                    }
+                &:active {
+                    background-color: rgba(rgb(100, 100, 100) .4);
                 }
             }
         }
@@ -78,31 +69,18 @@
 </style>
 
 <root>
-    <panel class="left">
-        <panel>
-            All
+    <panel>
+        <panel class="name">
+            Name
         </panel>
-        <panel>
-            Locations
+        <panel class="location">
+            Location
         </panel>
-        <panel>
-            Admins
+        <panel class="ping">
+            Ping
         </panel>
     </panel>
-    <panel class="right">
-        <panel>
-            <panel class="name">
-                Name
-            </panel>
-            <panel class="value">
-                Credits
-            </panel>
-            <panel class="ping">
-                Ping
-            </panel>
-        </panel>
-        <panel class="canvas" @ref=Canvas></panel>
-    </panel>
+    <panel class="canvas" @ref=Canvas></panel>
 </root>
 
 @code {
