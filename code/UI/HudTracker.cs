@@ -39,7 +39,7 @@ public partial class HudTracker : Panel
 
 		Panel zonePanel = cointracker.Add.Panel( "zone" );
 
-		CurZone = zonePanel.Add.Label( "Somewhere" );
+		CurZone = zonePanel.Add.Label( "Somewhere", "name" );
 
 		//mainContainer.Add.Panel("gradient_topright");
 		//mainContainer.Add.Panel("gradient_bottomleft");
