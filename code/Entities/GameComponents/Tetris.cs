@@ -9,6 +9,9 @@ namespace TowerResort.GameComponents;
 
 public partial class Tetris : EntityComponent, ISingletonComponent
 {
-
+	protected override void OnActivate()
+	{
+		base.OnActivate();
+	}
 }
 

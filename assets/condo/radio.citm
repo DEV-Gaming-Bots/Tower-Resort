@@ -12,13 +12,16 @@
 		IsInteractable = true
 		Toggable = true
 		InteractCooldown = 2
+		InteractionBodyGroup = -1
+		InteractionMaterial = resource:"materials/interactive/radio/radio/radio.vmat"
+		InteractionMaterialOverride = resource:"materials/interactive/radio/radio/radio_on.vmat"
 		InteractSound = resource:"sound/interactives/classic_radio.sound"
 		AnimatingSound = null
 		UnboxSound = null
 		InteractAnimBool = ""
 		ScreenScale = 1
 		ScreenCenterPoint = "0,0,0"
-		ScreenRotation = "0.00000004371139,1,0.00000004371139,0.000000000000001910685"
+		ScreenRotation = "-0.000001116595,1,-0.000001116595,0.000000000001246784"
 		LootItems = null
 		ParticleName = null
 		GameType = "Unspecified"
