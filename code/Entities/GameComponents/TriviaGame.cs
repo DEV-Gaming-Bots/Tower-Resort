@@ -67,14 +67,14 @@ public class TriviaMania : EntityComponent<ModelEntity>, ISingletonComponent
 
 	public void NextQuestion()
 	{
-		curQuestion = PastQuestion[Game.Random.Int( 0, Questions.Length )];
+		curQuestion = PastQuestion[Game.Random.Int( 0, Questions.Length-1 )];
 
 		var answers = curQuestion.PossibleAnswers;
 
 		Log.Info( $"Question: {curQuestion.DisplayQuestion}" +
 			$"\n1 - {answers.AnswerOne}" +
 			$"\n2 - {answers.AnswerTwo}" +
-			$"\n2 - {answers.AnswerThree}" +
+			$"\n3 - {answers.AnswerThree}" +
 			$"\n4 - {answers.AnswerFour}" );
 	}
 
