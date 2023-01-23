@@ -2,23 +2,23 @@
 {
 	data = 
 	{
-		Name = null
-		Description = null
+		Name = "Radio"
+		Description = ""
 		Icon = null
-		BaseCost = 1
-		ShopKeeper = "Generic"
-		Type = "Standard"
-		ModelPath = null
-		IsInteractable = false
-		Toggable = false
-		InteractCooldown = 1
-		InteractSound = null
+		BaseCost = 500
+		ShopKeeper = "Electronic"
+		Type = "Sound"
+		ModelPath = resource:"models/condo_items/interactive/radio/radio/radio.vmdl"
+		IsInteractable = true
+		Toggable = true
+		InteractCooldown = 2
+		InteractSound = resource:"sound/interactives/classic_radio.sound"
 		AnimatingSound = null
 		UnboxSound = null
-		InteractAnimBool = null
+		InteractAnimBool = ""
 		ScreenScale = 1
 		ScreenCenterPoint = "0,0,0"
-		ScreenRotation = "0,0,0,0"
+		ScreenRotation = "0.00000004371139,1,0.00000004371139,0.000000000000001910685"
 		LootItems = null
 		ParticleName = null
 		GameType = "Unspecified"
