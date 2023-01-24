@@ -156,8 +156,6 @@ public partial class PhysGun : WeaponBase
 		/*		if ( body.BodyType == PhysicsBodyType.Keyframed && rootEnt is not MainPawn )
 					return;*/
 
-		Log.Info( tr.Body.BodyType );
-
 		if ( tr.Entity is WorldEntity || tr.Body.BodyType == PhysicsBodyType.Static ) return;
 
 		//

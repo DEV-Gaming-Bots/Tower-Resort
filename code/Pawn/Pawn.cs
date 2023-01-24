@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TowerResort.Achievements;
 using TowerResort.Entities.Base;
@@ -56,8 +57,6 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	bool setView;
 	Angles setAngles;
 	[BindComponent] public Inventory Inventory { get; }
-
-	public long SteamID => Client.SteamId;
 
 	public AchTracker AchTracker;
 

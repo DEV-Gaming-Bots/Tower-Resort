@@ -41,6 +41,6 @@ public class CondoBase : ModelEntity
 	{
 		base.Spawn();
 		Model = WorldModel;
-		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
 }

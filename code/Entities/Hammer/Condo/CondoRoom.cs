@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TowerResort.Entities.CondoItems;
 using TowerResort.Entities.Condos;
 using static TowerResort.Entities.Hammer.CondoRoom;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace TowerResort.Entities.Hammer;
 
@@ -13,22 +15,19 @@ namespace TowerResort.Entities.Hammer;
 
 public partial class CondoRoom : Entity
 {
-	CondoBase Condo;
-
-	static CondoRoom testCondo;
-
-	List<CondoAssetBase> entAssets;
+	public CondoBase Condo { get; protected set; }
 
 	[Property]
 	public EntityTarget LeaveDestination { get; set; }
 
-	List<(Vector3 Pos, Rotation Rot)> EntityInfo;
 	public override void Spawn()
 	{
 		base.Spawn();
+	}
 
-		entAssets = new();
-		testCondo = this;
+	public bool IsClaimable()
+	{
+		return Owner == null;
 	}
 
 	public override void ClientSpawn()
@@ -43,7 +42,7 @@ public partial class CondoRoom : Entity
 		if ( ent is WorldEntity )
 			return false;
 
-		if ( ent is MainPawn )
+		if ( ent is LobbyPawn )
 			return false;
 
 		if ( ent == Condo ) 
@@ -59,7 +58,7 @@ public partial class CondoRoom : Entity
 		//TODO, get more condo styles
 	}
 
-	public void SpawnCondo( CondoType condoType = CondoType.Small )
+	public void SpawnRoom( CondoType condoType = CondoType.Small )
 	{
 		switch ( condoType )
 		{
@@ -90,19 +89,26 @@ public partial class CondoRoom : Entity
 		door.SetParent( Condo );
 	}
 
-	public void LoadCondo()
+	public void Load()
 	{
+		var owner = Owner as LobbyPawn;
 		int index = 0;
 
-		foreach ( var ent in entAssets )
+		foreach ( var asset in owner.CondoInfoAsset )
 		{
-			Log.Info( ent.Name );
+			Log.Info( owner.CondoInfoPosition[index] );
 
 			var item = new CondoItemBase();
-			item.SpawnFromAsset( ent );
-			item.Position = EntityInfo[index].Pos;
-			item.Rotation = EntityInfo[index].Rot;
+			item.SetParent( Condo );
 
+			if ( ResourceLibrary.TryGet( $"assets/condo/{asset}.citm", out CondoAssetBase found ) )
+			{
+				item.SpawnFromAsset( found );
+				Log.Info( found );
+			}
+
+			item.Position = Position + owner.CondoInfoPosition[index];
+			item.Rotation = owner.CondoInfoRotation[index];
 			index++;
 		}
 	}
@@ -127,34 +133,40 @@ public partial class CondoRoom : Entity
 		condoLights.Clear();
 	}
 
-	public void SaveCondoContents()
+	public void SaveContents()
 	{
 		DebugOverlay.Box( Condo.WorldSpaceBounds, Color.Green, 5);
-		EntityInfo = new();
+		List<(Vector3, Rotation)> entInfo = new();
+		List<CondoAssetBase> entAssets = new();
 
 		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
 		{
 			if ( !FilterCheck( entity ) )
 				continue;
 
-			if(entity is CondoItemBase item)
+			if( entity is CondoItemBase item )
 			{
-				Log.Info( item.Name );
+				entAssets.Add( item.Asset );
+				entInfo.Add( (entity.Position - Position, entity.Rotation) );
 			}
+		}
 
-			entAssets.Add( (entity as CondoItemBase).Asset );
-			EntityInfo.Add( (entity.Position, entity.Rotation) );
+		int index = 0;
+		foreach ( var item in entAssets )
+		{
+			(Owner as LobbyPawn).CondoInfoAsset.Add( item.ResourceName );
+			(Owner as LobbyPawn).CondoInfoPosition.Add( entInfo[index].Item1 );
+			(Owner as LobbyPawn).CondoInfoRotation.Add( entInfo[index].Item2 );
+			index++;
 		}
 	}
 
-	public void ClearCondo()
+	public void ClearRoom()
 	{
 		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
 		{
 			if ( !FilterCheck( entity ) )
 				continue;
-
-			//EntityInfo.Add( (entity.Position, entity.Rotation) );
 
 			Log.Info( $"Deleting {entity.Name}" );
 			entity.Delete();
@@ -164,70 +176,15 @@ public partial class CondoRoom : Entity
 		Condo.Delete();
 	}
 
-	[ConCmd.Server( "tr.condo.assign" )]
-	public static void CondoAssignCMD()
+	public void Wipe()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
+		{
+			if ( !FilterCheck( entity ) )
+				continue;
 
-		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
-		if ( pawn == null ) return;
-
-		if ( pawn.AssignedCondo != null ) return;
-
-		pawn.AssignedCondo = testCondo;
-		pawn.AssignedCondo.Owner = pawn;
-		Log.Info( $"{pawn.Name} assigned to {testCondo}" );
-	}
-
-	[ConCmd.Server("tr.condo.save")]
-	public static void CondoSaveCMD()
-	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
-
-		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
-		if ( pawn == null ) return;
-
-		if ( pawn.AssignedCondo == null ) return;
-
-		pawn.AssignedCondo.SaveCondoContents();
-	}
-
-	[ConCmd.Server( "tr.condo.load" )]
-	public static void CondoLoadCMD()
-	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
-
-		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
-		if ( pawn == null ) return;
-
-		if ( pawn.AssignedCondo == null ) return;
-
-		pawn.AssignedCondo.LoadCondo();
-	}
-
-	[ConCmd.Server( "tr.condo.spawn" )]
-	public static void CondoSpawnCMD()
-	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
-
-		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
-		if ( pawn == null ) return;
-
-		if ( pawn.AssignedCondo == null ) return;
-
-		pawn.AssignedCondo.SpawnCondo();
-	}
-
-	[ConCmd.Server( "tr.condo.clear" )]
-	public static void CondoClearCMD()
-	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
-
-		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
-		if ( pawn == null ) return;
-
-		if ( pawn.AssignedCondo == null ) return;
-
-		pawn.AssignedCondo.ClearCondo();
+			Log.Info( $"Deleting {entity.Name}" );
+			entity.Delete();
+		}
 	}
 }

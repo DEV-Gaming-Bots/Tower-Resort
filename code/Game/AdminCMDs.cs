@@ -42,16 +42,28 @@ public partial class TRGame
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
-		var player = ConsoleSystem.Caller.Pawn as MainPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( player == null ) return;
 
 		if ( ResourceLibrary.TryGet( $"assets/condo/{entName}.citm", out CondoAssetBase asset ) )
 		{
-			var model = new CondoItemBase();
-			model.SpawnFromAsset( asset );
-			model.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
-			model.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
-			model.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+			var item = new CondoItemBase();
+			item.SpawnFromAsset( asset );
+			item.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
+			item.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
+			item.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+
+			//CONDO TESTING
+			if ( player.AssignedCondo != null )
+			{
+				var present = FindInBox( player.AssignedCondo.Condo.WorldSpaceBounds );
+
+				if ( present.Contains( item ) )
+				{
+					Log.Info( "item present in players condo" );
+					item.SetParent( player.AssignedCondo.Condo );
+				}
+			}
 		}
 	}
 

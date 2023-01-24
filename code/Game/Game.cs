@@ -101,11 +101,8 @@ public partial class TRGame : GameManager
 		cl.Pawn = pawn;
 		pawn.SetUpPlayerStats();
 
-		/*if ( !LoadSave( cl ) )
-		{
+		if ( !LoadSave( cl ) )
 			pawn.NewStats();
-			//DoSave( cl );
-		}*/
 
 		if(!Game.IsDedicatedServer && !DevMode)
 			ForceShutdown();

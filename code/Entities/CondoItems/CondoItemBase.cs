@@ -102,11 +102,11 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 	protected override void OnDestroy()
 	{
-		base.OnDestroy();
-
 		if ( Game.IsServer )
 		{
-			if(Asset.Type == CondoAssetBase.ItemEnum.Sittable)
+			if ( Asset == null ) return;
+
+			if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			{
 				if ( Sitter != null )
 				{
@@ -114,13 +114,12 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 				}
 			}
 
-			if(Asset.Type == CondoAssetBase.ItemEnum.Playable)
+			if ( Asset.Type == CondoAssetBase.ItemEnum.Playable )
 			{
 				Components.Get<PokerGame>().RemovePlayers();
 			}
 
 			ParticleDestruction( To.Everyone );
-
 		}
 	}
 

@@ -17,6 +17,9 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	TimeSince timeLastUse;
 
+	[Property]
+	public bool IsLocked { get; set; } = false;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -25,7 +28,7 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return timeLastUse > 1.5f;
+		return timeLastUse > 1.5f || !IsLocked;
 	}
 
 	public async void OpenDoor(LobbyPawn opener)
@@ -52,6 +55,8 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	public bool OnUse( Entity user )
 	{
+		if ( !IsUsable( user ) ) return false;
+
 		if(user is LobbyPawn player)
 			OpenDoor( player );
 
