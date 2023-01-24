@@ -92,7 +92,7 @@ public partial class TRGame
 
 	public async Task StartSocket()
 	{
-		if( DataSocket == null)
+		if( DataSocket == null )
 			CreateSocket();
 
 		DataSocket.OnMessageReceived += ( data ) =>

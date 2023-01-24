@@ -223,6 +223,9 @@ public partial class TRGame
 				target.Client.Pawn = newPawn;
 				newPawn.Spawn();
 
+				newPawn.Position = oldPawn.Position;
+				newPawn.Rotation = oldPawn.Rotation;
+
 				if ( newPawn is LobbyPawn )
 					newPawn.SetUpPlayerStats();
 
@@ -234,6 +237,9 @@ public partial class TRGame
 			var oldPawn = player.Client.Pawn;
 			player.Client.Pawn = newPawn;
 			newPawn.Spawn();
+
+			newPawn.Position = oldPawn.Position;
+			newPawn.Rotation = oldPawn.Rotation;
 
 			if ( newPawn is LobbyPawn )
 				newPawn.SetUpPlayerStats();

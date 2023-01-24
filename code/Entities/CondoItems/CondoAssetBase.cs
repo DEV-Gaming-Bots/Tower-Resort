@@ -16,6 +16,12 @@ public struct SitSlots
 	public Vector3 LocalOffset { get; set; }
 }
 
+public struct SitTest
+{
+	public Vector3 Position;
+	public Rotation Rotation;
+}
+
 public struct LootItem
 {
 	public CondoAssetBase Item { get; set; }
@@ -126,7 +132,7 @@ public class CondoAssetBase : GameResource
 	public float SitHeight { get; set; } = 0;
 	
 	[Category( "Sitting Functionality" ), ShowIf( "Type", ItemEnum.Sittable )]
-	public SitSlots Seats { get; set; }
+	public SitTest[] Seats { get; set; }
 
 	[Category( "Drinking Functionality" ), ShowIf( "Type", ItemEnum.Drinkable )]
 	public bool IsAlcohol { get; set; } = false;

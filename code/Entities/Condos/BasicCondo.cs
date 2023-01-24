@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SBOXTower.UI.components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace TowerResort.Entities.Condos;
 
-public class BasicCondo : ModelEntity
+//Since we can't have nice things... like prefab loading
+public class CondoBase : ModelEntity
 {
+
 	public Vector3[] LightPositions = new Vector3[]
 	{
 		new Vector3(-57, -16, 24),
@@ -33,10 +36,12 @@ public class BasicCondo : ModelEntity
 	};
 
 	public Model WorldModel => Model.Load( "models/condo/basic_condo.vmdl" );
+	public Vector3 DoorPos => new Vector3( -23.75f, -226, -60 );
 
 	public override void Spawn()
 	{
 		base.Spawn();
 		Model = WorldModel;
+		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 	}
 }

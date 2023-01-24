@@ -3,6 +3,7 @@ using Editor;
 using System.Collections.Generic;
 using TowerResort.Entities.CondoItems;
 using TowerResort.Entities.Condos;
+using static TowerResort.Entities.Hammer.CondoRoom;
 
 namespace TowerResort.Entities.Hammer;
 
@@ -12,26 +13,21 @@ namespace TowerResort.Entities.Hammer;
 
 public partial class CondoRoom : Entity
 {
-	public BasicCondo Condo;
+	CondoBase Condo;
 
 	static CondoRoom testCondo;
 
-	List<Entity> entities;
+	List<CondoAssetBase> entAssets;
 
-	BBox condoBox;
+	[Property]
+	public EntityTarget LeaveDestination { get; set; }
 
 	List<(Vector3 Pos, Rotation Rot)> EntityInfo;
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		entities = new();
-
-		foreach ( var ent in FindInBox(WorldSpaceBounds) )
-		{
-			Log.Info( ent );
-		}
-
+		entAssets = new();
 		testCondo = this;
 	}
 
@@ -50,19 +46,32 @@ public partial class CondoRoom : Entity
 		if ( ent is MainPawn )
 			return false;
 
-		if ( ent is CondoRoom )
-			return false;
-
 		if ( ent == Condo ) 
 			return false;
 
 		return true;
 	}
 
-	public void LoadCondo()
+	public enum CondoType
 	{
-		Condo = new BasicCondo();
-		Condo.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		Small,
+		Classic,
+		//TODO, get more condo styles
+	}
+
+	public void SpawnCondo( CondoType condoType = CondoType.Small )
+	{
+		switch ( condoType )
+		{
+			case CondoType.Small: Condo = new CondoBase(); break;
+				//case CondoType.Classic: Condo = new ClassicCondo(); break;
+		}
+
+		if ( Condo == null )
+		{
+			return;
+		}
+
 		Condo.Position = Position;
 		Condo.Rotation = Rotation;
 
@@ -74,36 +83,28 @@ public partial class CondoRoom : Entity
 			index++;
 		}
 
-		//condoBox = new BBox( Condo.WorldSpaceBounds.Mins, Condo.WorldSpaceBounds.Maxs );
+		DoorTeleporter door = new DoorTeleporter();
+		door.SetModel( "models/citizen_props/crate01.vmdl" );
+		door.Position = Position + Condo.DoorPos;
+		door.TargetDest = LeaveDestination;
+		door.SetParent( Condo );
+	}
 
-		//Log.Info( Condo.Model.HasData<LightComponent>() );
-		/*if( Condo.Model.GetAllData<LightComponent>() != null)
+	public void LoadCondo()
+	{
+		int index = 0;
+
+		foreach ( var ent in entAssets )
 		{
-			var test = Condo.Model.TryGetData<LightComponent>( out LightComponent data );
+			Log.Info( ent.Name );
 
-			Log.Info( test );
+			var item = new CondoItemBase();
+			item.SpawnFromAsset( ent );
+			item.Position = EntityInfo[index].Pos;
+			item.Rotation = EntityInfo[index].Rot;
 
-			//Decorate(To.Everyone, Condo.Model.GetData<LightComponent>() );
-		}*/
-
-		//var ents = FindInBox( condoBox );
-
-		/*foreach ( var entity in test )
-		{
-			var ent = CreateByName( entity.ClassName );
-
-			if ( ent == null ) continue;
-
-			ent.Position = EntityInfo[index].Pos;
-			ent.Rotation = EntityInfo[index].Rot;
-
-			ent.Spawn();
-			Log.Info( $"Loaded {ent.Name}" );
 			index++;
-		}*/
-
-		//test.Clear();
-		//EntityInfo.Clear();
+		}
 	}
 
 	List<SceneLight> condoLights;
@@ -128,8 +129,6 @@ public partial class CondoRoom : Entity
 
 	public void SaveCondoContents()
 	{
-		//Log.Info( Condo.Model.GetData<LightComponent>());
-
 		DebugOverlay.Box( Condo.WorldSpaceBounds, Color.Green, 5);
 		EntityInfo = new();
 
@@ -138,15 +137,19 @@ public partial class CondoRoom : Entity
 			if ( !FilterCheck( entity ) )
 				continue;
 
-			//EntityInfo.Add( (entity.Position, entity.Rotation) );
+			if(entity is CondoItemBase item)
+			{
+				Log.Info( item.Name );
+			}
 
-			Log.Info($"Saving {entity.Name}");
+			entAssets.Add( (entity as CondoItemBase).Asset );
+			EntityInfo.Add( (entity.Position, entity.Rotation) );
 		}
 	}
 
 	public void ClearCondo()
 	{
-		foreach ( var entity in FindInBox( condoBox ) )
+		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
 		{
 			if ( !FilterCheck( entity ) )
 				continue;
@@ -172,6 +175,7 @@ public partial class CondoRoom : Entity
 		if ( pawn.AssignedCondo != null ) return;
 
 		pawn.AssignedCondo = testCondo;
+		pawn.AssignedCondo.Owner = pawn;
 		Log.Info( $"{pawn.Name} assigned to {testCondo}" );
 	}
 
@@ -199,6 +203,19 @@ public partial class CondoRoom : Entity
 		if ( pawn.AssignedCondo == null ) return;
 
 		pawn.AssignedCondo.LoadCondo();
+	}
+
+	[ConCmd.Server( "tr.condo.spawn" )]
+	public static void CondoSpawnCMD()
+	{
+		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+
+		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
+		if ( pawn == null ) return;
+
+		if ( pawn.AssignedCondo == null ) return;
+
+		pawn.AssignedCondo.SpawnCondo();
 	}
 
 	[ConCmd.Server( "tr.condo.clear" )]

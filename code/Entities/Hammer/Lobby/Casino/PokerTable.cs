@@ -187,7 +187,7 @@ public class PokerChair : ModelEntity
 		base.Spawn();
 
 		SetModel( "models/furniture/bar_stool/bar_stool.vmdl" );
-		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
 
 	public void Sitdown( Entity user )

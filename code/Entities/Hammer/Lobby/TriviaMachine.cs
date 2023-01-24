@@ -16,7 +16,7 @@ public partial class TriviaMachine : ModelEntity, IUse
 		base.Spawn();
 
 		SetModel( "models/gamemodes/poker/table/small/small_pokertable.vmdl" );
-		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		triviaGame = Components.Create<TriviaMania>();
 	}
