@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Components.SBOXTower;
+/*using Components.SBOXTower;*/
 using Sandbox;
 using Editor;
 using TowerResort.Player;
@@ -50,7 +50,7 @@ public partial class InteractNPCBase : BaseNPC, IUse
 [HammerEntity]
 public partial class CondoReceptionist : InteractNPCBase
 {
-	sboxtowerui.CondoTower condoPanel;
+	/*sboxtowerui.CondoTower condoPanel;*/
 
 	List<Entity> users;
 
@@ -81,15 +81,15 @@ public partial class CondoReceptionist : InteractNPCBase
 
 		foreach ( Entity player in users.ToArray() )
 		{
-			if ( Position.Distance( player.Position ) > 90.0f )
+			/*if ( Position.Distance( player.Position ) > 90.0f )
 			{
 				RemoveCondoPanel( To.Single( player.Client ) );
 				users.Remove( player );
-			}
+			}*/
 		}
 	}
 
-	[ClientRpc]
+/*	[ClientRpc]
 	public override void InteractClient()
 	{
 		if( condoPanel != null )
@@ -108,5 +108,5 @@ public partial class CondoReceptionist : InteractNPCBase
 	{
 		condoPanel?.Delete();
 		condoPanel = null;
-	}
+	}*/
 }
