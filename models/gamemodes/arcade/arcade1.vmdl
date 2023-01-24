@@ -1,0 +1,119 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "am_metal.vmat"
+								to = "materials/gamemodes/arcade/arcade_metal.vmat"
+							},
+							{
+								from = "am_screen.vmat"
+								to = "materials/gamemodes/arcade/arcade_screen.vmat"
+							},
+							{
+								from = "am_black_main.vmat"
+								to = "materials/gamemodes/arcade/arcade_main_plastic.vmat"
+							},
+							{
+								from = "am_white_plastic.vmat"
+								to = "materials/dev/primary_white.vmat"
+							},
+							{
+								from = "am_black_2.vmat"
+								to = "materials/gamemodes/arcade/arcade_controllers.vmat"
+							},
+							{
+								from = "am_black_cell.vmat"
+								to = "materials/gamemodes/arcade/speaker_cell/arcade_subwoofer_cell.vmat"
+							},
+							{
+								from = "am_logo.vmat"
+								to = "materials/gamemodes/arcade/arcade_main_plastic.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/dev/simple/floor_simple_128.vmat"
+					},
+					{
+						_class = "MaterialGroup"
+						name = "LCD2Test"
+						remaps = 
+						[
+							{
+								from = "materials/gamemodes/arcade/arcade_screen.vmat"
+								to = "materials/gamemodes/arcade/screens/arcade_screen_2.vmat"
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "models/gamemodes/arcade/arcade2adv.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsHullFile"
+						name = "arcade2adv"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						recenter_on_parent_bone = false
+						offset_origin = [ 0.0, 0.0, 0.0 ]
+						offset_angles = [ 0.0, 0.0, 0.0 ]
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						filename = "models/gamemodes/arcade/arcade2adv.fbx"
+						import_scale = 1.0
+						faceMergeAngle = 10.0
+						maxHullVertices = 20
+						import_mode = "HullPerElement"
+						optimization_algorithm = "QEM"
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

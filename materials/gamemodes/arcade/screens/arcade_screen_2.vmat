@@ -1,0 +1,26 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/lcd_monitor.shader"
+
+	//---- Blending ----
+	F_ADDITIVE_BLEND 1
+
+	//---- LCD Screen ----
+	g_flBrightnessMultiplier "3.687"
+	g_flFresnelExponent "5.000"
+	g_flFresnelReflectance "0.010"
+	g_flPixelBlendDistance "8.000"
+	g_flPixelBlendOffset "0.000"
+	g_flPixelOpacityMax "1.000"
+	g_flPixelOpacityMin "0.100"
+	g_vAnimationScroll "[0.000 -0.427]"
+	g_vPixelSize "[1.000 1.000]"
+	g_vScreenResolution "[256.000 256.000]"
+	PixelTexture "materials/default/default_color.tga"
+
+	//---- Material ----
+	TextureColor "materials/lobby/greencarpet01/greencarpet01_color.png"
+	TextureTintMask "materials/default/default.tga"
+}
