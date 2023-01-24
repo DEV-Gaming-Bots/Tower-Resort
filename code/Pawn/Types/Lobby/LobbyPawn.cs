@@ -21,17 +21,6 @@ public partial class LobbyPawn : MainPawn
 
 	public bool IsSitting;
 
-	[ConCmd.Server( "kill" )]
-	public static void DoSuicide()
-	{
-		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
-
-		if ( player == null ) return;
-		if ( player == null || player.LifeState == LifeState.Dead ) return;
-
-		player.TakeDamage( DamageInfo.Generic( 9999.0f ) );
-	}
-
 	public LobbyPawn()
 	{
 
@@ -63,9 +52,6 @@ public partial class LobbyPawn : MainPawn
 
 		timeSinceLastFootstep = 0;
 
-		//DebugOverlay.Box( 1, pos, -1, 1, Color.Red );
-		//DebugOverlay.Text( pos, $"{volume}", Color.White, 5 );
-
 		var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
 			.Radius( 1 )
 			.Ignore( this )
@@ -85,6 +71,8 @@ public partial class LobbyPawn : MainPawn
 	{
 		Drunkiness = 0;
 		base.Spawn();
+
+		EnableSelfCollisions = false;
 	}
 
 	public override void Respawn()

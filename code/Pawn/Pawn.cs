@@ -87,6 +87,20 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		
 	}
 
+	[ConCmd.Server( "kill" )]
+	public static void KillPawn()
+	{
+		var caller = ConsoleSystem.Caller.Pawn;
+
+		if ( caller == null ) return;
+
+		if ( caller is LobbyPawn lobby)
+			lobby.TakeDamage( DamageInfo.Generic( 9999.0f ) );
+
+		if ( caller is BallPawn ball )
+			ball.OnKilled();
+	}
+
 	public MainPawn()
 	{
 		clothingContainer = new();

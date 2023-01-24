@@ -14,17 +14,6 @@ public partial class BallPawn : MainPawn
 
 	TimeSince timeDied;
 
-	[ConCmd.Server("kill")]
-	public static void KillBall()
-	{
-		var player = ConsoleSystem.Caller.Pawn as BallPawn;
-
-		if ( player == null ) return;
-		if ( player == null || player.LifeState == LifeState.Dead ) return;
-
-		player.OnKilled();
-	}
-
 	public BallPawn()
 	{
 		//The ball shouldn't spawn but it does, just delete it
