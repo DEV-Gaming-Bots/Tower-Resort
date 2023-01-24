@@ -72,6 +72,7 @@ public partial class LobbyPawn : MainPawn
 		Drunkiness = 0;
 		base.Spawn();
 
+		Tags.Add( "pve" );
 		EnableSelfCollisions = false;
 	}
 

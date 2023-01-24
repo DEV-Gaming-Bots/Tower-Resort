@@ -170,11 +170,11 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		Components.Create<Inventory>();
 
-		Tags.Add( "player" );
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		Controller = new StandardController( this );
 
+		Tags.Add( "trplayer" );
 		MoveToSpawn();
 		base.Spawn();
 	}

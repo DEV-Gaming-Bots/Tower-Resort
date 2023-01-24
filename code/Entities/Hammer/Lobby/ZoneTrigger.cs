@@ -19,6 +19,9 @@ public partial class ZoneTrigger : BaseTrigger
 	[Property, Description( "The name of this zone" )]
 	public string ZoneName { get; set; } = "The Unknown";
 
+	[Property(), Title( "Activation Tags" ), DefaultValue( "trplayer" )]
+	public new TagList ActivationTags { get; set; } = "trplayer";
+
 	public override void Touch( Entity other )
 	{
 		base.Touch( other );
