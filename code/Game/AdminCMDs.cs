@@ -5,6 +5,9 @@ using TowerResort.Entities.Base;
 using TowerResort.Entities.CondoItems;
 using TowerResort.Player;
 using TowerResort.GameComponents;
+using System.Reflection;
+using TowerResort.Entities.Lobby;
+using System.Numerics;
 
 namespace TowerResort;
 
@@ -48,11 +51,12 @@ public partial class TRGame
 			model.SpawnFromAsset( asset );
 			model.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
 			model.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
+			model.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 		}
 	}
 
 	[ConCmd.Server( "tr.entity.spawn.lobby" )]
-	public static void SpawnLobbyItemCMD( string entName )
+	public static void SpawnLobbyItemCMD( string entName, bool isStatic = false )
 	{
 		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
@@ -64,6 +68,8 @@ public partial class TRGame
 
 		ent.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
 		ent.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
+		if( isStatic )
+			(ent as ModelEntity).SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
 
 	[ConCmd.Server( "tr.weapon.spawn" )]

@@ -133,7 +133,7 @@ public partial class PokerTable : ModelEntity, IUse
 		else
 			SetModel( WorldModel );
 
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		PokerChairs = new List<PokerChair>();
 

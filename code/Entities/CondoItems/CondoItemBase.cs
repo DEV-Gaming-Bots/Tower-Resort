@@ -26,6 +26,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		Asset = asset;
 
 		SetModel( Asset.ModelPath );
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Playable )
 		{	
@@ -46,6 +47,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		{
 			totalUses = asset.TotalDrinkUses;
 		}
+
 	}
 
 	public void DisplayMessage( List<IClient> clients, string msg, float time = 5.0f )
@@ -95,7 +97,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	{
 		base.Spawn();
 
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+		SetupPhysicsFromModel(PhysicsMotionType.Static);
 	}
 
 	protected override void OnDestroy()
