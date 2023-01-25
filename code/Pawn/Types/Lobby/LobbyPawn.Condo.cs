@@ -35,9 +35,12 @@ public partial class LobbyPawn
 		}
 
 		newCondo.Owner = this;
+
 		newCondo.SpawnRoom();
 		newCondo.Load();
+
 		AssignedCondo = newCondo;
+
 		string condoName = newCondo.Name.Replace("_", " ");
 
 		DisplayNotification( To.Single( this ), $"You have been checked into {condoName}", 5.0f);

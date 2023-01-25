@@ -47,6 +47,11 @@ public class CondoDoorTeleporter : DoorTeleporter, IUse
 		opener.ResetInterpolation();
 		opener.SetViewAngles( targetCondo.Condo.TPAngles );
 
+		string condoLocation = targetCondo.Name.Replace( "_", " " );
+
+		opener.CurZoneLocation = condoLocation;
+
+
 		opener.FreezeMovement = MainPawn.FreezeEnum.None;
 	}
 }
