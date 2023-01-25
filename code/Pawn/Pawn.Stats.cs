@@ -22,8 +22,8 @@ public partial class MainPawn
 	{
 		Credits = 500;
 
-		CondoInfoPosition = new();
-		CondoInfoRotation = new();
+		CondoInfoPosition = new List<Vector3>();
+		CondoInfoRotation = new List<Rotation>();
 		CondoInfoAsset = new List<string>();
 
 		TRGame.Instance.DoSave( Client );

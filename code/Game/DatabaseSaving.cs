@@ -73,8 +73,6 @@ public partial class TRGame
 
 			//DataSocket.OnMessageReceived += ( data ) => ReceiveSaveFile( data );
 		}
-
-
 	}
 
 	void ReceiveSaveFile(string json)

@@ -100,7 +100,7 @@ public partial class CondoRoom : Entity
 
 		IsLoaded = true;
 
-		if ( owner.CondoInfoAsset.Count() <= 0 )
+		if ( owner.CondoInfoAsset == null )
 			return;
 
 		foreach ( var asset in owner.CondoInfoAsset )
@@ -175,6 +175,13 @@ public partial class CondoRoom : Entity
 	{
 		foreach ( var entity in FindInBox( Condo.WorldSpaceBounds ) )
 		{
+			if ( entity is LobbyPawn pawn )
+			{
+				pawn.StartFading( To.Single( pawn ), 0.0f, 2.5f );
+				pawn.Position = LeaveDestination.GetTarget( null ).Position;
+				pawn.SetViewAngles( LeaveDestination.GetTarget( null ).Rotation.Angles() );
+			}
+
 			if ( !FilterCheck( entity ) )
 				continue;
 

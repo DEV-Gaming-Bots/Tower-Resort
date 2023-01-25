@@ -126,6 +126,13 @@ public partial class LobbyPawn : MainPawn
 
 		base.Simulate( cl );
 	}
+	public override void OnKilled()
+	{
+		if(AssignedCondo != null)
+			UnclaimCondo();
+
+		base.OnKilled();
+	}
 	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
