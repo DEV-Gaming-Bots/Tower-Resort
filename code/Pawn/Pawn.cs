@@ -57,7 +57,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	bool setView;
 	Angles setAngles;
-	[BindComponent] public Inventory Inventory { get; }
+	[BindComponent] public LobbyInventory Inventory { get; }
 
 	public AchTracker AchTracker;
 
@@ -180,7 +180,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		LifeState = LifeState.Alive;
 
-		Components.Create<Inventory>();
+		Components.Create<LobbyInventory>();
 
 		SetModel( "models/citizen/citizen.vmdl" );
 

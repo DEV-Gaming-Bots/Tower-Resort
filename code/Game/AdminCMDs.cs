@@ -92,7 +92,7 @@ public partial class TRGame
 		if ( wep == null ) return;
 
 		if ( inInv )
-			player.Inventory.AddWeapon( wep, true );
+			player.Inventory.AddItem( wep, true );
 		else
 			wep.Position = player.GetEyeTrace( 999.0f ).EndPosition;
 	}
@@ -259,6 +259,9 @@ public partial class TRGame
 
 			if ( newPawn is LobbyPawn )
 				newPawn.SetUpPlayerStats();
+
+			if ( newPawn is BallPawn ball )
+				ball.Ball.Position = newPawn.Position;
 
 			oldPawn.Delete();
 		}

@@ -5,38 +5,46 @@ using System.Linq;
 
 namespace TowerResort.Player;
 
-public partial class Inventory : EntityComponent<MainPawn>, ISingletonComponent
+public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonComponent
 {
-	[Net] protected IList<WeaponBase> Weapons { get; set; }
 	[Net, Predicted] public WeaponBase ActiveWeapon { get; set; }
 
-	public bool AddWeapon( WeaponBase weapon, bool makeActive = true )
+	[Net] protected IList<Entity> Items { get; set; }
+
+	[Net] public int MaxSlots { get; set; } = 30;
+	[Net] public int MaxHotarSlots { get; set; } = 9;
+
+	public bool AddItem( Entity entity, bool makeActive = true )
 	{
-		if ( Weapons.Contains( weapon ) ) return false;
+		if ( Items.Count() >= MaxSlots ) return false;
 
-		Weapons.Add( weapon );
+		if ( entity is WeaponBase wep )
+		{
+			if ( Items.Contains( wep ) ) return false;
+			if ( makeActive )
+				SetActiveWeapon( wep );
+		}
 
-		if ( makeActive )
-			SetActiveWeapon( weapon );
+		Items.Add( entity );
 
 		return true;
 	}
 
-	public void RemoveAllWeapons()
+	public void ClearInventory()
 	{
-		foreach ( var wep in Weapons.ToArray() )
+		foreach ( var ent in Items.ToArray() )
 		{
-			wep?.Delete();
+			ent?.Delete();
 		}
 
-		Weapons.Clear();
+		Items.Clear();
 
 		ActiveWeapon = null;
 	}
 
-	public bool RemoveWeapon( WeaponBase weapon, bool drop = false )
+	public bool RemoveItem( Entity ent, bool drop = false )
 	{
-		var success = Weapons.Remove( weapon );
+		var success = Items.Remove( ent );
 		if ( success && drop )
 		{
 			// TODO - Drop the weapon on the ground
@@ -64,14 +72,14 @@ public partial class Inventory : EntityComponent<MainPawn>, ISingletonComponent
 	{
 		if ( Game.IsServer )
 		{
-			Weapons.ToList()
+			Items.ToList()
 				.ForEach( x => x.Delete() );
 		}
 	}
 
-	public WeaponBase GetSlot( int slot )
+	public Entity GetSlot( int slot )
 	{
-		return Weapons.ElementAtOrDefault( slot ) ?? null;
+		return Items.ElementAtOrDefault( slot ) ?? null;
 	}
 
 	protected int GetSlotIndexFromInput( InputButton slot )

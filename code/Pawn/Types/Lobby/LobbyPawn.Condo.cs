@@ -19,13 +19,14 @@ public partial class LobbyPawn
 		var newCondo = condos.FirstOrDefault();
 
 		int attempts = 0;
+
 		//If the first condo is unclaimable, find one until there is one
 		//if there aren't any, just break the loop
-		while (!newCondo.IsClaimable())
+		while ( !newCondo.IsClaimable() )
 		{
 			if( attempts >= All.OfType<CondoRoom>().Count() )
 			{
-				Log.Warning( "There are no condos available" );
+				DisplayNotification( To.Single( this ), "There are no condos available", 5.0f );
 				break;
 			}
 

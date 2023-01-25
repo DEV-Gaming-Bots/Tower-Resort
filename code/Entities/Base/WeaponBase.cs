@@ -229,7 +229,7 @@ public partial class WeaponBase : CarriableEntityBase, IUse
 	public virtual bool OnUse( Entity user )
 	{
 		if ( user is MainPawn pawn )
-			pawn.Inventory.AddWeapon( this );
+			pawn.Inventory.AddItem( this );
 
 		return false;
 	}

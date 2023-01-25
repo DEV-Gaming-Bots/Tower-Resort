@@ -129,6 +129,7 @@ public partial class LobbyPawn
 		this.fadeInTime = fadeInTime;
 		this.fadeOutTime = -fadeOutTime;
 		this.holdTime = holdTime;
+		reverseFade = false;
 		shouldFade = true;
 	}
 

@@ -80,8 +80,8 @@ public partial class TRGame
 
 	public void StartDuel()
 	{
-		DuellerOne.Inventory.AddWeapon( new Confetti(), true );
-		DuellerTwo.Inventory.AddWeapon( new Confetti(), true );
+		DuellerOne.Inventory.AddItem( new Pistol(), true );
+		DuellerTwo.Inventory.AddItem( new Pistol(), true );
 
 		DuellerOne.FreezeMovement = MainPawn.FreezeEnum.None;
 		DuellerTwo.FreezeMovement = MainPawn.FreezeEnum.None;
@@ -92,8 +92,8 @@ public partial class TRGame
 
 	public void EndDuel()
 	{
-		DuellerOne.Inventory.RemoveWeapon(DuellerTwo.ActiveChild as WeaponBase );
-		DuellerTwo.Inventory.RemoveWeapon( DuellerTwo.ActiveChild as WeaponBase );
+		DuellerOne.Inventory.RemoveItem(DuellerTwo.ActiveChild as WeaponBase );
+		DuellerTwo.Inventory.RemoveItem( DuellerTwo.ActiveChild as WeaponBase );
 
 		DuellerOne.FreezeMovement = MainPawn.FreezeEnum.Movement;
 		DuellerTwo.FreezeMovement = MainPawn.FreezeEnum.Movement;
