@@ -27,9 +27,9 @@ public class BaseHud : RootPanel
 		AddChild( NotificationManager );
 
 		Current = this;
-		StyleSheet.Load( "/UI/Styles/HubHud.scss" );
+		StyleSheet.Load( "/UI/Styles/TRHud.scss" );
 		
-		AddChild<HubChat>();
+		AddChild<TRChat>();
 		AddChild<HudTracker>();
 		//TEMPORARY
 		AddChild<Scoreboard<ScoreboardEntry>>();

@@ -72,7 +72,7 @@ public partial class TRGame : GameManager
 	//we'll kick anyone who tries to host this unofficially or not in dev mode
 	public async void ForceShutdown()
 	{
-		HubChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "SERVER", 
+		TRChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "SERVER", 
 			"You are hosting this unofficially, please play the official servers" );
 
 		await WaitDelay( 8.0f );
@@ -95,7 +95,7 @@ public partial class TRGame : GameManager
 		clients.Remove( cl );
 
 		//Display to current clients
-		HubChat.AddChatEntryStatic( To.Multiple( clients ), "SERVER", $"{cl.Name} has connected" );
+		TRChat.AddChatEntryStatic( To.Multiple( clients ), "SERVER", $"{cl.Name} has connected" );
 
 		var pawn = new LobbyPawn();
 		cl.Pawn = pawn;
@@ -121,7 +121,7 @@ public partial class TRGame : GameManager
 
 		DoSave( cl );
 
-		HubChat.AddChatEntryStatic( To.Everyone, "SERVER", $"{cl.Name} has disconnected: {reason}" );
+		TRChat.AddChatEntryStatic( To.Everyone, "SERVER", $"{cl.Name} has disconnected: {reason}" );
 		base.ClientDisconnect( cl, reason );
 	}
 
@@ -138,7 +138,7 @@ public partial class TRGame : GameManager
 
 	public static void ServerAnnouncement(string message)
 	{
-		HubChat.AddChatEntryStatic( To.Everyone, "SERVER", message );
+		TRChat.AddChatEntryStatic( To.Everyone, "SERVER", message );
 	}
 
 	[ClientRpc]

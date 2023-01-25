@@ -149,7 +149,7 @@ public partial class TRGame
 		target.DuelOpponent = player;
 		player.DuelOpponent = target;
 
-		HubChat.AddChatEntryStatic( To.Single( target ), "DUEL", $"{player.Client.Name} has challenged you to a duel" );
+		TRChat.AddChatEntryStatic( To.Single( target ), "DUEL", $"{player.Client.Name} has challenged you to a duel" );
 	}
 
 	[ConCmd.Server("tr.dueling.respond")]
@@ -163,14 +163,14 @@ public partial class TRGame
 		if ( accepted )
 		{
 			Instance.InitiateDuel( player.DuelOpponent, player );
-			HubChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has accepted your duel" );
+			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has accepted your duel" );
 		}
 		else
 		{
 			player.DuelOpponent.DuelOpponent = null;
 			player.DuelOpponent = null;
 
-			HubChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has denied your duel" );
+			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has denied your duel" );
 		}
 
 	}
