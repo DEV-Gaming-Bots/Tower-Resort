@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Sandbox;
 using TowerResort.Entities.Weapons;
 
@@ -74,8 +75,88 @@ public partial class LobbyPawn
 		//lastZoom = zoom;
 	}
 
+	float fadeInTime;
+	float fadeOutTime;
+	float holdTime;
+
+	bool shouldFade = false;
+	bool reverseFade = false;
+
+	public async void DoFadingEffects()
+	{
+		var postProcess = Camera.Main.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
+
+		if ( !shouldFade )
+		{
+			postProcess.Brightness = 1.0f;
+			reverseFade = false;
+			return;
+		}
+
+
+		if( !reverseFade )
+		{
+			fadeInTime -= Time.Delta * 10;
+			postProcess.Brightness = MathX.Lerp( postProcess.Brightness, fadeInTime, Time.Delta );
+
+			if ( fadeInTime < 0 )
+			{
+				await Task.DelayRealtimeSeconds( holdTime * 1.25f );
+				reverseFade = true;
+			}
+		} 
+		else if (reverseFade)
+		{
+			fadeOutTime += Time.Delta * 10;
+			postProcess.Brightness = MathX.Lerp( postProcess.Brightness, fadeOutTime + 5.0f, Time.Delta );
+
+			if( fadeOutTime > 0 )
+			{
+				reverseFade = false;
+				shouldFade = false;
+
+				fadeInTime = 0.0f;
+				fadeOutTime = 0.0f;
+			}
+		}
+
+		postProcess.Brightness = postProcess.Brightness.Clamp( 0, 1 );
+	}
+
+	[ClientRpc]
+	public void StartFading(float fadeInTime = 1.0f, float fadeOutTime = 1.0f, float holdTime = 1.0f)
+	{
+		this.fadeInTime = fadeInTime;
+		this.fadeOutTime = -fadeOutTime;
+		this.holdTime = holdTime;
+
+		shouldFade = true;
+
+		/*Log.Info( Camera.Main.AmbientLightColor );
+
+		fading = fadeInTime;
+
+		while ( fading >= fadeInTime )
+		{
+			Log.Info( fadeTime );
+			fadeTime -= 0.001f;
+			fading = MathX.Lerp( fadeTime, fadeInTime, Time.Delta );
+
+			Camera.Main.AmbientLightColor = new Color( 0.0f, 0.0f, 0.0f, fadeTime );
+		}
+
+		await Task.DelayRealtimeSeconds( holdTime );
+
+		fadeTime = 0;
+		fading = 0;
+
+		//Camera.Main.AmbientLightColor = new Color( 0.0f, 0.0f, 0.0f, 1.0f );
+		Log.Info( "Success" );*/
+	}
+
 	public void FrameCamera()
 	{
+
 		if ( InThird )
 		{
 			Camera.Position = EyePosition + EyeRotation.Backward * ThirdCamOffset;
@@ -91,5 +172,6 @@ public partial class LobbyPawn
 
 		DoZoomingCamera();
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView - lastZoom );
+		DoFadingEffects();
 	}
 }

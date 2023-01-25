@@ -43,7 +43,8 @@ public class DoorTeleporter : ModelEntity, IUse
 		}
 
 		opener.FreezeMovement = MainPawn.FreezeEnum.Movement;
-		
+		opener.StartFading( To.Single( opener ), 3.5f, 1.5f, 1.75f);
+
 		await Task.DelayRealtimeSeconds( 2.0f );
 
 		opener.Position = dest.Position;

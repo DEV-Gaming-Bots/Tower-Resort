@@ -96,16 +96,11 @@ public partial class CondoRoom : Entity
 
 		foreach ( var asset in owner.CondoInfoAsset )
 		{
-			Log.Info( owner.CondoInfoPosition[index] );
-
 			var item = new CondoItemBase();
 			item.SetParent( Condo );
 
 			if ( ResourceLibrary.TryGet( $"assets/condo/{asset}.citm", out CondoAssetBase found ) )
-			{
 				item.SpawnFromAsset( found );
-				Log.Info( found );
-			}
 
 			item.Position = Position + owner.CondoInfoPosition[index];
 			item.Rotation = owner.CondoInfoRotation[index];
@@ -135,7 +130,6 @@ public partial class CondoRoom : Entity
 
 	public void SaveContents()
 	{
-		DebugOverlay.Box( Condo.WorldSpaceBounds, Color.Green, 5);
 		List<(Vector3, Rotation)> entInfo = new();
 		List<CondoAssetBase> entAssets = new();
 
@@ -168,7 +162,6 @@ public partial class CondoRoom : Entity
 			if ( !FilterCheck( entity ) )
 				continue;
 
-			Log.Info( $"Deleting {entity.Name}" );
 			entity.Delete();
 		}
 
@@ -183,7 +176,6 @@ public partial class CondoRoom : Entity
 			if ( !FilterCheck( entity ) )
 				continue;
 
-			Log.Info( $"Deleting {entity.Name}" );
 			entity.Delete();
 		}
 	}

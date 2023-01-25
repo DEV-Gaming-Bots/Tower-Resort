@@ -59,10 +59,7 @@ public partial class TRGame
 				var present = FindInBox( player.AssignedCondo.Condo.WorldSpaceBounds );
 
 				if ( present.Contains( item ) )
-				{
-					Log.Info( "item present in players condo" );
 					item.SetParent( player.AssignedCondo.Condo );
-				}
 			}
 		}
 	}
