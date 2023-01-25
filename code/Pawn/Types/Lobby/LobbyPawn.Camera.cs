@@ -135,7 +135,6 @@ public partial class LobbyPawn
 
 	public void FrameCamera()
 	{
-
 		if ( InThird )
 		{
 			Camera.Position = EyePosition + EyeRotation.Backward * ThirdCamOffset;

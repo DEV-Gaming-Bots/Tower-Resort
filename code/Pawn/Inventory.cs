@@ -11,12 +11,19 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 
 	[Net] protected IList<Entity> Items { get; set; }
 
+	[Net] protected IList<CondoAssetBase> CondoItemAssets { get; set; }
+
 	[Net] public int MaxSlots { get; set; } = 30;
 	[Net] public int MaxHotarSlots { get; set; } = 9;
 
+	public int GetCurrentSlot()
+	{
+		return CondoItemAssets.Count() + Items.Count();
+	}
+
 	public bool AddItem( Entity entity, bool makeActive = true )
 	{
-		if ( Items.Count() >= MaxSlots ) return false;
+		if ( GetCurrentSlot() >= MaxSlots ) return false;
 
 		if ( entity is WeaponBase wep )
 		{
@@ -33,11 +40,10 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 	public void ClearInventory()
 	{
 		foreach ( var ent in Items.ToArray() )
-		{
 			ent?.Delete();
-		}
 
 		Items.Clear();
+		CondoItemAssets.Clear();
 
 		ActiveWeapon = null;
 	}
@@ -49,6 +55,13 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 		{
 			// TODO - Drop the weapon on the ground
 		}
+
+		return success;
+	}
+
+	public bool RemoveItem( CondoAssetBase asset )
+	{
+		var success = CondoItemAssets.Remove( asset );
 
 		return success;
 	}
