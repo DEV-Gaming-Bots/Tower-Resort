@@ -67,7 +67,7 @@
 						filename = "models/gamemodes/arcade/arcade2adv.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
+						import_scale = 0.55
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
@@ -88,7 +88,7 @@
 						_class = "PhysicsHullFile"
 						name = "arcade2adv"
 						parent_bone = ""
-						surface_prop = "default"
+						surface_prop = "metal.sheet"
 						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
@@ -97,7 +97,7 @@
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
 						filename = "models/gamemodes/arcade/arcade2adv.fbx"
-						import_scale = 1.0
+						import_scale = 0.55
 						faceMergeAngle = 10.0
 						maxHullVertices = 20
 						import_mode = "HullPerElement"
@@ -111,8 +111,8 @@
 				]
 			},
 		]
-		model_archetype = ""
-		primary_associated_entity = ""
+		model_archetype = "static_prop_model"
+		primary_associated_entity = "prop_static"
 		anim_graph_name = ""
 		base_model_name = ""
 	}
