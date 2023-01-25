@@ -309,7 +309,8 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 			return;
 		}
 
-		helper.WithLookAt( AimRay.Position + AimRay.Forward * 200 );
+		if( Client.Components.Get<DevCamera>() != null && !Client.Components.Get<DevCamera>().Enabled )
+			helper.WithLookAt( AimRay.Position + AimRay.Forward * 200 );
 
 		helper.WithVelocity( Velocity );
 		helper.WithWishVelocity( Controller.WishVelocity );
