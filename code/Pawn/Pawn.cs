@@ -8,6 +8,7 @@ using TowerResort.Achievements;
 using TowerResort.Entities.Base;
 using TowerResort.Entities.Hammer;
 using TowerResort.Entities.Weapons;
+using TowerResort.Player.UsableClothing;
 using TowerResort.Weapons;
 
 namespace TowerResort.Player;
@@ -23,6 +24,8 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	public MainPawn DuelOpponent;
 
 	ClothingContainer clothingContainer;
+
+	List<Entity> usableClothing;
 
 	public Vector3 EyePosition
 	{
@@ -118,8 +121,19 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	public virtual void SetUpAdmin()
 	{
 		Clothing glasses = ResourceLibrary.Get<Clothing>( "models/cloth/dealwithitglass/dealwithitglass.clothing" );
-		if( !clothingContainer.Has(glasses))
+		
+		if( !clothingContainer.Has(glasses) )
 			clothingContainer.Clothing.Add( glasses );
+
+
+		var jetpack = new Jetpack();
+		jetpack.Owner = this;
+		jetpack.Spawn();
+
+		if ( !usableClothing.Contains( jetpack ) )
+			usableClothing.Add( jetpack );
+		else
+			jetpack.Delete();
 
 		clothingContainer.DressEntity( this );
 	}
@@ -149,6 +163,8 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		EnableShadowInFirstPerson = true;
 
 		FreezeMovement = FreezeEnum.None;
+
+		usableClothing = new List<Entity>();
 
 		if ( TRGame.DevIDs.Contains( Client.SteamId ) )
 			SetUpAdmin();
@@ -211,6 +227,14 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	public override void Simulate( IClient cl )
 	{
+		if(Game.IsServer)
+		{
+			foreach ( Entity usable in usableClothing )
+			{
+				usable.Simulate( cl );
+			}
+		}
+
 		AchTracker?.Simulate();
 		Controller?.Simulate();
 		Inventory?.Simulate(cl);

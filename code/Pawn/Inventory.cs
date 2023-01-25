@@ -9,7 +9,7 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 {
 	[Net, Predicted] public WeaponBase ActiveWeapon { get; set; }
 
-	[Net] protected IList<Entity> Items { get; set; }
+	[Net] public IList<Entity> Items { get; set; }
 
 	[Net] protected IList<CondoAssetBase> CondoItemAssets { get; set; }
 

@@ -170,7 +170,7 @@ public partial class TRGame
 			player.DuelOpponent.DuelOpponent = null;
 			player.DuelOpponent = null;
 
-			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has denied your duel" );
+			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has declined your duel" );
 		}
 
 	}
