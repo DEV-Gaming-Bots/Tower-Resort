@@ -4,7 +4,7 @@
 	{
 		Name = "Barrel of Beer"
 		Description = "Drink responsibly!"
-		Icon = null
+		Icon = resource:"ui/condoitems/barrel_beer.png"
 		BaseCost = 1000
 		ShopKeeper = "Bartender"
 		Type = "Drinkable"
@@ -12,6 +12,10 @@
 		IsInteractable = true
 		Toggable = false
 		InteractCooldown = 0.25
+		OwnerOnly = false
+		InteractionBodyGroup = -1
+		InteractionMaterial = ""
+		InteractionMaterialOverride = ""
 		InteractSound = null
 		AnimatingSound = null
 		UnboxSound = null
@@ -23,11 +27,9 @@
 		ParticleName = null
 		GameType = "Unspecified"
 		SitHeight = 0
-		Seats = 
-		{
-		}
-		IsAlcohol = true
-		TotalDrinkUses = 20
+		Seats = null
+		IsAlcohol = false
+		TotalDrinkUses = 1
 		DrinkSound = ""
 	}
 }

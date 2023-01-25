@@ -30,9 +30,18 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 			if ( Items.Contains( wep ) ) return false;
 			if ( makeActive )
 				SetActiveWeapon( wep );
-		}
-
+		} 
+	
 		Items.Add( entity );
+
+		return true;
+	}
+
+	public bool AddItem(CondoAssetBase asset)
+	{
+		if ( GetCurrentSlot() >= MaxSlots ) return false;
+
+		CondoItemAssets.Add( asset );
 
 		return true;
 	}

@@ -36,7 +36,7 @@ public partial class TRGame
 
 	}
 	[ConCmd.Server( "tr.entity.spawn.condo" )]
-	public static void SpawnCondoItemCMD( string entName )
+	public static void SpawnCondoItemCMD( string entName, bool inInv = false )
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
@@ -45,23 +45,29 @@ public partial class TRGame
 
 		if ( ResourceLibrary.TryGet( $"assets/condo/{entName}.citm", out CondoAssetBase asset ) )
 		{
-			var item = new CondoItemBase();
-			item.SpawnFromAsset( asset, player );
-			item.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
-			item.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
-			item.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
-
-			//CONDO TESTING
-			if ( player.AssignedCondo != null )
+			if( inInv )
+				player.Inventory.AddItem( asset );
+			else
 			{
-				var present = FindInBox( player.AssignedCondo.Condo.WorldSpaceBounds );
+				var item = new CondoItemBase();
+				item.SpawnFromAsset( asset, player );
+				item.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
+				item.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
+				item.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 
-				if ( present.Contains( item ) )
+				//CONDO TESTING
+				if ( player.AssignedCondo != null )
 				{
-					item.SetParent( player.AssignedCondo.Condo );
-					item.Owner = player;
+					var present = FindInBox( player.AssignedCondo.Condo.WorldSpaceBounds );
+
+					if ( present.Contains( item ) )
+					{
+						item.SetParent( player.AssignedCondo.Condo );
+						item.Owner = player;
+					}
 				}
-			} 
+			}
+
 		}
 	}
 
@@ -78,6 +84,7 @@ public partial class TRGame
 
 		ent.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
 		ent.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
+		
 		if( isStatic )
 			(ent as ModelEntity).SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
