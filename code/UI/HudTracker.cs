@@ -49,13 +49,6 @@ public partial class HudTracker : Panel
 		Current = this;
 	}
 
-	public void UpdateLocation(string newLocation)
-	{
-		if ( newLocation == CurZone.Text ) return;
-
-		CurZone.SetText( newLocation );
-	}
-
 	public override void Tick()
 	{
 		base.Tick();
@@ -77,8 +70,8 @@ public partial class HudTracker : Panel
 				CoinLbl.Text = "PLAY THE OFFICIAL SERVERS";
 		}
 
+		CurZone.Text = player.CurZoneLocation;
 		Username.SetText( Game.LocalClient.Name );
-
 		Avatar.Style.SetBackgroundImage( $"avatarbig:{Game.LocalClient.SteamId}" );
 	}
 }

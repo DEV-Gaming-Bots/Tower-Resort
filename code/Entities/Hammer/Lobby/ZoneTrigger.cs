@@ -27,7 +27,7 @@ public partial class ZoneTrigger : BaseTrigger
 		base.Touch( other );
 
 		if ( other is LobbyPawn player )
-			player.ClientLocationUpdate( To.Single( player ), ZoneName );
+			player.CurZoneLocation = ZoneName;
 	}
 }
 

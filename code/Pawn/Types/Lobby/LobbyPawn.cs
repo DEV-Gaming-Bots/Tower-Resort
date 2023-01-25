@@ -16,8 +16,8 @@ public partial class LobbyPawn : MainPawn
 
 	public TimeSince TimeDrank;
 	[Net] public Entity FocusedEntity { get; set; }
-
 	public bool IsSitting;
+	[Net] public string CurZoneLocation { get; set; } = "The Unknown";
 
 	public LobbyPawn()
 	{
@@ -131,12 +131,6 @@ public partial class LobbyPawn : MainPawn
 		base.FrameSimulate( cl );
 
 		FrameCamera();
-	}
-
-	[ClientRpc]
-	public void ClientLocationUpdate( string zoneName )
-	{
-		HudTracker.Current.UpdateLocation( zoneName );
 	}
 }
 
