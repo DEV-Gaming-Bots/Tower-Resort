@@ -1,0 +1,142 @@
+﻿@inherits Sandbox.UI.Panel
+@namespace TowerResort.UI
+
+@using Sandbox.UI
+@using Sandbox
+@using System
+@using System.Collections.Generic
+@using TowerResort.Player
+@using System.Linq
+
+<style>
+    Players {
+        opacity: 0;
+        height: 0;
+        width: 0;
+        width: 100%;
+        border-radius: 0 0 15px 15px;
+        font-size: 18px;
+        font-weight: 300;
+        flex-direction: column;
+        padding: 15px;
+
+        .name
+        {
+            margin-left: 45px;
+        }
+
+        .location {
+            margin-left: auto;
+        }
+
+        .location, .ping {
+            width: 120px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .image {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .canvas {
+            flex-direction: column;
+
+            .entry
+            {
+                align-items: center;
+                margin-bottom: 2px;
+
+                &.me
+                {
+                    color: #b6ff00;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(rgb(100, 100, 100) .2);
+                }
+
+                &:active {
+                    background-color: rgba(rgb(100, 100, 100) .4);
+                }
+            }
+        }
+    }
+</style>
+
+<root>
+    <panel>
+        <panel class="name">
+            Name
+        </panel>
+        <panel class="location">
+            Location
+        </panel>
+        <panel class="ping">
+            Ping
+        </panel>
+    </panel>
+    <panel class="canvas" @ref=Canvas></panel>
+</root>
+
+@code {
+    ServerInformation serverInformation = Game.Server;
+    RealTimeSince timeSinceSorted;
+    Dictionary<IClient, PlayerEntry> Rows = new();
+    Panel Canvas;
+
+    public override void Tick()
+    {
+        if (!IsVisible)
+            return;
+
+        foreach (var client in Game.Clients.Except(Rows.Keys))
+        {
+            var entry = AddClient(client);
+            Rows[client] = entry;
+        }
+
+        foreach (var client in Rows.Keys.Except(Game.Clients))
+        {
+            if (Rows.TryGetValue(client, out var row))
+            {
+                row?.Delete();
+                Rows.Remove(client);
+            }
+        }
+
+        if (timeSinceSorted > 0.1f)
+        {
+            timeSinceSorted = 0;
+
+            Canvas.SortChildren<PlayerEntry>((x) =>
+            {
+                MainPawn player = x.Client.Pawn as MainPawn;
+                return player.Credits;
+            });
+        }
+    }
+
+    private PlayerEntry AddClient(IClient entry)
+    {
+        var p = Canvas.AddChild<PlayerEntry>();
+        p.Client = entry;
+        return p;
+    }
+
+    protected override int BuildHash()
+    {
+        if (timeSinceSorted < 0.1f) return 0;
+
+        return HashCode.Combine(serverInformation.ServerTitle);
+    }
+
+    public void SetOpen(bool open)
+    {
+        SetClass("open-sub", open);
+    }
+}

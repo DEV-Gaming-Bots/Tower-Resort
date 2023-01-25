@@ -1,0 +1,26 @@
+﻿@inherits Sandbox.UI.Panel
+@namespace TowerResort.UI
+
+@using Sandbox.UI
+
+<style>
+    Settings {
+        opacity: 0;
+        height: 0;
+        width: 0;
+        flex-direction: column;
+    }
+</style>
+
+<root>
+    <panel>
+        Settings
+    </panel>
+</root>
+
+@code {
+    public void SetOpen(bool open)
+    {
+        SetClass("open-sub", open);
+    }
+}

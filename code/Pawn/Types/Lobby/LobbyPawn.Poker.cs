@@ -184,7 +184,7 @@ public partial class LobbyPawn : MainPawn
 		leave.action = () => { ConsoleSystem.Run( "tr.game.poker.leave" ); };
 
 		foreach ( var player in CurPokerTable.Components.Get<PokerGame>().Players )
-			playersPanel.AddPlayer( new PlayerEntry( player.Client.Name ) );
+			playersPanel.AddPlayer( new Components.BaseGamesUi.BaseGamesUi.PlayerEntry( player.Client.Name ) );
 
 		var cards = new flexPanel();
 
