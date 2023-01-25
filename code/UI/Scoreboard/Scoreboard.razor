@@ -1,0 +1,101 @@
+﻿@inherits Sandbox.UI.Panel
+@attribute [StyleSheet("/UI/Scoreboard/Scoreboard.scss")]
+@namespace TowerResort.UI
+
+@using Sandbox.UI
+@using System.Collections.Generic;
+@using Sandbox;
+
+<root>
+    <panel class="top">
+        <panel class="title">
+            Tower Resort
+        </panel>
+        <panel>
+            <button onclick=@(OnClickPlayers)>
+                Players
+            </button>
+            <button onclick=@(OnClickAwards)>
+                Awards
+            </button>
+            <button onclick=@(OnClickSettings)>
+                Settings
+            </button>
+            <button onclick=@(OnClickNews)>
+                News
+            </button>
+            <button onclick=@(OnClickAbout)>
+                About
+            </button>
+        </panel>
+    </panel>
+</root>
+
+@code {
+    About about = new();
+    Awards awards = new();
+    News news = new();
+    Players players = new();
+    Settings settings = new();
+
+    public Scoreboard()
+    {
+        AddChild(about);
+        AddChild(awards);
+        AddChild(news);
+        AddChild(players);
+        AddChild(settings);
+
+        OnClickPlayers();
+    }
+
+    public override void Tick()
+    {
+        SetClass("open", Input.Down(InputButton.Score));
+    }
+
+    public void OnClickPlayers()
+    {
+        about.SetOpen(false);
+        awards.SetOpen(false);
+        news.SetOpen(false);
+        players.SetOpen(true);
+        settings.SetOpen(false);
+    }
+
+    public void OnClickAwards()
+    {
+        about.SetOpen(false);
+        awards.SetOpen(true);
+        news.SetOpen(false);
+        players.SetOpen(false);
+        settings.SetOpen(false);
+    }
+
+    public void OnClickNews()
+    {
+        about.SetOpen(false);
+        awards.SetOpen(false);
+        news.SetOpen(true);
+        players.SetOpen(false);
+        settings.SetOpen(false);
+    }
+
+    public void OnClickSettings()
+    {
+        about.SetOpen(false);
+        awards.SetOpen(false);
+        news.SetOpen(false);
+        players.SetOpen(false);
+        settings.SetOpen(true);
+    }
+
+    public void OnClickAbout()
+    {
+        about.SetOpen(true);
+        awards.SetOpen(false);
+        news.SetOpen(false);
+        players.SetOpen(false);
+        settings.SetOpen(false);
+    }
+}
