@@ -39,7 +39,7 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	public virtual bool CanUse( Entity user )
 	{
-		if ( TimeLastUse < 4.0f ) return false;
+		if ( TimeLastUse < 2.5f ) return false;
 
 		if ( IsLocked ) return false;
 

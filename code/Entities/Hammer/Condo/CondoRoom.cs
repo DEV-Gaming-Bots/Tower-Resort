@@ -156,16 +156,20 @@ public partial class CondoRoom : Entity
 
 		var condoPlayer = Owner as LobbyPawn;
 
-		condoPlayer.CondoInfoAsset?.Clear();
-		condoPlayer.CondoInfoPosition?.Clear();
-		condoPlayer.CondoInfoRotation?.Clear();
+		condoPlayer.CondoInfoAsset = condoPlayer.DataFile?.CondoInfoAsset ?? new();
+		condoPlayer.CondoInfoPosition = condoPlayer.DataFile?.CondoInfoPosition ?? new();
+		condoPlayer.CondoInfoRotation = condoPlayer.DataFile?.CondoInfoRotation ?? new();
+
+		condoPlayer.CondoInfoAsset.Clear();
+		condoPlayer.CondoInfoPosition.Clear();
+		condoPlayer.CondoInfoRotation.Clear();
 
 		int index = 0;
 		foreach ( var item in entAssets )
 		{
-			condoPlayer.CondoInfoAsset?.Add( item.ResourceName );
-			condoPlayer.CondoInfoPosition?.Add( entInfo[index].Item1 );
-			condoPlayer.CondoInfoRotation?.Add( entInfo[index].Item2 );
+			condoPlayer.CondoInfoAsset.Add( item.ResourceName );
+			condoPlayer.CondoInfoPosition.Add( entInfo[index].Item1 );
+			condoPlayer.CondoInfoRotation.Add( entInfo[index].Item2 );
 			index++;
 		}
 	}

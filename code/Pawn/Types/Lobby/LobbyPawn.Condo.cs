@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,12 +79,14 @@ public partial class LobbyPawn
 	{
 		if ( AssignedCondo == null ) return;
 
-		AssignedCondo.SaveContents();
+		SaveCondo();
 		DisplayNotification( To.Single( this ), $"You have checked out of your condo", 5.0f );
 
 		AssignedCondo.ClearRoom();
 		AssignedCondo.Owner = null;
 		AssignedCondo = null;
+
+		TRGame.Instance.DoSave( Client );
 	}
 
 	[ConCmd.Server( "tr.condo.assign" )]

@@ -12,10 +12,6 @@ using TowerResort.Player;
 //Interactable NPCs
 public partial class InteractNPCBase : BaseNPC, IUse
 {
-	public TimeSince TimeLastInteract;
-
-	public virtual float TimeToUse => 2.0f;
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -26,7 +22,6 @@ public partial class InteractNPCBase : BaseNPC, IUse
 	public virtual void Interact( Entity user )
 	{
 		//Do stuff
-		TimeLastInteract = 0;
 		InteractClient(To.Single(user));
 	}
 
@@ -39,7 +34,7 @@ public partial class InteractNPCBase : BaseNPC, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return TimeLastInteract >= TimeToUse;
+		return true;
 	}
 
 	public bool OnUse( Entity user )
@@ -58,6 +53,7 @@ public partial class CondoReceptionist : InteractNPCBase
 	/*sboxtowerui.CondoTower condoPanel;*/
 
 	List<Entity> users;
+	TimeSince spamPrevent;
 
 	public override void Spawn()
 	{
@@ -68,6 +64,10 @@ public partial class CondoReceptionist : InteractNPCBase
 	public override void Interact( Entity user )
 	{
 		base.Interact( user );
+
+		if ( spamPrevent < 1.0f ) return;
+
+		spamPrevent = 0;
 
 		if ( user is LobbyPawn player )
 		{
