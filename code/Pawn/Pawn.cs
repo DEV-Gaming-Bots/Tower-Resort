@@ -1,6 +1,8 @@
-﻿using Sandbox;
+﻿using Components.NotificationManager;
+using Sandbox;
 using Sandbox.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TowerResort.Achievements;
 using TowerResort.Entities.Base;
@@ -55,16 +57,14 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	bool setView;
 	Angles setAngles;
-	[BindComponent] public Inventory Inventory { get; }
-
-	public long SteamID => Client.SteamId;
+	[BindComponent] public LobbyInventory Inventory { get; }
 
 	public AchTracker AchTracker;
 
 	[ConCmd.Server( "noclip" )]
 	public static void DoNoclip()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) )
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) )
 			return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
@@ -87,6 +87,20 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		
 	}
 
+	[ConCmd.Server( "kill" )]
+	public static void KillPawn()
+	{
+		var caller = ConsoleSystem.Caller.Pawn;
+
+		if ( caller == null ) return;
+
+		if ( caller is LobbyPawn lobby)
+			lobby.TakeDamage( DamageInfo.Generic( 9999.0f ) );
+
+		if ( caller is BallPawn ball )
+			ball.OnKilled();
+	}
+
 	public MainPawn()
 	{
 		clothingContainer = new();
@@ -103,17 +117,23 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	public virtual void SetUpAdmin()
 	{
-		if( Inventory != null )
-		{
-			Inventory.RemoveAllWeapons();
-			Inventory.AddWeapon( new PhysGun(), true );
-		}
-
 		Clothing glasses = ResourceLibrary.Get<Clothing>( "models/cloth/dealwithitglass/dealwithitglass.clothing" );
 		if( !clothingContainer.Has(glasses))
 			clothingContainer.Clothing.Add( glasses );
 
 		clothingContainer.DressEntity( this );
+	}
+
+	[ClientRpc]
+	public void PlaySoundClientside(string sound)
+	{
+		PlaySound( sound );
+	}
+
+	[ClientRpc]
+	public void DisplayNotification( string message, float lifeTime )
+	{
+		BaseHud.Current.NotificationManager.AddNotification( message, NotificationType.Info, lifeTime );
 	}
 
 	public virtual void SetUpPlayerStats()
@@ -130,7 +150,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		FreezeMovement = FreezeEnum.None;
 
-		if ( TRGame.AdminIDs.Contains( Client.SteamId ) )
+		if ( TRGame.DevIDs.Contains( Client.SteamId ) )
 			SetUpAdmin();
 	}
 
@@ -160,13 +180,13 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		LifeState = LifeState.Alive;
 
-		Components.Create<Inventory>();
+		Components.Create<LobbyInventory>();
 
-		Tags.Add( "player" );
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		Controller = new StandardController( this );
 
+		Tags.Add( "trplayer" );
 		MoveToSpawn();
 		base.Spawn();
 	}

@@ -11,9 +11,8 @@ namespace TowerResort.Entities.CondoItems;
 
 public struct SitSlots
 {
-	public int Seats { get; set; }
-	public Vector3 StartOffset { get; set; }
-	public Vector3 LocalOffset { get; set; }
+	public Vector3 SeatPosition { get; set; }
+	public Rotation SeatRotation { get; set; }
 }
 
 public struct LootItem
@@ -76,6 +75,9 @@ public class CondoAssetBase : GameResource
 	[Category( "Interaction" ), ShowIf("IsInteractable", true)]
 	public double InteractCooldown { get; set; } = 1.0f;
 
+	[Category( "Interaction" ), Description("Can the owner only interact to this item"), ShowIf( "IsInteractable", true )]
+	public bool OwnerOnly { get; set; } = false;
+
 	[Category( "Interaction" ), ShowIf( "Toggable", true )]
 	public int InteractionBodyGroup { get; set; } = -1;
 
@@ -126,7 +128,7 @@ public class CondoAssetBase : GameResource
 	public float SitHeight { get; set; } = 0;
 	
 	[Category( "Sitting Functionality" ), ShowIf( "Type", ItemEnum.Sittable )]
-	public SitSlots Seats { get; set; }
+	public SitSlots[] Seats { get; set; }
 
 	[Category( "Drinking Functionality" ), ShowIf( "Type", ItemEnum.Drinkable )]
 	public bool IsAlcohol { get; set; } = false;

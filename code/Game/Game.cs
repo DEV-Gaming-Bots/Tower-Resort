@@ -13,17 +13,13 @@ public partial class TRGame : GameManager
 {
 	public static TRGame Instance => Current as TRGame;
 
-	[ConVar.Replicated( "tr.devmode" )]
-	public static bool DevMode { get; set; }
-	public static bool IsDevMode { get; set; }
+	[Net] public bool RunningDedi { get; private set; }
 
 	public TRGame()
 	{
-		IsDevMode = DevMode;
-
 		if (Game.IsServer)
 		{
-			
+			RunningDedi = Game.IsDedicatedServer;
 		}
 
 		if ( Game.IsClient )
@@ -50,7 +46,7 @@ public partial class TRGame : GameManager
 	{
 		Game.AssertServer();
 
-		if ( !AdminIDs.Contains( client.SteamId ) )
+		if ( !DevIDs.Contains( client.SteamId ) )
 			return;
 
 		var player = client.Pawn as MainPawn;
@@ -76,7 +72,7 @@ public partial class TRGame : GameManager
 	//we'll kick anyone who tries to host this unofficially or not in dev mode
 	public async void ForceShutdown()
 	{
-		HubChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "SERVER", 
+		TRChat.AddChatEntryStatic( To.Single( Game.Clients.First() ), "SERVER", 
 			"You are hosting this unofficially, please play the official servers" );
 
 		await WaitDelay( 8.0f );
@@ -94,24 +90,38 @@ public partial class TRGame : GameManager
 	{
 		base.ClientJoined( cl );
 
+		//Get all clients and remove the new client
+		var clients = Game.Clients.ToList();
+		clients.Remove( cl );
+
+		//Display to current clients
+		TRChat.AddChatEntryStatic( To.Multiple( clients ), "SERVER", $"{cl.Name} has connected" );
+
 		var pawn = new LobbyPawn();
 		cl.Pawn = pawn;
 		pawn.SetUpPlayerStats();
 
-		/*if ( !LoadSave( cl ) )
-		{
+		if ( !LoadSave( cl ) )
 			pawn.NewStats();
-			//DoSave( cl );
-		}*/
 
-		if(!Game.IsDedicatedServer && !DevMode)
+		if( !Game.IsDedicatedServer && !DevIDs.Contains(cl.SteamId) )
 			ForceShutdown();
+
 	}
 
 	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )
 	{
+		//If the pawn is a lobby type...
+		if(cl.Pawn is LobbyPawn lobbyPawn)
+		{
+			//And they left while having a condo, unclaim it
+			if( lobbyPawn.AssignedCondo != null )
+				lobbyPawn.UnclaimCondo();
+		}
+
 		DoSave( cl );
 
+		TRChat.AddChatEntryStatic( To.Everyone, "SERVER", $"{cl.Name} has disconnected: {reason}" );
 		base.ClientDisconnect( cl, reason );
 	}
 
@@ -128,7 +138,7 @@ public partial class TRGame : GameManager
 
 	public static void ServerAnnouncement(string message)
 	{
-		HubChat.AddChatEntryStatic( To.Everyone, "SERVER", message );
+		TRChat.AddChatEntryStatic( To.Everyone, "SERVER", message );
 	}
 
 	[ClientRpc]

@@ -12,13 +12,17 @@
 		IsInteractable = true
 		Toggable = false
 		InteractCooldown = 1
+		OwnerOnly = true
+		InteractionBodyGroup = -1
+		InteractionMaterial = ""
+		InteractionMaterialOverride = ""
 		InteractSound = null
 		AnimatingSound = null
 		UnboxSound = resource:"sound/interactives/gift_reveal.sound"
 		InteractAnimBool = ""
 		ScreenScale = 1
 		ScreenCenterPoint = "0,0,0"
-		ScreenRotation = "0.00000004371139,1,0.00000004371139,0.000000000000001911119"
+		ScreenRotation = "-0.000001116595,1,-0.000001116595,0.000000000001246785"
 		LootItems = 
 		[
 			{
@@ -34,11 +38,9 @@
 		ParticleName = null
 		GameType = "Unspecified"
 		SitHeight = 0
-		Seats = 
-		{
-		}
+		Seats = null
 		IsAlcohol = false
-		TotalDrinkUses = 0
-		DrinkSound = null
+		TotalDrinkUses = 1
+		DrinkSound = ""
 	}
 }

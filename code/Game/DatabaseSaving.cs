@@ -13,15 +13,21 @@ public interface IPlayerData
 	string PlayerName { get; }
 	long SteamID { get; }
 	int Credits { get; set; }
+
+	//We need to think of how to condense this into one for json
+	List<Vector3> CondoInfoPosition { get; set; }
+	List<Rotation> CondoInfoRotation { get; set; }
+	List<string> CondoInfoAsset { get; set; }
 }
 
 public class PlayerData : IPlayerData
 {
 	public string PlayerName { get; }
-
 	public long SteamID { get; }
-
 	public int Credits { get; set; }
+	public List<Vector3> CondoInfoPosition { get; set; }
+	public List<Rotation> CondoInfoRotation { get; set; }
+	public List<string> CondoInfoAsset { get; set; }
 }
 
 public partial class TRGame 
@@ -40,34 +46,33 @@ public partial class TRGame
 
 	public void DoSave( IClient cl )
 	{
-		if( SavingType == DataSaveEnum.Flatfile)
+		var player = cl.Pawn as MainPawn;
+
+		if ( SavingType == DataSaveEnum.Flatfile)
 		{
-			FileSystem.Data.WriteJson( $"{cl.SteamId}.json", (IPlayerData)cl.Pawn );
-			
+			FileSystem.Data.WriteJson( $"{cl.SteamId}.json", (IPlayerData)player );
 		}
+
 		else if ( SavingType == DataSaveEnum.SQL)
 		{
+			/*JsonSerializerOptions options = new JsonSerializerOptions
+			{
+				ReadCommentHandling = JsonCommentHandling.Skip,
+				PropertyNameCaseInsensitive = true,
+				AllowTrailingCommas = true,
+				WriteIndented = true
+			};
 
+			string contents = JsonSerializer.Serialize( (IPlayerData)cl.Pawn, options );
 
+			Log.Info( contents );*/
+
+			/*DataSocket.Send( 
+				"{\"type\": \"jsonserver\", \"data\": \"users/\", \"method\": \"put\"}"
+			);*/
+
+			//DataSocket.OnMessageReceived += ( data ) => ReceiveSaveFile( data );
 		}
-
-		JsonSerializerOptions options = new JsonSerializerOptions
-		{
-			ReadCommentHandling = JsonCommentHandling.Skip,
-			PropertyNameCaseInsensitive = true,
-			AllowTrailingCommas = true,
-			WriteIndented = true
-		};
-
-		string contents = JsonSerializer.Serialize( (IPlayerData)cl.Pawn, options );
-
-		Log.Info( contents );
-
-		/*DataSocket.Send( 
-			"{\"type\": \"jsonserver\", \"data\": \"users/\", \"method\": \"put\"}"
-		);*/
-
-		//DataSocket.OnMessageReceived += ( data ) => ReceiveSaveFile( data );
 	}
 
 	void ReceiveSaveFile(string json)
@@ -82,6 +87,13 @@ public partial class TRGame
 		if ( data == null )
 			return false;
 
+		var lobbyPawn = cl.Pawn as LobbyPawn;
+		lobbyPawn.DataFile = data;
+
+		lobbyPawn.CondoInfoPosition = data.CondoInfoPosition;
+		lobbyPawn.CondoInfoRotation = data.CondoInfoRotation;
+		lobbyPawn.CondoInfoAsset = data.CondoInfoAsset;
+
 		return true;
 	}
 
@@ -92,7 +104,7 @@ public partial class TRGame
 
 	public async Task StartSocket()
 	{
-		if( DataSocket == null)
+		if( DataSocket == null )
 			CreateSocket();
 
 		DataSocket.OnMessageReceived += ( data ) =>

@@ -1,4 +1,11 @@
-﻿using Components.BaseGamesUi;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Sandbox;
+using Sandbox.UI;
+using Components.BaseGamesUi;
 using Components.NotificationManager;
 using Sandbox.UI;
 using TowerResort.UI;
@@ -21,17 +28,9 @@ public class BaseHud : RootPanel
 		AddChild( NotificationManager );
 
 		Current = this;
-		StyleSheet.Load( "/UI/Styles/HubHud.scss" );
-
-		/* TEST - REMOVE - Cards Panel
-		 * TestCardsPanel = new();
-
-		TestCardsPanel.AddCard( "path/to/texture", "spades" );
-		TestCardsPanel.AddCard( "path/to/texture", "spades" );
-
-		AddChild( TestCardsPanel );*/
-
-		AddChild<HubChat>();
+		StyleSheet.Load( "/UI/Styles/TRHud.scss" );
+		
+		AddChild<TRChat>();
 		AddChild<HudTracker>();
 		AddChild<Scoreboard>();
 	}

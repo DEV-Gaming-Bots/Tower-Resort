@@ -25,5 +25,6 @@ public class LobbyPlaceable : ModelEntity
 		item.SpawnFromAsset( AssetToPlace );
 		item.Position = Position;
 		item.Rotation = Rotation;
+		item.SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
 }

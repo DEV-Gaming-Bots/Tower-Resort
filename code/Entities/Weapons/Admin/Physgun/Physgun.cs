@@ -120,12 +120,6 @@ public partial class PhysGun : WeaponBase
 		{
 			var body = physicsGroup.GetBody( i );
 			if ( !body.IsValid() ) continue;
-
-			if ( body.BodyType == PhysicsBodyType.Static )
-			{
-				body.BodyType = PhysicsBodyType.Dynamic;
-				unfrozen = true;
-			}
 		}
 
 		if ( unfrozen )
@@ -162,12 +156,12 @@ public partial class PhysGun : WeaponBase
 		/*		if ( body.BodyType == PhysicsBodyType.Keyframed && rootEnt is not MainPawn )
 					return;*/
 
-		if ( tr.Entity is WorldEntity ) return;
+		if ( tr.Entity is WorldEntity || tr.Body.BodyType == PhysicsBodyType.Static ) return;
 
 		//
 		// Unfreeze
 		//
-		if ( body.BodyType == PhysicsBodyType.Static || body.BodyType == PhysicsBodyType.Keyframed )
+		if ( body.BodyType == PhysicsBodyType.Keyframed )
 		{
 			OriginalPhysicsType = body.BodyType;
 			body.BodyType = PhysicsBodyType.Dynamic;

@@ -12,24 +12,12 @@ namespace TowerResort.Player;
 
 public partial class LobbyPawn : MainPawn
 {
-	public CondoRoom AssignedCondo;
-
 	[Net] public float Drunkiness { get; set; }
+
 	public TimeSince TimeDrank;
 	[Net] public Entity FocusedEntity { get; set; }
-
 	public bool IsSitting;
-
-	[ConCmd.Server( "kill" )]
-	public static void DoSuicide()
-	{
-		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
-
-		if ( player == null ) return;
-		if ( player == null || player.LifeState == LifeState.Dead ) return;
-
-		player.TakeDamage( DamageInfo.Generic( 9999.0f ) );
-	}
+	[Net] public string CurZoneLocation { get; set; } = "Somewhere";
 
 	public LobbyPawn()
 	{
@@ -62,9 +50,6 @@ public partial class LobbyPawn : MainPawn
 
 		timeSinceLastFootstep = 0;
 
-		//DebugOverlay.Box( 1, pos, -1, 1, Color.Red );
-		//DebugOverlay.Text( pos, $"{volume}", Color.White, 5 );
-
 		var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
 			.Radius( 1 )
 			.Ignore( this )
@@ -84,6 +69,9 @@ public partial class LobbyPawn : MainPawn
 	{
 		Drunkiness = 0;
 		base.Spawn();
+
+		Tags.Add( "pve" );
+		EnableSelfCollisions = false;
 	}
 
 	public override void Respawn()
@@ -138,17 +126,18 @@ public partial class LobbyPawn : MainPawn
 
 		base.Simulate( cl );
 	}
+	public override void OnKilled()
+	{
+		if(AssignedCondo != null)
+			UnclaimCondo();
+
+		base.OnKilled();
+	}
 	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
 
 		FrameCamera();
-	}
-
-	[ClientRpc]
-	public void ClientLocationUpdate( string zoneName )
-	{
-		HudTracker.Current.UpdateLocation( zoneName );
 	}
 }
 

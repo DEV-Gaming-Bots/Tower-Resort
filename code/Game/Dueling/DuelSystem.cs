@@ -80,8 +80,8 @@ public partial class TRGame
 
 	public void StartDuel()
 	{
-		DuellerOne.Inventory.AddWeapon( new Confetti(), true );
-		DuellerTwo.Inventory.AddWeapon( new Confetti(), true );
+		DuellerOne.Inventory.AddItem( new Pistol(), true );
+		DuellerTwo.Inventory.AddItem( new Pistol(), true );
 
 		DuellerOne.FreezeMovement = MainPawn.FreezeEnum.None;
 		DuellerTwo.FreezeMovement = MainPawn.FreezeEnum.None;
@@ -92,8 +92,8 @@ public partial class TRGame
 
 	public void EndDuel()
 	{
-		DuellerOne.Inventory.RemoveWeapon(DuellerTwo.ActiveChild as WeaponBase );
-		DuellerTwo.Inventory.RemoveWeapon( DuellerTwo.ActiveChild as WeaponBase );
+		DuellerOne.Inventory.RemoveItem(DuellerTwo.ActiveChild as WeaponBase );
+		DuellerTwo.Inventory.RemoveItem( DuellerTwo.ActiveChild as WeaponBase );
 
 		DuellerOne.FreezeMovement = MainPawn.FreezeEnum.Movement;
 		DuellerTwo.FreezeMovement = MainPawn.FreezeEnum.Movement;
@@ -149,7 +149,7 @@ public partial class TRGame
 		target.DuelOpponent = player;
 		player.DuelOpponent = target;
 
-		HubChat.AddChatEntryStatic( To.Single( target ), "DUEL", $"{player.Client.Name} has challenged you to a duel" );
+		TRChat.AddChatEntryStatic( To.Single( target ), "DUEL", $"{player.Client.Name} has challenged you to a duel" );
 	}
 
 	[ConCmd.Server("tr.dueling.respond")]
@@ -163,14 +163,14 @@ public partial class TRGame
 		if ( accepted )
 		{
 			Instance.InitiateDuel( player.DuelOpponent, player );
-			HubChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has accepted your duel" );
+			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has accepted your duel" );
 		}
 		else
 		{
 			player.DuelOpponent.DuelOpponent = null;
 			player.DuelOpponent = null;
 
-			HubChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has denied your duel" );
+			TRChat.AddChatEntryStatic( To.Single( player.DuelOpponent ), "DUEL", $"{player.Client.Name} has denied your duel" );
 		}
 
 	}

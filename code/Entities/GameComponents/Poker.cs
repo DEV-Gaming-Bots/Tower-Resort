@@ -171,8 +171,10 @@ public partial class PokerGame : EntityComponent, ISingletonComponent
 	{
 		DisplayMessage( leaver, "You have left the table", 5.0f );
 		leaver.ClientCleanUp();
+
 		leaver.FreezeMovement = MainPawn.FreezeEnum.None;
 		leaver.FocusedEntity = null;
+
 		Players.Remove( leaver );
 
 		if(Entity is PokerTable)

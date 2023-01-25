@@ -2,7 +2,7 @@ using Sandbox;
 
 namespace TowerResort.UI;
 
-public partial class HubChat
+public partial class TRChat
 {
 	[ConCmd.Client( "tr.chat.add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string playerId = "0", bool isInfo = false )

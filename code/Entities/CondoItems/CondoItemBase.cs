@@ -21,11 +21,13 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 	[Net] bool IsPreviewing { get; set; } = false;
 
-	public void SpawnFromAsset( CondoAssetBase asset )
+	public void SpawnFromAsset( CondoAssetBase asset, Entity owner = null )
 	{
 		Asset = asset;
+		Owner = owner;
 
 		SetModel( Asset.ModelPath );
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Playable )
 		{	
@@ -46,6 +48,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		{
 			totalUses = asset.TotalDrinkUses;
 		}
+
 	}
 
 	public void DisplayMessage( List<IClient> clients, string msg, float time = 5.0f )
@@ -95,16 +98,18 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	{
 		base.Spawn();
 
-		SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+		SetupPhysicsFromModel(PhysicsMotionType.Static);
 	}
 
 	protected override void OnDestroy()
 	{
-		base.OnDestroy();
-
 		if ( Game.IsServer )
 		{
-			if(Asset.Type == CondoAssetBase.ItemEnum.Sittable)
+			if ( Asset == null ) return;
+
+			curSound.Stop();
+
+			if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			{
 				if ( Sitter != null )
 				{
@@ -112,13 +117,12 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 				}
 			}
 
-			if(Asset.Type == CondoAssetBase.ItemEnum.Playable)
+			if ( Asset.Type == CondoAssetBase.ItemEnum.Playable )
 			{
 				Components.Get<PokerGame>().RemovePlayers();
 			}
 
 			ParticleDestruction( To.Everyone );
-
 		}
 	}
 
@@ -129,6 +133,9 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			return Sitter == null && Asset.IsInteractable;
+
+		if ( Asset.OwnerOnly && Owner != user )
+			return false;
 
 		return Asset.IsInteractable;
 	}
@@ -205,10 +212,10 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		if ( !IsUsable( user ) )
 			return false;
 
+		if ( Game.IsClient ) return false;
+
 		if ( Asset.Toggable )
 			isToggled = !isToggled;
-
-		if ( Game.IsClient ) return false;
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Drinkable )
 			DoDrinking( user );
@@ -260,7 +267,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			if ( !string.IsNullOrEmpty( Asset.InteractionMaterial ) )
 				SetMaterialOverride( Asset.InteractionMaterial );
 		}
-
+		
 		cooldown = (float)Asset.InteractCooldown;
 		var pawn = user as MainPawn;
 

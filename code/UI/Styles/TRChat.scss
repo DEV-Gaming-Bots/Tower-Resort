@@ -4,10 +4,11 @@ iconpanel {
 
 $rounding: 3px;
 
-HubChat {
+TRChat {
     position: absolute;
-    bottom: 360px;
-    left: 35px;
+    bottom: 23.5%;
+    left: 32px;
+    z-index: 1001;
     flex-direction: column;
     width: 505px;
     max-height: 435px;
@@ -21,7 +22,7 @@ HubChat {
         flex-shrink: 0;
         min-height: 44px;
         opacity: 0;
-        background-color: rgba(rgb(31, 31, 31) .55);
+        background-color: rgba( #090d10, 0.6 );
         border-radius: $rounding;
         margin-bottom: 28px;
     }
@@ -52,7 +53,7 @@ HubChat {
             max-width: 100%;
             opacity: 1;
             flex-shrink: 0;
-            background-color: rgba(rgb(31, 31, 31) .55);
+            background-color: rgba( #090d10, 0.65 );
             padding: 4px 10px;
             border-radius: $rounding;
             transition: opacity 0.15s ease;
@@ -111,6 +112,9 @@ HubChat {
 
     &.open {
         pointer-events: all;
+        backdrop-filter-blur: 20px;
+        background-image: linear-gradient( to top, rgba( #1b1b35, 0.9 ), rgba( #1c1c38, 0.85 ), rgba( #1c1c38, 0.8 ) 80%, rgba( #1c1c38, 0.5 ) );
+        bottom: 23.5%;
         border-radius: $rounding $rounding 0 0;
 
         textentry {
