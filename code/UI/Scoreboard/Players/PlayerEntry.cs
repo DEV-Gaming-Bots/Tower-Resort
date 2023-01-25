@@ -44,13 +44,13 @@ public partial class PlayerEntry : Panel
 
 	public virtual void UpdateData()
 	{
-		MainPawn player = Client.Pawn as MainPawn;
+		LobbyPawn player = Client.Pawn as LobbyPawn;
 
 		PlayerName.Text = Client.Name;
-		Value.Text = "Somewhere";
+		Value.Text = player.CurZoneLocation;
 		Ping.Text = Client.Ping.ToString();
 		PlayerPicture.SetTexture( $"avatar:{Client.SteamId}" );
-		SetClass( "me", Client == Sandbox.Game.LocalClient );
+		SetClass( "me", Client == Game.LocalClient );
 	}
 
 	public virtual void UpdateFrom( IClient client )
