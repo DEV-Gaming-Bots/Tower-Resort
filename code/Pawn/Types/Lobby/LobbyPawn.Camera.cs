@@ -129,29 +129,7 @@ public partial class LobbyPawn
 		this.fadeInTime = fadeInTime;
 		this.fadeOutTime = -fadeOutTime;
 		this.holdTime = holdTime;
-
 		shouldFade = true;
-
-		/*Log.Info( Camera.Main.AmbientLightColor );
-
-		fading = fadeInTime;
-
-		while ( fading >= fadeInTime )
-		{
-			Log.Info( fadeTime );
-			fadeTime -= 0.001f;
-			fading = MathX.Lerp( fadeTime, fadeInTime, Time.Delta );
-
-			Camera.Main.AmbientLightColor = new Color( 0.0f, 0.0f, 0.0f, fadeTime );
-		}
-
-		await Task.DelayRealtimeSeconds( holdTime );
-
-		fadeTime = 0;
-		fading = 0;
-
-		//Camera.Main.AmbientLightColor = new Color( 0.0f, 0.0f, 0.0f, 1.0f );
-		Log.Info( "Success" );*/
 	}
 
 	public void FrameCamera()

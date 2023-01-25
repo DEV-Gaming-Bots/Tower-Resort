@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TowerResort.Entities.Condos;
 using TowerResort.Entities.Hammer;
 
 namespace TowerResort.Player;
@@ -37,6 +38,9 @@ public partial class LobbyPawn
 		newCondo.SpawnRoom();
 		newCondo.Load();
 		AssignedCondo = newCondo;
+		string condoName = newCondo.Name.Replace("_", " ");
+
+		DisplayNotification( To.Single( this ), $"You have been checked into {condoName}", 5.0f);
 	}
 
 	//Clears the condo
@@ -70,6 +74,9 @@ public partial class LobbyPawn
 	{
 		if ( AssignedCondo == null ) return;
 
+		AssignedCondo.SaveContents();
+		DisplayNotification( To.Single( this ), $"You have checked out of your condo", 5.0f );
+
 		AssignedCondo.ClearRoom();
 		AssignedCondo.Owner = null;
 		AssignedCondo = null;
@@ -78,7 +85,7 @@ public partial class LobbyPawn
 	[ConCmd.Server( "tr.condo.assign" )]
 	public static void CondoAssignCMD()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -89,7 +96,7 @@ public partial class LobbyPawn
 	[ConCmd.Server( "tr.condo.save" )]
 	public static void CondoSaveCMD()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -100,7 +107,7 @@ public partial class LobbyPawn
 	[ConCmd.Server( "tr.condo.load" )]
 	public static void CondoLoadCMD()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -115,7 +122,7 @@ public partial class LobbyPawn
 	[ConCmd.Server( "tr.condo.spawn" )]
 	public static void CondoSpawnCMD()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
@@ -128,7 +135,7 @@ public partial class LobbyPawn
 	[ConCmd.Server( "tr.condo.clear" )]
 	public static void CondoClearCMD(bool wipe = false)
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;

@@ -37,6 +37,9 @@ public class CondoBase : ModelEntity
 	public Model WorldModel => Model.Load( "models/condo/basic_condo.vmdl" );
 	public Vector3 DoorPos => new Vector3( -23.75f, -226, -60 );
 
+	public Vector3 TPPos => new Vector3( -24, -186, -60 );
+	public Angles TPAngles => new Angles( 0, 90, 0 );
+
 	public override void Spawn()
 	{
 		base.Spawn();

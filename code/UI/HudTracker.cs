@@ -64,7 +64,7 @@ public partial class HudTracker : Panel
 			CoinLbl.Text = $"{player.Credits:C0}";
 		else
 		{
-			if(TRGame.IsDevMode)
+			if(TRGame.DevIDs.Contains(Game.LocalClient.SteamId))
 				CoinLbl.Text = $"DEV - {player.Credits:C0}";
 			else
 				CoinLbl.Text = "PLAY THE OFFICIAL SERVERS";

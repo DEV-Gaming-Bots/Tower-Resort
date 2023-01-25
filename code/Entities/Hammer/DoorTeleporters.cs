@@ -21,7 +21,7 @@ public class DoorTeleporter : ModelEntity, IUse
 	[Property, ResourceType( "sound" )]
 	public string CloseSound { get; set; }
 
-	TimeSince timeLastUse;
+	public TimeSince TimeLastUse;
 
 	[Property]
 	public bool IsLocked { get; set; } = false;
@@ -34,16 +34,22 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		if ( timeLastUse < 4.0f )
-			return false;
-
-		return !IsLocked;
+		return CanUse(user);
 	}
 
-	public async void OpenDoor(LobbyPawn opener)
+	public virtual bool CanUse( Entity user )
+	{
+		if ( TimeLastUse < 4.0f ) return false;
+
+		if ( IsLocked ) return false;
+
+		return true;
+	}
+
+	public virtual async void OpenDoor(LobbyPawn opener)
 	{
 		var dest = TargetDest.GetTarget( null );
-		timeLastUse = 0;
+		TimeLastUse = 0;
 
 		if( dest == null )
 		{

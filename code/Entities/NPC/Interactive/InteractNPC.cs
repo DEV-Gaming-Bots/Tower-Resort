@@ -12,6 +12,10 @@ using TowerResort.Player;
 //Interactable NPCs
 public partial class InteractNPCBase : BaseNPC, IUse
 {
+	public TimeSince TimeLastInteract;
+
+	public virtual float TimeToUse => 2.0f;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -22,6 +26,7 @@ public partial class InteractNPCBase : BaseNPC, IUse
 	public virtual void Interact( Entity user )
 	{
 		//Do stuff
+		TimeLastInteract = 0;
 		InteractClient(To.Single(user));
 	}
 
@@ -34,7 +39,7 @@ public partial class InteractNPCBase : BaseNPC, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return true;
+		return TimeLastInteract >= TimeToUse;
 	}
 
 	public bool OnUse( Entity user )
@@ -64,16 +69,21 @@ public partial class CondoReceptionist : InteractNPCBase
 	{
 		base.Interact( user );
 
-		if ( user is MainPawn player )
+		if ( user is LobbyPawn player )
 		{
-			if ( users.Contains( player ) )
+			if ( player.AssignedCondo == null )
+				player.AssignCondo();
+			else
+				player.UnclaimCondo();
+
+			/*if ( users.Contains( player ) )
 				users.Remove( player );
 			else
-				users.Add( player );
+				users.Add( player );*/
 		}
 	}
 
-	[Event.Tick.Server]
+/*	[Event.Tick.Server]
 	public void Simulate()
 	{
 		if ( users.Count <= 0 )
@@ -81,15 +91,15 @@ public partial class CondoReceptionist : InteractNPCBase
 
 		foreach ( Entity player in users.ToArray() )
 		{
-			/*if ( Position.Distance( player.Position ) > 90.0f )
+			if ( Position.Distance( player.Position ) > 90.0f )
 			{
-				RemoveCondoPanel( To.Single( player.Client ) );
+				//RemoveCondoPanel( To.Single( player.Client ) );
 				users.Remove( player );
-			}*/
+			}
 		}
-	}
+	}*/
 
-/*	[ClientRpc]
+	/*[ClientRpc]
 	public override void InteractClient()
 	{
 		if( condoPanel != null )

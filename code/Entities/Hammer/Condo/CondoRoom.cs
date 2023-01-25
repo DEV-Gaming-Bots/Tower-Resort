@@ -20,6 +20,8 @@ public partial class CondoRoom : Entity
 	[Property]
 	public EntityTarget LeaveDestination { get; set; }
 
+	public bool IsLoaded = false;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -96,6 +98,11 @@ public partial class CondoRoom : Entity
 		var owner = Owner as LobbyPawn;
 		int index = 0;
 
+		IsLoaded = true;
+
+		if ( owner.CondoInfoAsset.Count() <= 0 )
+			return;
+
 		foreach ( var asset in owner.CondoInfoAsset )
 		{
 			var item = new CondoItemBase();
@@ -147,12 +154,19 @@ public partial class CondoRoom : Entity
 			}
 		}
 
+
+		var condoPlayer = Owner as LobbyPawn;
+
+		condoPlayer.CondoInfoAsset.Clear();
+		condoPlayer.CondoInfoPosition.Clear();
+		condoPlayer.CondoInfoRotation.Clear();
+
 		int index = 0;
 		foreach ( var item in entAssets )
 		{
-			(Owner as LobbyPawn).CondoInfoAsset.Add( item.ResourceName );
-			(Owner as LobbyPawn).CondoInfoPosition.Add( entInfo[index].Item1 );
-			(Owner as LobbyPawn).CondoInfoRotation.Add( entInfo[index].Item2 );
+			condoPlayer.CondoInfoAsset.Add( item.ResourceName );
+			condoPlayer.CondoInfoPosition.Add( entInfo[index].Item1 );
+			condoPlayer.CondoInfoRotation.Add( entInfo[index].Item2 );
 			index++;
 		}
 	}
@@ -169,6 +183,7 @@ public partial class CondoRoom : Entity
 
 		DestroyLights( To.Everyone );
 		Condo.Delete();
+		IsLoaded = false;
 	}
 
 	public void Wipe()

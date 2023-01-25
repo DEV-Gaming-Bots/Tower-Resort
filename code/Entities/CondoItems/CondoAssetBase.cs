@@ -75,6 +75,9 @@ public class CondoAssetBase : GameResource
 	[Category( "Interaction" ), ShowIf("IsInteractable", true)]
 	public double InteractCooldown { get; set; } = 1.0f;
 
+	[Category( "Interaction" ), Description("Can the owner only interact to this item"), ShowIf( "IsInteractable", true )]
+	public bool OwnerOnly { get; set; } = false;
+
 	[Category( "Interaction" ), ShowIf( "Toggable", true )]
 	public int InteractionBodyGroup { get; set; } = -1;
 

@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Components.NotificationManager;
+using Sandbox;
 using Sandbox.UI;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	[ConCmd.Server( "noclip" )]
 	public static void DoNoclip()
 	{
-		if ( !TRGame.AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) )
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) )
 			return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
@@ -129,6 +130,12 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		PlaySound( sound );
 	}
 
+	[ClientRpc]
+	public void DisplayNotification( string message, float lifeTime )
+	{
+		BaseHud.Current.NotificationManager.AddNotification( message, NotificationType.Info, lifeTime );
+	}
+
 	public virtual void SetUpPlayerStats()
 	{
 		CreatePhysHull();
@@ -143,7 +150,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		FreezeMovement = FreezeEnum.None;
 
-		if ( TRGame.AdminIDs.Contains( Client.SteamId ) )
+		if ( TRGame.DevIDs.Contains( Client.SteamId ) )
 			SetUpAdmin();
 	}
 

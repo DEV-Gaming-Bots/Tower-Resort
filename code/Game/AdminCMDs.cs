@@ -15,14 +15,12 @@ public partial class TRGame
 {
 	//Hardcoded way of doing an admin check
 	//We should figure out a better way of doing this
-	public static long[] AdminIDs => new long[]
+	public static long[] DevIDs => new long[]
 	{
 		//ItsRifter
 		76561197972285500,
 		//AlexVeeBee
 		76561198294665561,
-		//Xenthio
-		76561198231234036,
 		//Baik
 		76561197991940798,
 		//trende2001
@@ -30,9 +28,9 @@ public partial class TRGame
 	};
 
 	[ConCmd.Server( "tr.dueling.admin.stop" )]
-	public static void duelingForceStop()
+	public static void DuelingForceStop()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		Instance.ResetDuelToIdle();
 
@@ -40,7 +38,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.entity.spawn.condo" )]
 	public static void SpawnCondoItemCMD( string entName )
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( player == null ) return;
@@ -48,7 +46,7 @@ public partial class TRGame
 		if ( ResourceLibrary.TryGet( $"assets/condo/{entName}.citm", out CondoAssetBase asset ) )
 		{
 			var item = new CondoItemBase();
-			item.SpawnFromAsset( asset );
+			item.SpawnFromAsset( asset, player );
 			item.Position = player.GetEyeTrace( 999.0f, 0.1f ).EndPosition;
 			item.Rotation = Rotation.LookAt( player.EyeRotation.Backward.WithZ( 0 ), Vector3.Up );
 			item.SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
@@ -59,15 +57,18 @@ public partial class TRGame
 				var present = FindInBox( player.AssignedCondo.Condo.WorldSpaceBounds );
 
 				if ( present.Contains( item ) )
+				{
 					item.SetParent( player.AssignedCondo.Condo );
-			}
+					item.Owner = player;
+				}
+			} 
 		}
 	}
 
 	[ConCmd.Server( "tr.entity.spawn.lobby" )]
 	public static void SpawnLobbyItemCMD( string entName, bool isStatic = false )
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
 		if ( player == null ) return;
@@ -99,7 +100,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.entity.delete" )]
 	public static void DeleteEntityCMD()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
 		if ( player == null ) return;
@@ -114,7 +115,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.player.give.credits" )]
 	public static void GiveCreditsCMD( int amt, string targetName = "" )
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
 		if ( player == null ) return;
@@ -145,7 +146,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.game.poker.setcard" )]
 	public static void SetCards( int card, int number, int suit )
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( player == null ) return;
@@ -171,7 +172,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.game.reset" )]
 	public static void ResetGame()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var ents = All.ToList();
 		ents.RemoveAll( e => e is IClient );
@@ -205,7 +206,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.player.pawn.set" )]
 	public static void SetPawnCMD( int type, string targetName = "" )
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as MainPawn;
 		if ( player == null ) return;
@@ -266,7 +267,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.data.connect" )]
 	public static void DataTest()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		_ = Instance.StartSocket();
 	}
@@ -274,7 +275,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.data.reset" )]
 	public static void DataCheck()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		Instance.DataSocket.Dispose();
 	}
@@ -282,7 +283,7 @@ public partial class TRGame
 	[ConCmd.Server( "tr.data.save" )]
 	public static void DataSaveCMD()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		Instance.DoSave(ConsoleSystem.Caller);
 	}
@@ -290,7 +291,7 @@ public partial class TRGame
 	[ConCmd.Admin( "tr.poker.admin.start" )]
 	public static void PokerAdminStart()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( player == null ) return;
@@ -307,7 +308,7 @@ public partial class TRGame
 	[ConCmd.Admin( "tr.poker.admin.update" )]
 	public static void PokerAdminNextState()
 	{
-		if ( !AdminIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
 
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( player == null ) return;

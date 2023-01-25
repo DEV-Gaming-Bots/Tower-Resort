@@ -21,9 +21,10 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 	[Net] bool IsPreviewing { get; set; } = false;
 
-	public void SpawnFromAsset( CondoAssetBase asset )
+	public void SpawnFromAsset( CondoAssetBase asset, Entity owner = null )
 	{
 		Asset = asset;
+		Owner = owner;
 
 		SetModel( Asset.ModelPath );
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
@@ -106,6 +107,8 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		{
 			if ( Asset == null ) return;
 
+			curSound.Stop();
+
 			if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			{
 				if ( Sitter != null )
@@ -130,6 +133,9 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 			return Sitter == null && Asset.IsInteractable;
+
+		if ( Asset.OwnerOnly && Owner != user )
+			return false;
 
 		return Asset.IsInteractable;
 	}
@@ -206,10 +212,10 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		if ( !IsUsable( user ) )
 			return false;
 
+		if ( Game.IsClient ) return false;
+
 		if ( Asset.Toggable )
 			isToggled = !isToggled;
-
-		if ( Game.IsClient ) return false;
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Drinkable )
 			DoDrinking( user );
@@ -261,7 +267,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			if ( !string.IsNullOrEmpty( Asset.InteractionMaterial ) )
 				SetMaterialOverride( Asset.InteractionMaterial );
 		}
-
+		
 		cooldown = (float)Asset.InteractCooldown;
 		var pawn = user as MainPawn;
 
