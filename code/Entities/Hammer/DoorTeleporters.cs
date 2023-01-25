@@ -15,6 +15,12 @@ public class DoorTeleporter : ModelEntity, IUse
 	[Property]
 	public EntityTarget TargetDest { get; set; }
 
+	[Property, ResourceType("sound")]
+	public string OpenSound { get; set; }
+
+	[Property, ResourceType( "sound" )]
+	public string CloseSound { get; set; }
+
 	TimeSince timeLastUse;
 
 	[Property]
@@ -28,7 +34,10 @@ public class DoorTeleporter : ModelEntity, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return timeLastUse > 1.5f || !IsLocked;
+		if ( timeLastUse < 4.0f )
+			return false;
+
+		return !IsLocked;
 	}
 
 	public async void OpenDoor(LobbyPawn opener)
@@ -43,9 +52,12 @@ public class DoorTeleporter : ModelEntity, IUse
 		}
 
 		opener.FreezeMovement = MainPawn.FreezeEnum.Movement;
-		opener.StartFading( To.Single( opener ), 3.5f, 1.5f, 1.75f);
+		opener.StartFading( To.Single( opener ), 3.5f, 1.5f, 1.75f );
+		opener.PlaySoundClientside( To.Single( opener ), OpenSound );
 
-		await Task.DelayRealtimeSeconds( 2.0f );
+		await Task.DelayRealtimeSeconds( 2.25f );
+
+		opener.PlaySoundClientside( To.Single( opener ), CloseSound );
 
 		opener.Position = dest.Position;
 		opener.ResetInterpolation();

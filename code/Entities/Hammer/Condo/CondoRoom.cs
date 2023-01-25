@@ -87,6 +87,8 @@ public partial class CondoRoom : Entity
 		door.Position = Position + Condo.DoorPos;
 		door.TargetDest = LeaveDestination;
 		door.SetParent( Condo );
+		door.OpenSound = "door_open";
+		door.CloseSound = "door_close";
 	}
 
 	public void Load()

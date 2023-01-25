@@ -123,6 +123,12 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		clothingContainer.DressEntity( this );
 	}
 
+	[ClientRpc]
+	public void PlaySoundClientside(string sound)
+	{
+		PlaySound( sound );
+	}
+
 	public virtual void SetUpPlayerStats()
 	{
 		CreatePhysHull();
