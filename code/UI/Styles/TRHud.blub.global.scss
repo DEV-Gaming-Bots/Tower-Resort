@@ -1,0 +1,142 @@
+@import "vars.scss";
+dropdown {
+    padding: 5px 9px;
+    gap: 10px;
+    
+    color: white;
+    border-radius: 3px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height */
+
+    color: #000000;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+
+    align-items: center;
+
+    // min-height: with padding and font size
+    min-height: 50px;
+    // justify-content: space-between;
+    // flex-direction: row-reverse;
+    .dropdown_indicator {
+        position: absolute;
+        right: 0;
+    }
+}
+TRHudTest {
+    padding: 32px;
+}
+.TRButton.btn {
+    background-color: $button-base-style-base;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    color: $button-base-text-enabled;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $button-base-style-hover;
+        transform: scale(1.1);
+        z-index: 2;
+    }
+    &:active {
+        transition: transform 0.3s ease, background-color 0.1s ease;
+        background-color: $button-base-style-active;
+    }
+    &.disabled {
+        background-color: $button-base-style-disabled;
+        color: $button-base-text-disabled;
+        transform: scale(1.0);
+    }
+
+    // #AAAAAA
+    // #EEF5F4
+    // #FFFFFF
+    // /* Rectangle 62 */ 
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 18px;
+    gap: 10px;
+    
+    border-radius: 10px;
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    /* btn btn-default */
+
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-transform: uppercase;
+
+
+    &.btn-prim {
+        background-color: $button-primary-style-base;
+        color: #FFFFFF;
+        &:hover {
+            background-color: $button-primary-style-hover;
+        }
+        &:active {
+            background-color: $button-primary-style-active;
+        }
+        &.disabled {
+            background-color: $button-primary-style-disabled;
+            color: $button-primary-text-disabled;
+        }
+    }
+
+    &.btn-danger {
+        background-color: $button-danger-style-base;
+        color: #FFFFFF;
+        &:hover {
+            background-color: $button-danger-style-hover;
+        }
+        &:active {
+            background-color: $button-danger-style-active;
+        }
+        &.disabled {
+            background-color: $button-danger-style-disabled;
+            color: $button-danger-text-disabled;
+        }
+    }
+}
+
+.themeSet {
+    &.panel {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 19px 0px;
+        gap: 0px;
+        .header {
+            padding: 0px 19px;
+            font-family: 'Outfit';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 30px;
+            text-transform: uppercase;
+        }
+        .body {
+            padding: 19px 19px;
+            overflow: scroll;
+        }
+    }
+}

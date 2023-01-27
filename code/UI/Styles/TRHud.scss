@@ -1,5 +1,45 @@
 $blue: #3273eb;
+.popup-panel {
+    position: absolute;
+    background-color: #061C37;
+    border: 1px solid rgba(55, 54, 126, 0.75);
+    border-radius: 3px; 
+    backdrop-filter: blur(12px);
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: white;
+    overflow: scroll;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
+    button {
+        font-family: 'Outfit';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+    
+        width: 100%;
+        padding: 9px;
+        background: #0A2E59;
+        border-radius: 3px;    
+        border: 1px solid #368ff400;
+
+        iconpanel {
+            font-size: 32px;
+        }
+
+        &:hover {
+            border: 1px solid #368EF4;
+            color: #9abae0;
+        }
+    }
+
+    .active {
+        background-color: #083D64;
+        border: 1px solid #368EF4;
+        color: #9abae0;
+    }
+}
 @import "/UI/Styles/TRChat.scss";
 
 @keyframes pulse {

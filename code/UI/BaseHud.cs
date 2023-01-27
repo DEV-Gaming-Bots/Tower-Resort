@@ -7,15 +7,12 @@ using Sandbox;
 using Sandbox.UI;
 using Components.BaseGamesUi;
 using Components.NotificationManager;
-using Sandbox.UI;
-using TowerResort.UI;
 
 public class BaseHud : RootPanel
 {
 	public static BaseHud Current;
 	public NotificationManagerUI NotificationManager;
-	/*public BaseGamesUi.CardsPanel TestCardsPanel;*/
-
+	public TRBaseUIComponents.ThemePanel CurrentTheme; 
 	public BaseHud()
 	{
 		if ( Current != null )
@@ -33,5 +30,6 @@ public class BaseHud : RootPanel
 		AddChild<TRChat>();
 		AddChild<HudTracker>();
 		AddChild<Scoreboard>();
+		AddChild<TRHudTest>();
 	}
 }

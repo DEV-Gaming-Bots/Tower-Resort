@@ -1,0 +1,39 @@
+$button-base-style-base: #AAAAAA;
+$button-base-style-hover: #BDBDBD;
+$button-base-style-active: #D0D0D0;
+$button-base-style-disabled: #D0D0D0;
+$button-base-text-enabled: #ffffff;
+$button-base-text-disabled: #AAAAAA;
+
+$button-primary-style-base: #368EF4;
+$button-primary-style-hover: #65ACFF;
+$button-primary-style-active: #86BEFF;
+$button-primary-style-disabled: #86BEFF;
+$button-primary-text-enabled: #ffffff;
+$button-primary-text-disabled: #368EF4;
+
+$button-danger-style-base: #FA5757;
+$button-danger-style-hover: #FF7E7E;
+$button-danger-style-active: #FFA1A1;
+$button-danger-style-disabled: #FFA1A1;
+$button-danger-text-enabled: #ffffff;
+$button-danger-text-disabled: #FA5757;
+
+// theme colors
+
+ThemePanel  {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+iconpanel,
+.iconpanel {
+    font-family: "Material Icons";
+}
+
+InfoPanel {
+    padding: 32px;
+}

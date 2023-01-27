@@ -1,0 +1,34 @@
+@import "vars.scss";
+
+.theme-light {
+    dropdown {
+        background-color: #F4F9FF;
+        border: 1px solid rgba(224, 223, 255, 0.75);
+    }
+
+    .themeSet {
+        &.panel {
+            .header { 
+                color: black;
+            }
+            box-sizing: border-box;
+            
+            /* Auto layout */
+            
+            background-color: #F4F9FF;
+            border: 1px solid rgba(224, 223, 255, 0.75);
+            border-radius: 18px;
+
+            &.info {
+                background-color: #D9EFFF;
+                border: 1px solid #368EF4;
+            }
+            &.danger {
+                background-color: #FFD9D9;
+                border: 1px solid #FA5757;
+            }
+        }
+
+    }
+}
+

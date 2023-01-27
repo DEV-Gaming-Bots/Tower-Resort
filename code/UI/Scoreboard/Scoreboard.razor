@@ -49,6 +49,15 @@
         OnClickPlayers();
     }
 
+    public void HideAllTabs()
+    {
+        about.SetOpen(false);
+        awards.SetOpen(false);
+        news.SetOpen(false);
+        players.SetOpen(false);
+        settings.SetOpen(false);
+    }
+
     public override void Tick()
     {
         SetClass("open", Input.Down(InputButton.Score));
@@ -56,46 +65,31 @@
 
     public void OnClickPlayers()
     {
-        about.SetOpen(false);
-        awards.SetOpen(false);
-        news.SetOpen(false);
+        HideAllTabs();
         players.SetOpen(true);
-        settings.SetOpen(false);
     }
 
     public void OnClickAwards()
     {
-        about.SetOpen(false);
+        HideAllTabs();
         awards.SetOpen(true);
-        news.SetOpen(false);
-        players.SetOpen(false);
-        settings.SetOpen(false);
     }
 
     public void OnClickNews()
     {
-        about.SetOpen(false);
-        awards.SetOpen(false);
+        HideAllTabs();
         news.SetOpen(true);
-        players.SetOpen(false);
-        settings.SetOpen(false);
     }
 
     public void OnClickSettings()
     {
-        about.SetOpen(false);
-        awards.SetOpen(false);
-        news.SetOpen(false);
-        players.SetOpen(false);
+        HideAllTabs();
         settings.SetOpen(true);
     }
 
     public void OnClickAbout()
     {
+        HideAllTabs();
         about.SetOpen(true);
-        awards.SetOpen(false);
-        news.SetOpen(false);
-        players.SetOpen(false);
-        settings.SetOpen(false);
     }
 }
