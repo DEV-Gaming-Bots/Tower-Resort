@@ -30,7 +30,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Playable )
-		{	
+		{
 			switch ( Asset.GameType )
 			{
 				case CondoAssetBase.GameEnum.Poker:
@@ -39,14 +39,19 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			}
 		}
 
-		if(Asset.Type == CondoAssetBase.ItemEnum.Sittable)
+		if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )
 		{
 			CreateParticles( To.Everyone );
 		}
 
-		if(Asset.Type == CondoAssetBase.ItemEnum.Drinkable)
+		if ( Asset.Type == CondoAssetBase.ItemEnum.Drinkable )
 		{
 			totalUses = asset.TotalDrinkUses;
+		}
+
+		if ( Asset.Type == CondoAssetBase.ItemEnum.Visual )
+		{
+			SetUpVideoPlayer();
 		}
 
 	}

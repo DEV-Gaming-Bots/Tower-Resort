@@ -2,6 +2,7 @@
 global using System;
 global using System.Linq;
 global using System.Threading.Tasks;
+global using System.Collections.Generic;
 global using TowerResort.Achievements;
 global using TowerResort.Entities.CondoItems;
 global using TowerResort.Player;
@@ -12,6 +13,8 @@ namespace TowerResort;
 public partial class TRGame : GameManager
 {
 	public static TRGame Instance => Current as TRGame;
+
+	public List<WebSocket> VideoSockets { get; set; } = new();
 
 	[Net] public bool RunningDedi { get; private set; }
 

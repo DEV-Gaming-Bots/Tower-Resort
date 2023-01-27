@@ -38,7 +38,7 @@ public class Jetpack : ModelEntity, IClothingUsable
 	{
 		base.Simulate( cl );
 
-		if ( User.Controller is not StandardController ) return;
+		if ( User.Controller is NoclipControl ) return;
 
 		if( jetFuel < 100.0f && timeJetUsed > 4.0f )
 		{
