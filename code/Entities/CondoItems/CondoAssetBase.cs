@@ -90,6 +90,9 @@ public class CondoAssetBase : GameResource
 	[Category( "Sounds" ), ResourceType( "sound" ), ShowIf("Type", ItemEnum.Sound)]
 	public string InteractSound { get; set; }
 
+	[Category( "Sounds" ), Title("Can use HTTP Music"), ResourceType( "sound" ), Description("Can this use music from the net"), ShowIf( "Type", ItemEnum.Sound )]
+	public bool CanUseHTTPMusic { get; set; } = false;
+
 	[Category( "Animated Functionality" ), ResourceType( "sound" ), ShowIf( "Type", ItemEnum.Animated )]
 	public string AnimatingSound { get; set; }
 

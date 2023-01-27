@@ -21,7 +21,6 @@ public class VideoStreamPanel : Panel
 		
 	public VideoPlayer Player { get; set; }
 	public VideoReceiver Receiver { get; set; }
-		
 	public float FrameLoadTime { get; set; }
 
 	public float Throughput { get; set; }

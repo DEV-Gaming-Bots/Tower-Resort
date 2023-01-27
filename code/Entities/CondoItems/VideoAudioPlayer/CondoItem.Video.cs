@@ -7,7 +7,7 @@ namespace TowerResort.Entities.CondoItems;
 public partial class CondoItemBase : IPlayableVideo
 {
 	public VideoPlayer Player { get; set; }
-	private VideoReceiver Receiver { get; set; }
+	private VideoReceiver VidReciever { get; set; }
 	[Net] public bool IsVideoPlaying { get; set; }
 	[Net] public string VideoId { get; set; }
 	[Net] public TimeSince VideoStart { get; set; }
@@ -42,12 +42,12 @@ public partial class CondoItemBase : IPlayableVideo
 		SceneObject.Attributes.Set("tint", Color.White);
 
 		VideoStreamPanel.Instance.Player = Player;
-		VideoStreamPanel.Instance.Receiver = Receiver;
+		VideoStreamPanel.Instance.Receiver = VidReciever;
 	}
 
 	private async void InitializeServerReceiver()
 	{
-		Receiver = new VideoReceiver( async (id) =>
+		VidReciever = new VideoReceiver( async (id) =>
 		{
 			VideoId = id;
 			VideoStart = 0;
@@ -76,13 +76,13 @@ public partial class CondoItemBase : IPlayableVideo
 			PlayVideo( id );
 		}, OnVideoProgress );
 			
-        await Receiver.CreateSocket();
+        await VidReciever.CreateSocket();
 	}
 
 	private async void InitializeReceiver()
 	{
-		Receiver = new VideoReceiver( Player );
-		await Receiver.CreateSocket();
+		VidReciever = new VideoReceiver( Player );
+		await VidReciever.CreateSocket();
 	}
 
 	[Event.Client.Frame]
@@ -100,14 +100,14 @@ public partial class CondoItemBase : IPlayableVideo
 	private void UpdateFrames()
 	{
 		Player?.UpdateFrames();
-		Receiver?.Update();
+		VidReciever?.Update();
 	}
 
 	[ClientRpc]
 	public void PlayVideo( string id )
 	{
 		Log.Info( $"Playing the video! {id}" );
-		Receiver.JoinVideoStream( id );
+		VidReciever.JoinVideoStream( id );
 	}
 		
 	public void RequestVideoURL(string url)
@@ -115,7 +115,7 @@ public partial class CondoItemBase : IPlayableVideo
 		Game.AssertServer();
 			
 		Log.Info( $"Requested a video, URL: {url}" );
-		Receiver.RequestVideo(url);
+		VidReciever.RequestVideo(url);
 	}
 
 	[ClientRpc]

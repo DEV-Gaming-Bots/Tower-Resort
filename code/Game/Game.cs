@@ -149,4 +149,16 @@ public partial class TRGame : GameManager
 	{
 		Sound.FromScreen( path );
 	}
+
+	[ConCmd.Server( "tr.audio.request" )]
+	public static void RequestAudio( int playable, string url )
+	{
+		// var ent = FindByIndex( playable );
+		// if ( ent != null && ent is TVEntity tvEntity )
+		// {
+		// 	tvEntity.RequestVideo(url);
+		// }
+
+		//TRGame.Instance?.ScreenPlayers[0].RequestVideo( url );
+	}
 }

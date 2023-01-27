@@ -12,10 +12,12 @@
 		IsInteractable = true
 		Toggable = true
 		InteractCooldown = 2
+		OwnerOnly = false
 		InteractionBodyGroup = -1
 		InteractionMaterial = resource:"materials/interactive/radio/radio/radio.vmat"
 		InteractionMaterialOverride = resource:"materials/interactive/radio/radio/radio_on.vmat"
-		InteractSound = resource:"sound/interactives/classic_radio.sound"
+		InteractSound = null
+		CanUseHTTPMusic = true
 		AnimatingSound = null
 		UnboxSound = null
 		InteractAnimBool = ""
@@ -26,9 +28,7 @@
 		ParticleName = null
 		GameType = "Unspecified"
 		SitHeight = 0
-		Seats = 
-		{
-		}
+		Seats = null
 		IsAlcohol = false
 		TotalDrinkUses = 1
 		DrinkSound = ""

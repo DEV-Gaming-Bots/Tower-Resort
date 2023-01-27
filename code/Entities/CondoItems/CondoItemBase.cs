@@ -54,6 +54,11 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			SetUpVideoPlayer();
 		}
 
+		if(Asset.Type == CondoAssetBase.ItemEnum.Sound && Asset.CanUseHTTPMusic)
+		{
+			SetUpMusicPlayer();
+		}
+
 	}
 
 	public void DisplayMessage( List<IClient> clients, string msg, float time = 5.0f )

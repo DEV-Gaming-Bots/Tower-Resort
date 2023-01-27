@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Sandbox;
+using TowerResort.Video;
 
-namespace TowerResort.Video;
+namespace TowerResort.Audio;
 
-public class VideoReceiver
+public class AudioReceiver
 {
-	//public string WebSocketURL { get; } = "ws://avbdns.duckdns.org:8080/";
-	public string WebSocketURL { get; } = "ws://m0uka.dev:8880";
-
+	public string WebSocketURL { get; } = "ws://avbdns.duckdns.org:8080/";
+	//public string WebSocketURL { get; } = "ws://m0uka.dev:8880";
 	public Action<string[]> MessageReceived { get; set; }
 	public Action<string> StreamSuccess { get; set; }
-	public Action<string> VideoProgress { get; set; }
+	public Action<string> AudioProgress { get; set; }
 		
-	public VideoPlayer VideoPlayer { get; set; }
+	public AudioPlayer MusicPlayer { get; set; }
 		
 	private WebSocket WebSocket { get; set; }
 
@@ -31,15 +31,15 @@ public class VideoReceiver
 		}
 	}
 
-	public VideoReceiver( VideoPlayer player )
+	public AudioReceiver( AudioPlayer player )
 	{
-		VideoPlayer = player;
+		MusicPlayer = player;
 	}
 		
-	public VideoReceiver(Action<string> onStreamSuccess, Action<string> onVideoProgress)
+	public AudioReceiver(Action<string> onStreamSuccess, Action<string> onAudioProgress )
 	{
 		StreamSuccess = onStreamSuccess;
-		VideoProgress = onVideoProgress;
+		AudioProgress = onAudioProgress;
 	}
 
 	private byte[] MergeBytes(List<byte[]> fragments)
@@ -105,13 +105,13 @@ public class VideoReceiver
 		}
 		catch ( Exception )
 		{
-			Log.Error( "Couldn't connect to VideoPlayer Backend! Retrying connection in 5 seconds..." );
+			Log.Error( "Couldn't connect to AudioPlayer Backend! Retrying connection in 5 seconds..." );
 			await RetryConnection();
 		}
 
 		if ( WebSocket.IsConnected )
 		{
-			Log.Info( "Connected to VideoPlayer Backend" );
+			Log.Info( "Connected to AudioPlayer Backend" );
 		}
 		else return;
 
@@ -128,7 +128,7 @@ public class VideoReceiver
 
 					byte[] fragment = MergeBytes( frameFragments );
 
-					VideoPlayer.AddFrame(fragment);
+					MusicPlayer.AddFrame(fragment);
 					frameFragments.Clear();
 				}
 				else
@@ -141,7 +141,7 @@ public class VideoReceiver
 				// Check if data is JPEG
 				if ( data.Length > 1 && data[0] == 0xFF && data[1] == 0xD8 )
 				{
-					VideoPlayer.AddFrame( data.ToArray() );
+					MusicPlayer.AddFrame( data.ToArray() );
 				}
 				else if ( data.Length > 0 && data[0] == 0xAA )
 				{
@@ -151,7 +151,7 @@ public class VideoReceiver
 				{
 					// sound frame!
 					short[] shorts = ConvertBitsToShorts( data.Slice( 1 ).ToArray() );
-					VideoPlayer.AddSoundSample( shorts );
+					MusicPlayer.AddSoundSample( shorts );
 				}
 			}
 				
@@ -183,28 +183,26 @@ public class VideoReceiver
 				Log.Error( error );
 			}
 				
-			if ( msgId == "video_progress" )
+			if ( msgId == "audio_progress" )
 			{
 				string rest = string.Join( " ", messageSplit.Skip( 1 ));
-				VideoProgress( rest );
+				AudioProgress( rest );
 			}
-				
+			
 			if ( msgId == "stream_end" )
 			{
-				VideoPlayer.IsStreaming = false;
+				MusicPlayer.IsStreaming = false;
 			}
 
 			if ( msgId == "join_success" )
 			{
 				string rest = string.Join( " ", messageSplit.Skip( 1 ));
-				var video = JsonSerializer.Deserialize<VideoData>(rest);
+				var video = JsonSerializer.Deserialize<AudioData>(rest);
 					
 				Log.Info( "Successfully joined, starting!" );
-				VideoPlayer.VideoData = video;
-				VideoPlayer.Ready();
+				MusicPlayer.AudioData = video;
+				MusicPlayer.Ready();
 			}
-				
-				
 		};
 	}
 
@@ -216,7 +214,7 @@ public class VideoReceiver
 		{
 			await Task.Delay(5000);
 				
-			Log.Info($"Trying to reconnect to Video Backend... Attempt number {retryNum}");
+			Log.Info($"Trying to reconnect to Audio Backend... Attempt number {retryNum}");
 			try
 			{
 				WebSocket = new WebSocket();
@@ -229,25 +227,25 @@ public class VideoReceiver
 
 			retryNum++;
 		}
-			
-		Log.Info( "Successfully reconnected to Video Backend!" );
+		
+		Log.Info( "Successfully reconnected to Audio Backend!" );
 	}
 
 	/// <summary>
 	/// Request a video (serverside)
 	/// </summary>
-	public void RequestVideo(string url)
+	public void RequestAudioURL(string url)
 	{
 		if ( !WebSocket.IsConnected ) return;
-		WebSocket.Send( $"stream_request {url}" );
+		WebSocket.Send( $"stream_request_audio {url}" );
 	}
 		
 	/// <summary>
 	/// Join video stream (clientside)
 	/// </summary>
-	public void JoinVideoStream(string id)
+	public void JoinAudioStream(string id)
 	{
 		if ( !WebSocket.IsConnected ) return;
-		WebSocket.Send( $"stream_join {id}" );
+		WebSocket.Send( $"stream_join_audio {id}" );
 	}
 }
