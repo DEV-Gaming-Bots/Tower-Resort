@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using TowerResort.Entities.Condos;
@@ -12,6 +13,58 @@ namespace TowerResort.Player;
 public partial class LobbyPawn
 {
 	public CondoRoom AssignedCondo { get; set; }
+	public bool PartyActive { get; set; } = false;
+
+	public TimeSince TimePartyHappen;
+
+	//When a condo owner wants to start a party
+	public void StartCondoParty()
+	{
+		if ( AssignedCondo == null || PartyActive ) return;
+
+		PartyActive = true;
+		TimePartyHappen = 0;
+
+		string condoRoom = AssignedCondo.Name.Replace( "_", " " );
+
+		TRChat.AddChatEntryStatic(To.Everyone, "SERVER", $"{Client.Name} is hosting a party at {condoRoom}");
+	}
+
+	//Ends the party
+	public void EndCondoParty()
+	{
+		if ( AssignedCondo == null || !PartyActive ) return;
+
+		PartyActive = false;
+		TRChat.AddChatEntryStatic( To.Everyone, "SERVER", $"{Client.Name}'s party has ended" );
+	}
+
+	int presentPlayers = 0;
+	TimeUntil timeUpdate;
+
+	//Condo simulation
+	public void CondoSimulate()
+	{
+		if ( Game.IsClient || AssignedCondo == null ) return;
+
+		if( PartyActive && TimePartyHappen > (60 * 5) )
+		{
+			EndCondoParty();
+		}
+
+		var players = FindInBox( AssignedCondo.Condo.WorldSpaceBounds ).Where(x => x is LobbyPawn && x != this );
+		presentPlayers = players.Count();
+
+		if ( presentPlayers < 4 )
+			timeUpdate = 60.0f;
+
+		if ( timeUpdate <= 0 )
+		{
+			AchTracker.UpdateAchievement( typeof( PartyAddict ) );
+			Log.Info( $"A minute has passed - {AchTracker.GetAchievementProgress(typeof(PartyAddict))}" );
+			timeUpdate = 60.0f;
+		}
+	}
 
 	//Assigns the player their random but available condo
 	public void AssignCondo()
@@ -81,12 +134,38 @@ public partial class LobbyPawn
 
 		SaveCondo();
 		DisplayNotification( To.Single( this ), $"You have checked out of your condo", 5.0f );
+		EndCondoParty();
 
 		AssignedCondo.ClearRoom();
 		AssignedCondo.Owner = null;
 		AssignedCondo = null;
 
 		TRGame.Instance.DoSave( Client );
+	}
+
+
+	//BELOW IS TEMPORARY, Used for condo testing, might have a use later
+
+	[ConCmd.Server("tr.condo.party.start")]
+	public static void CondoPartyStartCMD()
+	{
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+
+		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
+		if ( pawn == null ) return;
+
+		pawn.StartCondoParty();
+	}
+
+	[ConCmd.Server( "tr.condo.party.end" )]
+	public static void CondoPartyEndCMD()
+	{
+		if ( !TRGame.DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+
+		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
+		if ( pawn == null ) return;
+
+		pawn.EndCondoParty();
 	}
 
 	[ConCmd.Server( "tr.condo.assign" )]

@@ -114,7 +114,7 @@ public partial class TRGame
 
 		var ent = player.GetEyeTrace( 999.0f ).Entity;
 
-		if ( ent is MainPawn || ent is WorldEntity ) return;
+		if ( ent == null || ent is MainPawn || ent is WorldEntity ) return;
 
 		ent.Delete();
 	}

@@ -84,13 +84,42 @@ public partial class CondoRoom : Entity
 			index++;
 		}
 
-		DoorTeleporter door = new DoorTeleporter();
-		door.SetModel( "models/citizen_props/crate01.vmdl" );
-		door.Position = Position + Condo.DoorPos;
-		door.TargetDest = LeaveDestination;
-		door.SetParent( Condo );
-		door.OpenSound = "door_open";
-		door.CloseSound = "door_close";
+		index = 0;
+
+		foreach ( var condoDoor in Condo.BuyDoorPos )
+		{
+			BuyableDoor buyDoor = new BuyableDoor();
+
+			buyDoor.SetModel( Condo.BuyDoorModel[index] );
+
+			buyDoor.Distance = 90;
+			buyDoor.Speed = 100;
+
+			buyDoor.MoveDirType = DoorEntity.DoorMoveType.Rotating;
+
+			buyDoor.Position = Condo.BuyDoorPos[index] + Position;
+			buyDoor.LocalRotation = Condo.BuyDoorAngles[index].ToRotation();
+			//buyDoor.LocalRotation = Condo.BuyDoorAngles[index].ToRotation();
+
+			buyDoor.SetParent( this );
+
+			buyDoor.LocalPosition = Condo.BuyDoorPos[index];
+
+			buyDoor.RotationA = Condo.BuyDoorOpenAngles[index].ToRotation();
+			buyDoor.RotationB = Rotation;
+
+			buyDoor.UpgradeCost = Condo.BuyDoorCosts[index];
+
+			index++;
+		}
+
+		DoorTeleporter exitDoor = new DoorTeleporter();
+		exitDoor.SetModel( "models/citizen_props/crate01.vmdl" );
+		exitDoor.Position = Position + Condo.DoorPos;
+		exitDoor.TargetDest = LeaveDestination;
+		exitDoor.SetParent( Condo );
+		exitDoor.OpenSound = "door_open";
+		exitDoor.CloseSound = "door_close";
 	}
 
 	public void Load()
@@ -123,6 +152,7 @@ public partial class CondoRoom : Entity
 	public void PlaceLights( Vector3 pos, float radius, Color colour )
 	{
 		SceneLight light = new SceneLight( Scene, pos, radius, colour );
+		light.ShadowsEnabled = false;
 		condoLights.Add( light );
 	}
 

@@ -125,7 +125,6 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		if( !clothingContainer.Has(glasses) )
 			clothingContainer.Clothing.Add( glasses );
 
-
 		var jetpack = new Jetpack();
 		jetpack.Owner = this;
 		jetpack.Spawn();

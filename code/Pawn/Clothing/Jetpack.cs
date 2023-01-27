@@ -26,6 +26,7 @@ public class Jetpack : ModelEntity, IClothingUsable
 	{
 		base.Spawn();
 		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
 
 		Model = WorldModel;
 		SetParent( User, true );

@@ -115,14 +115,15 @@ public partial class LobbyPawn : MainPawn
 			Inventory.ActiveWeapon = null;
 		}
 
-		SimulateAnimator();
-
 		if ( FocusedEntity != null )
 			FocusedEntity.Simulate( cl );
 
 		TickPlayerUse();
 		SimulateActiveChild( ActiveChild );
 		SimulateActiveWeapon( Inventory.ActiveWeapon );
+		SimulateAnimator();
+
+		CondoSimulate();
 
 		base.Simulate( cl );
 	}

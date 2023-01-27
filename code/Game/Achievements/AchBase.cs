@@ -35,18 +35,22 @@ public class AchBase
 		Progress += update;
 		Progress = Progress.Clamp( 0, Goal );
 
-		if ( Progress % PerUpdateNotify == 0 && !IsSecret )
-		{
-			//TODO: achievement notifications
-		}
-
 		if ( Progress == Goal )
 			IsCompleted = true;
 	}
-
 	public int GetProgress()
 	{
 		return Progress;
+	}
+
+	public static int GetAllAchievementsCount()
+	{
+		int count = 0;
+
+		foreach ( var ach in TypeLibrary.GetTypes<AchBase>() )
+			count++;
+
+		return count;
 	}
 }
 

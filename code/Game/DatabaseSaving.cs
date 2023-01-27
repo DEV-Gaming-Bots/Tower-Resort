@@ -28,6 +28,7 @@ public class PlayerData : IPlayerData
 	public List<Vector3> CondoInfoPosition { get; set; }
 	public List<Rotation> CondoInfoRotation { get; set; }
 	public List<string> CondoInfoAsset { get; set; }
+	//TODO, Get achievements stored
 }
 
 public partial class TRGame 

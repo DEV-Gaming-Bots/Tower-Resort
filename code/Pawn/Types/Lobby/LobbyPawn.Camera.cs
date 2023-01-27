@@ -55,6 +55,17 @@ public partial class LobbyPawn
 
 	float speed = 175;
 
+	public TraceResult TraceCheck()
+	{
+		var tr = Trace.Ray( EyePosition, EyePosition + Camera.Rotation.Backward * ThirdCamOffset )
+			.WithTag( "solid" )
+			.Ignore( this )
+			.Size( 26.0f )
+			.Run();
+
+		return tr;
+	}
+
 	public void DoZoomingCamera()
 	{
 		if ( InThird )
@@ -137,7 +148,7 @@ public partial class LobbyPawn
 	{
 		if ( InThird )
 		{
-			Camera.Position = EyePosition + EyeRotation.Backward * ThirdCamOffset;
+			Camera.Position = TraceCheck().EndPosition;
 			Camera.FirstPersonViewer = null;
 		} 
 		else

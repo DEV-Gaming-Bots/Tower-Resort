@@ -75,9 +75,9 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ 177.765839, 69.90921, -0.021378 ]
+						origin = [ 173.845001, 69.90921, -0.021378 ]
 						angles = [ -0.0, 90.0, 0.0 ]
-						dimensions = [ 7.659939, 83.503174, 119.615868 ]
+						dimensions = [ 7.659939, 91.344818, 119.615868 ]
 					},
 					{
 						_class = "PhysicsShapeBox"
@@ -195,9 +195,9 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ 108.244301, 70.035545, 47.694042 ]
+						origin = [ 103.763206, 70.035545, 53.988632 ]
 						angles = [ -0.0, 90.0, 0.0 ]
-						dimensions = [ 7.407364, 57.008499, 24.185036 ]
+						dimensions = [ 7.407364, 50.074684, 11.595858 ]
 					},
 					{
 						_class = "PhysicsShapeBox"
@@ -205,9 +205,9 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ -54.480595, 81.981422, 47.694042 ]
+						origin = [ -60.578434, 81.981422, 53.649315 ]
 						angles = [ -0.0, 90.0, 0.0 ]
-						dimensions = [ 7.886837, 57.008499, 24.185036 ]
+						dimensions = [ 7.886837, 51.628922, 12.27449 ]
 					},
 					{
 						_class = "PhysicsShapeBox"
@@ -235,9 +235,9 @@
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
-						origin = [ 6.759644, 81.395866, -0.021378 ]
+						origin = [ 2.510155, 81.395866, -0.021378 ]
 						angles = [ 0.0, 0.0, 0.0 ]
-						dimensions = [ 68.704117, 8.473923, 119.615868 ]
+						dimensions = [ 77.202942, 8.473923, 119.615868 ]
 					},
 				]
 			},
@@ -247,9 +247,9 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						filename = "models/basic_condo.dmx"
+						filename = "models/condo/dmx/mesh/basic_condo.dmx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 90.0, 0.0 ]
 						import_scale = 1.0
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
