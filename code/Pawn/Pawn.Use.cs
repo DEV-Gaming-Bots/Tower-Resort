@@ -13,6 +13,7 @@ public partial class MainPawn
 	/// Entity the player is currently using via their interaction key.
 	/// </summary>
 	public Entity Using { get; protected set; }
+	public bool IsGripped { get; protected set; }
 
 	/// <summary>
 	/// This should be called somewhere in your player's tick to allow them to use entities
@@ -25,22 +26,46 @@ public partial class MainPawn
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
-			if ( Input.Pressed( InputButton.Use ) )
+			if(PlayingInVR)
 			{
-				Using = FindUsable();
-
-				if ( Using == null )
+				if(Input.VR.RightHand.Grip.Value >= 1 && !IsGripped )
 				{
-					UseFail();
+					Using = FindUsable(true);
+					IsGripped = true;
+
+					if ( Using == null )
+					{
+						UseFail();
+						return;
+					}
+
+				} 
+				else if ( Input.VR.RightHand.Grip.Value < 1 && IsGripped )
+				{
+					StopUsing();
+					IsGripped = false;
+				}
+			} 
+			else
+			{
+				if ( Input.Pressed( InputButton.Use ) )
+				{
+					Using = FindUsable();
+
+					if ( Using == null )
+					{
+						UseFail();
+						return;
+					}
+				}
+
+				if ( !Input.Down( InputButton.Use ) )
+				{
+					StopUsing();
 					return;
 				}
 			}
 
-			if ( !Input.Down( InputButton.Use ) )
-			{
-				StopUsing();
-				return;
-			}
 
 			if ( !Using.IsValid() )
 				return;
@@ -89,10 +114,10 @@ public partial class MainPawn
 	/// <summary>
 	/// Find a usable entity for this player to use
 	/// </summary>
-	protected virtual Entity FindUsable()
+	protected virtual Entity FindUsable(bool usingVR = false)
 	{
 		// First try a direct 0 width line
-		var tr = GetEyeTrace( 72.0f );
+		var tr = GetEyeTrace( 72.0f, 1.0f, usingVR );
 
 		// See if any of the parent entities are usable if we ain't.
 		var ent = tr.Entity;

@@ -25,6 +25,8 @@ public partial class TRGame
 		76561197991940798,
 		//trende2001
 		76561198043979097,
+		//IanSource2
+		76561198330783877,
 	};
 
 	[ConCmd.Server( "tr.dueling.admin.stop" )]
@@ -35,7 +37,7 @@ public partial class TRGame
 		Instance.ResetDuelToIdle();
 
 	}
-	[ConCmd.Server( "tr.entity.spawn.condo" )]
+	[ConCmd.Server( "tr.entity.sOwner.condo" )]
 	public static void SpawnCondoItemCMD( string entName, bool inInv = false )
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -71,7 +73,7 @@ public partial class TRGame
 		}
 	}
 
-	[ConCmd.Server( "tr.entity.spawn.lobby" )]
+	[ConCmd.Server( "tr.entity.sOwner.lobby" )]
 	public static void SpawnLobbyItemCMD( string entName, bool isStatic = false )
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;

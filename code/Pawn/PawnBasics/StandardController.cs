@@ -44,12 +44,12 @@ public partial class StandardController : BaseNetworkable
 	public Vector3 WishVelocity { get; set; }
 
 	public DuckController Duck;
-	public Unstuck Unstuck;
+	public Unstucker Unstuck;
 
 	public StandardController()
 	{
 		Duck = new DuckController( this );
-		Unstuck = new Unstuck( this );
+		Unstuck = new Unstucker( this );
 	}
 
 	public StandardController( MainPawn newOwner ) : this()

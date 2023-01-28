@@ -198,8 +198,6 @@ public partial class LobbyPawn
 		var pawn = ConsoleSystem.Caller.Pawn as LobbyPawn;
 		if ( pawn == null ) return;
 
-		Log.Info( pawn.AssignedCondo );
-
 		if ( pawn.AssignedCondo == null ) return;
 
 		pawn.AssignedCondo.Load();

@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace TowerResort.Player;
 
-public class Unstuck
+public class Unstucker
 {
 	public StandardController Controller;
 
@@ -11,7 +11,7 @@ public class Unstuck
 
 	internal int StuckTries = 0;
 
-	public Unstuck( StandardController controller )
+	public Unstucker( StandardController controller )
 	{
 		Controller = controller;
 	}

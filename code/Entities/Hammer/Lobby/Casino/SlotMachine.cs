@@ -221,7 +221,7 @@ public partial class SlotMachine : ModelEntity, IUse
 		if ( IsActive ) return false;
 
 		//The player isn't sitting down
-		if ( pawn.GroundEntity == null ) return false;
+		if ( Owner.GroundEntity == null ) return false;
 
 		return true;
 	}

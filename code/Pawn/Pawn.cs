@@ -21,6 +21,8 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	[ClientInput] public Entity ActiveWeaponInput { get; set; }
 	[Net, Predicted] public Entity LastActiveWeapon { get; set; }
 
+	[Net, Local] public bool PlayingInVR { get; set; }
+
 	public MainPawn DuelOpponent;
 
 	ClothingContainer clothingContainer;
@@ -203,6 +205,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 		Tags.Add( "trplayer" );
 		MoveToSpawn();
+
 		base.Spawn();
 	}
 
@@ -383,13 +386,34 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 		base.FrameSimulate( cl );
 	}
 
-	public TraceResult GetEyeTrace( float dist, float size = 1.0f, bool useHitbox = false )
+	public TraceResult GetEyeTrace( float dist, float size = 1.0f, bool useVR = false, bool useHitbox = false )
 	{
-		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * dist )
-			.Ignore( this )
-			.Size( size )
-			.UseHitboxes( useHitbox )
-			.Run();
+		TraceResult tr;
+
+		if(useVR)
+		{
+			var headPos = Input.VR.Head.Position;
+			var headRot = Input.VR.Head.Rotation;
+
+			Log.Info( headPos );
+
+			tr = Trace.Ray( headPos, headPos + headRot.Forward * dist )
+				.Ignore( this )
+				.Size( size )
+				.UseHitboxes( useHitbox )
+				.Run();
+
+			DebugOverlay.Line( tr.StartPosition, tr.EndPosition, 7.5f );
+		} 
+		else
+		{
+			tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * dist )
+				.Ignore( this )
+				.Size( size )
+				.UseHitboxes( useHitbox )
+				.Run();
+
+		}
 
 		return tr;
 	}

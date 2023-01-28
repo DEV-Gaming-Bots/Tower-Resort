@@ -100,7 +100,7 @@ public partial class TRGame : GameManager
 		//Display to current clients
 		TRChat.AddChatEntryStatic( To.Multiple( clients ), "SERVER", $"{cl.Name} has connected" );
 
-		var pawn = new LobbyPawn();
+		var pawn = new LobbyPawn(cl.IsUsingVr);
 		cl.Pawn = pawn;
 		pawn.SetUpPlayerStats();
 

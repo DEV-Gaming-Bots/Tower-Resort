@@ -24,6 +24,11 @@ public partial class LobbyPawn : MainPawn
 
 	}
 
+	public LobbyPawn(bool usingVR) : this()
+	{
+		PlayingInVR = usingVR;
+	}
+
 	public override void SetUpPlayerStats()
 	{
 		base.SetUpPlayerStats();
@@ -37,7 +42,7 @@ public partial class LobbyPawn : MainPawn
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if(Game.IsServer)
+		if( Game.IsServer )
 			AchTracker.UpdateAchievement( typeof( Walkathron ), 1 );
 
 		if ( !Game.IsClient )
@@ -67,11 +72,40 @@ public partial class LobbyPawn : MainPawn
 
 	public override void Spawn()
 	{
+		if ( Client.IsUsingVr )
+			PlayingInVR = true;
+		else
+			PlayingInVR = false;
+
+		if ( PlayingInVR )
+		{
+			Tags.Add( "trplayer" );
+			SpawnVR(); 
+		}
+		else
+			base.Spawn();
+
 		Drunkiness = 0;
-		base.Spawn();
 
 		Tags.Add( "pve" );
 		EnableSelfCollisions = false;
+	}
+
+	public override void BuildInput()
+	{
+		InputDirection = Input.AnalogMove;
+
+		var look = Input.AnalogLook;
+
+		var viewAngles = ViewAngles;
+		viewAngles += look;
+		viewAngles.pitch = viewAngles.pitch.Clamp( -89, 89 );
+		ViewAngles = viewAngles.Normal;
+
+		Inventory?.BuildInput();
+		ActiveChild?.BuildInput();
+
+		base.BuildInput();
 	}
 
 	public override void Respawn()
@@ -84,6 +118,14 @@ public partial class LobbyPawn : MainPawn
 		if ( LifeState == LifeState.Dead && Game.IsServer )
 		{
 			SimulateDead();
+			return;
+		}
+
+		TickPlayerUse();
+
+		if ( PlayingInVR )
+		{
+			SimulateVR( cl );
 			return;
 		}
 
@@ -118,7 +160,6 @@ public partial class LobbyPawn : MainPawn
 		if ( FocusedEntity != null )
 			FocusedEntity.Simulate( cl );
 
-		TickPlayerUse();
 		SimulateActiveChild( ActiveChild );
 		SimulateActiveWeapon( Inventory.ActiveWeapon );
 		SimulateAnimator();
@@ -132,6 +173,9 @@ public partial class LobbyPawn : MainPawn
 		if(AssignedCondo != null)
 			UnclaimCondo();
 
+		if ( PlayingInVR )
+			OnKilledVR();
+
 		base.OnKilled();
 	}
 	public override void FrameSimulate( IClient cl )
@@ -139,6 +183,9 @@ public partial class LobbyPawn : MainPawn
 		base.FrameSimulate( cl );
 
 		FrameCamera();
+
+		if ( PlayingInVR )
+			FrameVR();
 	}
 }
 
