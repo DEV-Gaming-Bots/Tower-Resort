@@ -88,7 +88,7 @@ public partial class CondoRoom : Entity
 
 		foreach ( var condoDoor in Condo.BuyDoorPos )
 		{
-			BuyableDoor buyDoor = new BuyableDoor();
+			BuyableDoor buyDoor = new BuyableDoor() { Owner = this.Owner };
 
 			buyDoor.SetModel( Condo.BuyDoorModel[index] );
 

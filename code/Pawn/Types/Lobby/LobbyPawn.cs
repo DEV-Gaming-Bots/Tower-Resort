@@ -72,19 +72,17 @@ public partial class LobbyPawn : MainPawn
 
 	public override void Spawn()
 	{
-		if ( Client.IsUsingVr )
-			PlayingInVR = true;
-		else
-			PlayingInVR = false;
-
 		if ( PlayingInVR )
 		{
 			Tags.Add( "trplayer" );
-			SpawnVR(); 
+			SpawnVR();
 		}
-		else
+		else if ( !PlayingInVR )
+		{
 			base.Spawn();
+		}
 
+		Components.Create<LobbyInventory>();
 		Drunkiness = 0;
 
 		Tags.Add( "pve" );
@@ -123,12 +121,6 @@ public partial class LobbyPawn : MainPawn
 
 		TickPlayerUse();
 
-		if ( PlayingInVR )
-		{
-			SimulateVR( cl );
-			return;
-		}
-
 		if (Drunkiness > 0.0 && Game.IsServer && LifeState == LifeState.Alive)
 		{
 			if( Drunkiness >= 100.0f )
@@ -146,6 +138,12 @@ public partial class LobbyPawn : MainPawn
 		}
 
 		DoCameraActions();
+
+		if ( PlayingInVR )
+		{
+			SimulateVR( cl );
+			return;
+		}
 
 		if ( SittingChair != null )
 		{

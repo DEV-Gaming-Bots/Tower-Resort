@@ -29,9 +29,9 @@ public partial class BuyableDoor : DoorEntity, IUse
 
 	public override bool OnUse( Entity user )
 	{
-		if(user is LobbyPawn player)
+		if(user is LobbyPawn player && Owner == player)
 		{
-			if ( player.Credits >= UpgradeCost )
+			if ( player.Credits >= UpgradeCost && Locked )
 			{
 				player.TakeCredits( UpgradeCost );
 				Locked = false;

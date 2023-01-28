@@ -21,7 +21,7 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	[ClientInput] public Entity ActiveWeaponInput { get; set; }
 	[Net, Predicted] public Entity LastActiveWeapon { get; set; }
 
-	[Net, Local] public bool PlayingInVR { get; set; }
+	[Net, Local] public bool PlayingInVR { get; set; } = false;
 
 	public MainPawn DuelOpponent;
 
@@ -191,13 +191,11 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 
 	public override void Spawn()
 	{
-		AchTracker = Components.Create<AchTracker>();
-
 		Game.AssertServer();
 
-		LifeState = LifeState.Alive;
+		AchTracker = Components.Create<AchTracker>();
 
-		Components.Create<LobbyInventory>();
+		LifeState = LifeState.Alive;
 
 		SetModel( "models/citizen/citizen.vmdl" );
 
@@ -395,15 +393,11 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 			var headPos = Input.VR.Head.Position;
 			var headRot = Input.VR.Head.Rotation;
 
-			Log.Info( headPos );
-
 			tr = Trace.Ray( headPos, headPos + headRot.Forward * dist )
 				.Ignore( this )
 				.Size( size )
 				.UseHitboxes( useHitbox )
 				.Run();
-
-			DebugOverlay.Line( tr.StartPosition, tr.EndPosition, 7.5f );
 		} 
 		else
 		{

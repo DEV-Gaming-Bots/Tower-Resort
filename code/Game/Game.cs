@@ -102,6 +102,7 @@ public partial class TRGame : GameManager
 
 		var pawn = new LobbyPawn(cl.IsUsingVr);
 		cl.Pawn = pawn;
+
 		pawn.SetUpPlayerStats();
 
 		if ( !LoadSave( cl ) )
