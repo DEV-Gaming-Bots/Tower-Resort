@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TowerResort.Entities.Hammer;
 
-[Library("tr_trigger_teleport"), Category("Triggers")]
+[Library("tr_trigger_teleport"), Category("Trigger")]
 [Title("Trigger Teleporter"), Description("Basically just a simple teleport trigger but modified to set viewangles of players")]
 [HammerEntity, SupportsSolid]
 public class TRTeleporter : TeleportVolumeEntity
