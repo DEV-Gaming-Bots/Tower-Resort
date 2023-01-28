@@ -155,7 +155,7 @@ public partial class LobbyPawn : MainPawn
 			Inventory.ActiveWeapon = null;
 		}
 
-		if ( FocusedEntity != null )
+		if ( FocusedEntity != null && Game.IsServer )
 			FocusedEntity.Simulate( cl );
 
 		SimulateActiveChild( ActiveChild );

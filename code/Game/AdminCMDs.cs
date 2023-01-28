@@ -37,7 +37,7 @@ public partial class TRGame
 		Instance.ResetDuelToIdle();
 
 	}
-	[ConCmd.Server( "tr.entity.sOwner.condo" )]
+	[ConCmd.Server( "tr.entity.spawn.condo" )]
 	public static void SpawnCondoItemCMD( string entName, bool inInv = false )
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -73,7 +73,7 @@ public partial class TRGame
 		}
 	}
 
-	[ConCmd.Server( "tr.entity.sOwner.lobby" )]
+	[ConCmd.Server( "tr.entity.spawn.lobby" )]
 	public static void SpawnLobbyItemCMD( string entName, bool isStatic = false )
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;

@@ -137,7 +137,6 @@ public partial class ReflectivePlane : ModelEntity
 
 	public Model GeneratePortalModel()
 	{
-		Log.Info( MirrorMaterial.Name );
 		Mesh portalMesh = new( MirrorMaterial );
 
 		VertexBuffer buf = new();
