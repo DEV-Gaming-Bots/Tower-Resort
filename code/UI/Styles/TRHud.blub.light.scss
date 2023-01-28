@@ -1,9 +1,19 @@
 @import "vars.scss";
 
 .theme-light {
-    dropdown {
+    dropdown, TextEntry, TRTextEntry {
+        color: black;
         background-color: #F4F9FF;
         border: 1px solid rgba(224, 223, 255, 0.75);
+        .placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+    }
+    TRTextEntry {
+        &:focus {
+            background-color: #D9EFFF;
+            border: 1px solid #368EF4;
+        }
     }
 
     .themeSet {

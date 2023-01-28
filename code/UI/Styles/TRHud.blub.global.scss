@@ -32,6 +32,38 @@ dropdown {
         right: 0;
     }
 }
+TextEntry, TRTextEntry {
+    cursor: text;
+
+    padding: 5px 9px;
+    
+    border-radius: 3px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height */
+
+
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+
+    align-items: center;
+
+    min-height: 50px;
+    .placeholder {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 36px;
+        position: absolute;
+        left: 5px;
+    }
+}
 TRHudTest {
     padding: 32px;
 }
@@ -137,6 +169,14 @@ TRHudTest {
         .body {
             padding: 19px 19px;
             overflow: scroll;
+        }
+        .footer {
+            padding: 0px 19px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 10px;
         }
     }
 }

@@ -58,7 +58,6 @@ namespace TowerResort.UI
 				StyleSheet.Load( "/UI/Styles/vars.scss" );
 			}
 		}
-
 		public class EmptyBasePanel : Panel
 		{
 			public string Theme = "theme-blub";
@@ -69,21 +68,19 @@ namespace TowerResort.UI
 				AddClass( "panel " + Theme );
 			}
 		}
-
-
 		public class BaseMessagePanel : EmptyBasePanel
 		{
 			/* styles: info and dnager */
-			public class info : BaseMessagePanel
+			public class Info : BaseMessagePanel
 			{
-				public info()
+				public Info()
 				{
 					AddClass( "info" );
 				}
 			}
-			public class danger : BaseMessagePanel
+			public class Danger : BaseMessagePanel
 			{
-				public danger()
+				public Danger()
 				{
 					AddClass( "danger" );
 				}
@@ -97,8 +94,8 @@ namespace TowerResort.UI
 			{
 				AddClass( "themeSet" );
 				header = Add.Panel( "header" );
-				footer = Add.Panel( "footer" );
 				body = Add.Panel( "body" );
+				footer = Add.Panel( "footer" );
 			}
 		}
 		public class TRButton : Panel
@@ -107,31 +104,48 @@ namespace TowerResort.UI
 			
 			public class Primary : TRButton
 			{
-				public Primary( string Text ) : base( Text )
+				public Primary( string Text, Action onClick = null ) : base( Text , onClick )
 				{
 					AddClass( "btn-prim" );
 				}
 			}
 			public class Danger : TRButton
 			{
-				public Danger( string Text ) : base( Text )
+				public Danger( string Text, Action onClick = null ) : base( Text, onClick )
 				{
 					AddClass( "btn-danger" );
 				}
 			}
 			
 
-			public TRButton(string Text)
+			public TRButton(string Text, Action onClick = null)
 			{
 				AddClass( "TRButton btn" );
 				Add.Label( Text );
 
+				if ( onClick != null )
+				{
+					this.onClick = onClick;
+				}
+
 				AddEventListener( "onclick", ( e ) =>
 				{
 					if (!HasClass("disabled"))
-						onClick?.Invoke();
+						this.onClick?.Invoke();
 				} );
 			}
+		}
+	
+	}
+	public class TRTextEntry : TextEntry
+	{
+		public string placeholder;
+		public override void Tick()
+		{
+			base.Tick();
+			/*Input.Placeholder = string.IsNullOrEmpty( Input.Text ) ? "Enter your message..." : string.Empty;*/
+			/* if not empty, hide placeholder */
+			Placeholder = string.IsNullOrEmpty( Text ) ? placeholder : string.Empty;
 		}
 	}
 }
@@ -143,4 +157,4 @@ namespace TowerResort.UI
 {
 
 }*/
-	
+
