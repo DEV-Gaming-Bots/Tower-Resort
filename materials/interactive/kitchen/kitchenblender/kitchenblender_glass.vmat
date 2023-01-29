@@ -12,7 +12,7 @@ Layer0
 	g_flDirectionalLightmapStrength "1.000"
 
 	//---- Blur ----
-	g_flBlurAmount "1.000"
+	g_flBlurAmount "10.963"
 	GlassBlurMask "materials/default/default.tga"
 
 	//---- Color ----
@@ -30,9 +30,9 @@ Layer0
 
 	//---- Fresnel ----
 	g_bFresnel "1"
-	g_flEdgeColorFalloff "3.000"
-	g_flEdgeColorMaxOpacity "0.500"
-	g_flEdgeColorThickness "0.100"
+	g_flEdgeColorFalloff "4.385"
+	g_flEdgeColorMaxOpacity "0.973"
+	g_flEdgeColorThickness "0.372"
 	g_vEdgeColor "[0.000000 0.000000 0.000000 0.000000]"
 
 	//---- Glass ----
@@ -44,7 +44,7 @@ Layer0
 	GlassTintColor "materials/default/default_color.tga"
 
 	//---- Refraction ----
-	g_flRefractionStrength "0.010"
+	g_flRefractionStrength "0.100"
 	RefractionNormal "materials/interactive/kitchen/kitchenblender/kitchenblender_normal.png"
 
 	//---- Texture Coordinates ----
