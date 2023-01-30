@@ -1,0 +1,321 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderPrimitiveSphere"
+						name = "lod_0"
+						parent_bone = ""
+						material_name = "dev/helper/testgrid.vmat"
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						max_u = 1.0
+						max_v = 1.0
+						radius = 2.25
+						segments_u = 32
+						segments_v = 32
+					},
+					{
+						_class = "RenderPrimitiveSphere"
+						name = "lod_1"
+						parent_bone = ""
+						material_name = "dev/helper/testgrid.vmat"
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						max_u = 1.0
+						max_v = 1.0
+						radius = 2.25
+						segments_u = 24
+						segments_v = 24
+					},
+					{
+						_class = "RenderPrimitiveSphere"
+						name = "lod_2"
+						parent_bone = ""
+						material_name = "dev/helper/testgrid.vmat"
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						max_u = 1.0
+						max_v = 1.0
+						radius = 2.25
+						segments_u = 12
+						segments_v = 12
+					},
+					{
+						_class = "RenderPrimitiveSphere"
+						name = "lod_3"
+						parent_bone = ""
+						material_name = "dev/helper/testgrid.vmat"
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						max_u = 1.0
+						max_v = 1.0
+						radius = 2.25
+						segments_u = 8
+						segments_v = 8
+					},
+				]
+			},
+			{
+				_class = "LODGroupList"
+				children = 
+				[
+					{
+						_class = "LODGroup"
+						switch_threshold = 0.0
+						meshes = 
+						[
+							"lod_0",
+						]
+					},
+					{
+						_class = "LODGroup"
+						switch_threshold = 25.0
+						meshes = 
+						[
+							"lod_1",
+						]
+					},
+					{
+						_class = "LODGroup"
+						switch_threshold = 35.0
+						meshes = 
+						[
+							"lod_2",
+						]
+					},
+					{
+						_class = "LODGroup"
+						switch_threshold = 50.0
+						meshes = 
+						[
+							"lod_3",
+						]
+					},
+				]
+			},
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "dev/helper/testgrid.vmat"
+								to = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = ""
+					},
+					{
+						_class = "MaterialGroup"
+						name = "8_ball"
+						remaps = 
+						[
+							{
+								from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+								to = "materials/gamemodes/pool/poolball/8_ball.vmat"
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "stripe"
+						children = 
+						[
+							{
+								_class = "MaterialGroup"
+								name = "9_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/9_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "10_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/10_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "11_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/11_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "12_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/12_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "13_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/13_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "14_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/14_ball_stripe.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "15_ball_stripe"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/stripe/15_ball_stripe.vmat"
+									},
+								]
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "solid"
+						children = 
+						[
+							{
+								_class = "MaterialGroup"
+								name = "1_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/1_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "2_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/2_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "3_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/3_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "4_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/4_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "5_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/5_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "6_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/6_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "7_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/7_ball_solid.vmat"
+									},
+								]
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeSphere"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						radius = 2.25
+						center = [ 0.0, 0.0, 0.0 ]
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}
