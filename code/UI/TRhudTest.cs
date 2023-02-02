@@ -81,10 +81,10 @@ public class TRHudTest : TRBaseUIComponents.ThemePanel
 		TRBaseUIComponents.BaseMessagePanel normalinfopanel = new();
 		normalinfopanel.header.Add.Label( "Info Panel" );
 
-		TRBaseUIComponents.BaseMessagePanel.info infoinfopanel = new();
+		TRBaseUIComponents.BaseMessagePanel.Info infoinfopanel = new();
 		infoinfopanel.header.Add.Label( "Info Panel" );
 
-		TRBaseUIComponents.BaseMessagePanel.danger dangerinfopanel = new();
+		TRBaseUIComponents.BaseMessagePanel.Danger dangerinfopanel = new();
 		dangerinfopanel.header.Add.Label( "danger Panel" );
 
 

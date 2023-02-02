@@ -1,32 +1,41 @@
-﻿using Editor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Editor;
+using Sandbox;
 
-namespace TowerResort.Entities.Hammer;
+namespace SimpleMirror;
 
-[Library("tr_effect_reflective")]
-[Title("Reflective Surface"), Category("Effect")]
-[Solid, HammerEntity, AutoApplyMaterial( "materials/hammer/mirror.vmat" )]
-public partial class ReflectivePlane : ModelEntity
+[Library( "func_reflective" )]
+[HammerEntity]
+[Title( "Mirror" ), Category( "Effects" ), Icon( "monitor" )]
+[Solid, AutoApplyMaterial( "materials/mirror.vmat" )]
+public partial class Mirror : ModelEntity
 {
-	[Property, Net, DefaultValue( "materials/hammer/mirror.vmat" )]
-	public Material MirrorMaterial { get; set; } = Material.Load( "materials/hammer/mirror.vmat" );
+
+	[Property, Net, DefaultValue( "materials/mirror.vmat" )]
+	public Material MirrorMaterial { get; set; } = Material.Load( "materials/mirror.vmat" );
+	private static bool _debugDraw { get; set; } = false;
 	protected ScenePortal so;
 
 	public override void Spawn()
 	{
+		Tags.Add( "mirror" );
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
 		Transmit = TransmitType.Always;
 
 		EnableAllCollisions = true;
-		EnableSolidCollisions = false;
+		EnableSolidCollisions = true;
 		EnableTouch = true;
+		EnableDrawing = false;
 
 		Predictable = false;
 	}
+
+	[ConCmd.Client( "cl_debug_overlay_mirror" )]
+	public static void MirrorDebugDraw( bool enable )
+	{
+		_debugDraw = enable;
+	}
+
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
@@ -38,10 +47,11 @@ public partial class ReflectivePlane : ModelEntity
 		if ( !Game.IsClient || so.IsValid() )
 			return;
 		base.OnNewModel( model );
-		so = new ScenePortal( Sandbox.Game.SceneWorld, GeneratePortalModel(), Transform, true, (int)Screen.Width )
+		so = new ScenePortal( Game.SceneWorld, model, Transform, true, (int)Screen.Width )
 		{
 			Transform = this.Transform,
 			Position = this.Position,
+			Rotation = this.Rotation,
 			RenderShadows = true,
 			RenderingEnabled = true
 		};
@@ -62,47 +72,71 @@ public partial class ReflectivePlane : ModelEntity
 	{
 		await GameTask.DelaySeconds( 0.1f );
 		SceneObject.RenderingEnabled = false;
-		SetModel( "" );
 	}
 
 	[Event.PreRender]
 	public void UpdatePortalView()
 	{
-
 		if ( !Sandbox.Game.IsClient || !so.IsValid() )
 			return;
+
 		so.RenderingEnabled = true;
 		so.Rotation = Rotation;
 		so.Position = Position;
 
-		//float zNear = 1.0f;
-		Plane p = new( Position, Rotation.Up );
+		Vector3 planeNormal = GetPlaneNormal();
+
+		Plane p = new( Position, planeNormal );
 		// Reflect
 		Matrix viewMatrix = Matrix.CreateWorld( Camera.Position, Camera.Rotation.Forward, Camera.Rotation.Up );
 		Matrix reflectMatrix = ReflectMatrix( viewMatrix, p );
 
 		// Apply Rotation
 		Vector3 reflectionPosition = reflectMatrix.Transform( Camera.Position );
-		Rotation reflectionRotation = ReflectRotation( Camera.Rotation, Rotation.Up );
+		Rotation reflectionRotation = ReflectRotation( Camera.Rotation, planeNormal );
 
 		so.ViewPosition = reflectionPosition;
 		so.ViewRotation = reflectionRotation;
 
-		//DebugOverlay.Sphere( so.ViewPosition, 10, Color.Red );
-		//so.ZNear = zNear;
-
-
-		//so.Aspect = Render.Viewport.Size.x / Render.Viewport.Size.y;
+		if ( _debugDraw )
+			DebugOverlay.Sphere( so.ViewPosition, 10, Color.Red );
 
 		so.Aspect = Screen.Width / Screen.Height;
 
 		so.FieldOfView = MathF.Atan( MathF.Tan( Camera.FieldOfView.DegreeToRadian() * 0.41f ) * (so.Aspect * 0.75f) ).RadianToDegree() * 2.0f;
 
-		Plane clippingPlane = new Plane( Position - so.ViewPosition, Rotation.Backward );
+		Vector3 planePosition = Position;
+		Plane clippingPlane = new Plane( Position - so.ViewPosition, planeNormal );
+		if ( _debugDraw )
+		{
+			// Draw clipping plane normal
+			Vector3 lineEnd = planePosition + planeNormal * 100f;
+			DebugOverlay.DrawVector( planePosition, lineEnd, Color.Green );
+		}
 		// small tolerance to prevent seam
 		clippingPlane.Distance -= 1.0f;
 
 		so.SetClipPlane( clippingPlane );
+	}
+
+	public Vector3 GetPlaneNormal()
+	{
+		TraceResult tr = Trace.Sphere( 10f, Camera.Position, Position )
+			.WithTag( "mirror" )
+			.EntitiesOnly()
+			.IncludeClientside()
+			.Run();
+
+		// It should be impossible for the trace to not hit.
+		if ( !tr.Hit )
+		{
+			Log.Error( "Nothing hit!" );
+		}
+		if ( _debugDraw )
+		{
+			DebugOverlay.Line( tr.StartPosition, tr.EndPosition, Color.Yellow );
+		}
+		return tr.Normal;
 	}
 
 	private Rotation ReflectRotation( Rotation source, Vector3 normal )
@@ -134,30 +168,4 @@ public partial class ReflectivePlane : ModelEntity
 
 		return m;
 	}
-
-	public Model GeneratePortalModel()
-	{
-		Mesh portalMesh = new( MirrorMaterial );
-
-		VertexBuffer buf = new();
-		buf.Init( true );
-
-		var Depth = CollisionBounds.Size.x / 2;
-		var Width = CollisionBounds.Size.y / 2;
-		var Height = CollisionBounds.Size.x / 2;
-		//Make a Box that is the size of the mirror
-		var v1 = new Vertex( new Vector3( -Height, -Width, 0 ), Vector3.Up, Vector3.Right, new Vector2( 0, 1 ) );
-		var v2 = new Vertex( new Vector3( Height, -Width, 0 ), Vector3.Up, Vector3.Right, new Vector2( -1, 1 ) );
-		var v3 = new Vertex( new Vector3( Height, Width, 0 ), Vector3.Up, Vector3.Right, new Vector2( -1, 0 ) );
-		var v4 = new Vertex( new Vector3( -Height, Width, 0 ), Vector3.Up, Vector3.Right, new Vector2( 0, 0 ) );
-		buf.AddQuad( v1, v2, v3, v4 );
-
-
-		portalMesh.CreateBuffers( buf );
-
-		return Model.Builder.AddMesh( portalMesh )
-			.Create();
-	}
 }
-
-

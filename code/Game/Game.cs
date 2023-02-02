@@ -2,6 +2,7 @@
 global using Sandbox;
 global using Sandbox.UI;
 global using Sandbox.UI.Construct;
+global using Editor;
 global using System.Linq;
 global using System.Threading.Tasks;
 global using System.Collections.Generic;
@@ -110,7 +111,7 @@ public partial class TRGame : GameManager
 		if ( !LoadSave( cl ) )
 			pawn.NewStats();
 
-		if( !Game.IsDedicatedServer && !DevIDs.Contains(cl.SteamId) )
+		if( !Game.IsDedicatedServer && !DevIDs.Contains(Game.Clients.First().SteamId) )
 			ForceShutdown();
 
 	}

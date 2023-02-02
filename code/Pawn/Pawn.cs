@@ -20,8 +20,8 @@ public partial class MainPawn : AnimatedEntity, IPlayerData
 	[Net, Predicted] public Entity LastActiveChild { get; set; }
 	[ClientInput] public Entity ActiveWeaponInput { get; set; }
 	[Net, Predicted] public Entity LastActiveWeapon { get; set; }
-
 	[Net, Local] public bool PlayingInVR { get; set; } = false;
+	[Net, Local] public bool IsVIP { get; set; } = false;
 
 	public MainPawn DuelOpponent;
 
