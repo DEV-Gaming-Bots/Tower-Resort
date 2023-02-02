@@ -20,7 +20,7 @@ public partial class MainPawn
 
 	public void NewStats()
 	{
-		Credits = 500;
+		//AddCredits( 500 );
 
 		CondoInfoPosition = new List<Vector3>();
 		CondoInfoRotation = new List<Rotation>();

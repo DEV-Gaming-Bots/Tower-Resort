@@ -31,8 +31,8 @@ public partial class LobbyPawn : MainPawn
 
 	public override void SetUpPlayerStats()
 	{
-		base.SetUpPlayerStats();
-		AddCredits( 500 );
+		base.SetUpPlayerStats(); 
+		AddCredits( 69420 );
 	}
 
 	TimeSince timeSinceLastFootstep = 0;
