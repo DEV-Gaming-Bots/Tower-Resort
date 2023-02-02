@@ -111,8 +111,9 @@ public partial class TRGame : GameManager
 		if ( !LoadSave( cl ) )
 			pawn.NewStats();
 
-		if( !Game.IsDedicatedServer && !DevIDs.Contains(Game.Clients.First().SteamId) )
-			ForceShutdown();
+		//This seems to be not working as intended (for non-devs joining a dev even if its bots)
+		//if( !Game.IsDedicatedServer && !DevIDs.Contains(Game.Clients.First().SteamId) )
+			//ForceShutdown();
 
 	}
 
