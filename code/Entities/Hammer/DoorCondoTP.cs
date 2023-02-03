@@ -23,9 +23,9 @@ public class CondoDoorTeleporter : DoorTeleporter, IUse
 
 	public override bool CanUse( Entity user )
 	{
-		var targetCondo = CondoArea.GetTarget( null ) as CondoRoom;
+		/*var targetCondo = CondoArea.GetTarget( null ) as CondoRoom;
 		if ( !targetCondo.IsLoaded ) return false;
-
+*/
 		return base.CanUse( user );
 	}
 
@@ -43,9 +43,11 @@ public class CondoDoorTeleporter : DoorTeleporter, IUse
 
 		opener.PlaySoundClientside( To.Single( opener ), CloseSound );
 
-		opener.Position = targetCondo.Condo.TPPos + targetCondo.Position;
+		var exit = (DoorTeleporter)targetCondo.Condo.Children.Where( x => x is DoorTeleporter ).FirstOrDefault();
+
+		opener.Position = exit.Rotation.Forward * 25 + exit.Position;
 		opener.ResetInterpolation();
-		opener.SetViewAngles( targetCondo.Condo.TPAngles );
+		opener.SetViewAngles( exit.Rotation.Angles() );
 
 		string condoLocation = targetCondo.Name.Replace( "_", " " );
 

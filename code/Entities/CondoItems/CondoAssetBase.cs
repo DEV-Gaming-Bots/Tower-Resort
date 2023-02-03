@@ -11,8 +11,15 @@ namespace TowerResort.Entities.CondoItems;
 
 public struct SitSlots
 {
-	public Vector3 SeatPosition { get; set; }
-	public Rotation SeatRotation { get; set; }
+	//Position
+	public float SeatPosX { get; set; }
+	public float SeatPosY { get; set; }
+	public float SeatPosZ { get; set; }
+
+	//Rotation
+	public float SeatRotX { get; set; }
+	public float SeatRotY { get; set; }
+	public float SeatRotZ { get; set; }
 }
 
 public struct LootItem
@@ -130,7 +137,7 @@ public class CondoAssetBase : GameResource
 	[Category( "Sitting Functionality" ), ShowIf( "Type", ItemEnum.Sittable )]
 	public float SitHeight { get; set; } = 0;
 	
-	[Category( "Sitting Functionality" ), ShowIf( "Type", ItemEnum.Sittable )]
+	[Category( "Sitting Functionality" ), ShowIf( "Type", ItemEnum.Sittable ), Description("The position and rotation in local space to the item")]
 	public SitSlots[] Seats { get; set; }
 
 	[Category( "Drinking Functionality" ), ShowIf( "Type", ItemEnum.Drinkable )]

@@ -6,24 +6,31 @@
 		Description = "A tavern style stool"
 		Icon = null
 		BaseCost = 1
+		ShopKeeper = "Generic"
 		Type = "Sittable"
 		ModelPath = resource:"models/furniture/tavern_stool/tavern_stool.vmdl"
 		IsInteractable = true
 		Toggable = false
 		InteractCooldown = 1
+		OwnerOnly = false
+		InteractionBodyGroup = -1
+		InteractionMaterial = ""
+		InteractionMaterialOverride = ""
 		InteractSound = null
+		CanUseHTTPMusic = false
 		AnimatingSound = null
 		UnboxSound = null
 		InteractAnimBool = ""
 		ScreenScale = 1
 		ScreenCenterPoint = "0,0,0"
-		ScreenRotation = "-0.000001235804,1,-0.000001235804,0.000000000001527212"
+		ScreenRotation = "0.00000004371139,1,0.00000004371139,0.000000000000001911119"
 		LootItems = null
 		ParticleName = null
 		GameType = "Unspecified"
 		SitHeight = 7
-		Seats = 
-		{
-		}
+		Seats = [  ]
+		IsAlcohol = false
+		TotalDrinkUses = 1
+		DrinkSound = ""
 	}
 }

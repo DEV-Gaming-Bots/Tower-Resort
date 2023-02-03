@@ -15,7 +15,7 @@ namespace TowerResort.Entities.Hammer;
 
 public partial class CondoRoom : Entity
 {
-	public CondoBase Condo { get; protected set; }
+	public ModelEntity Condo { get; protected set; }
 
 	[Property]
 	public EntityTarget LeaveDestination { get; set; }
@@ -64,62 +64,43 @@ public partial class CondoRoom : Entity
 	{
 		switch ( condoType )
 		{
-			case CondoType.Small: Condo = new CondoBase(); break;
-				//case CondoType.Classic: Condo = new ClassicCondo(); break;
+			case CondoType.Small:
+				if ( PrefabLibrary.TrySpawn<ModelEntity>( "models/prefabs/basic_condo.prefab", out var condo ) )
+				{
+					condo.Position = Position;
+					condo.Rotation = Rotation;
+					condo.SetupPhysicsFromModel( PhysicsMotionType.Static );
+
+					foreach ( var child in condo.Children )
+					{
+						if ( child is CondoLight light )
+						{
+							PlaceLights( To.Everyone, light.Position, light.LightRadius, light.LightColor );
+						}
+
+						if ( child is BuyableDoor door )
+						{
+							door.TimeBeforeReset = -1;
+							door.MoveDirType = DoorEntity.DoorMoveType.Rotating;
+							door.RotationA = Rotation.FromYaw( door.YawCloseRotation );
+							door.RotationB = Rotation.FromYaw( door.YawOpenRotation );
+							door.Owner = Owner;
+						}
+					}
+
+					Condo = condo;
+				}
+				break;
 		}
 
-		if ( Condo == null )
+		foreach ( var child in Condo.Children )
 		{
-			return;
+			if ( child is DoorTeleporter door )
+			{
+				door.TargetDest = LeaveDestination;
+				break;
+			}
 		}
-
-		Condo.Position = Position;
-		Condo.Rotation = Rotation;
-
-		int index = 0;
-
-		foreach ( var lightPos in Condo.LightPositions )
-		{
-			PlaceLights( To.Everyone, Condo.Position + lightPos, Condo.LightRadius[index], Condo.LightColor[index] );
-			index++;
-		}
-
-		index = 0;
-
-		foreach ( var condoDoor in Condo.BuyDoorPos )
-		{
-			BuyableDoor buyDoor = new BuyableDoor() { Owner = this.Owner };
-
-			buyDoor.SetModel( Condo.BuyDoorModel[index] );
-
-			buyDoor.Distance = 90;
-			buyDoor.Speed = 100;
-
-			buyDoor.MoveDirType = DoorEntity.DoorMoveType.Rotating;
-
-			buyDoor.Position = Condo.BuyDoorPos[index] + Position;
-			buyDoor.LocalRotation = Condo.BuyDoorAngles[index].ToRotation();
-			//buyDoor.LocalRotation = Condo.BuyDoorAngles[index].ToRotation();
-
-			buyDoor.SetParent( this );
-
-			buyDoor.LocalPosition = Condo.BuyDoorPos[index];
-
-			buyDoor.RotationA = Condo.BuyDoorOpenAngles[index].ToRotation();
-			buyDoor.RotationB = Rotation;
-
-			buyDoor.UpgradeCost = Condo.BuyDoorCosts[index];
-
-			index++;
-		}
-
-		DoorTeleporter exitDoor = new DoorTeleporter();
-		exitDoor.SetModel( "models/citizen_props/crate01.vmdl" );
-		exitDoor.Position = Position + Condo.DoorPos;
-		exitDoor.TargetDest = LeaveDestination;
-		exitDoor.SetParent( Condo );
-		exitDoor.OpenSound = "door_open";
-		exitDoor.CloseSound = "door_close";
 	}
 
 	public void Load()

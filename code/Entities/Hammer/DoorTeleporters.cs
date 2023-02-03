@@ -10,15 +10,16 @@ namespace TowerResort.Entities.Hammer;
 [Library("tr_door")]
 [Title("Doorway"), Description("A door that teleports players on use"), Category("Lobby")]
 [HammerEntity, Model]
+[Prefab]
 public class DoorTeleporter : ModelEntity, IUse
 {
 	[Property]
 	public EntityTarget TargetDest { get; set; }
 
-	[Property, ResourceType("sound")]
+	[Property, Prefab, ResourceType("sound")]
 	public string OpenSound { get; set; }
 
-	[Property, ResourceType( "sound" )]
+	[Property, Prefab, ResourceType( "sound" )]
 	public string CloseSound { get; set; }
 
 	public TimeSince TimeLastUse;

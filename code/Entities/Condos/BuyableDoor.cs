@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace TowerResort.Entities.Condos;
 
+[Prefab]
 public partial class BuyableDoor : DoorEntity, IUse
 {
-	[Net] public int UpgradeCost { get; set; } = 0;
+	[Prefab, Net] public int UpgradeCost { get; set; } = 0;
 
 	public Vector3 PositionA;
 	public Vector3 PositionB;
 	public Rotation RotationA;
 	public Rotation RotationB;
+	[Prefab] public float YawOpenRotation { get; set; }
+	[Prefab] public float YawCloseRotation { get; set; }
+
 	Rotation RotationB_Normal;
 	Rotation RotationB_Opposite;
 

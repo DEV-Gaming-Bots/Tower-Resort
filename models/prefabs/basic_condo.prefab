@@ -1,0 +1,270 @@
+{
+  "SchemaVersion": 1,
+  "Name": null,
+  "Description": null,
+  "Root": {
+    "Guid": "77d8f322-374e-48fd-9e37-a74ac6ac39ae",
+    "Class": "model_entity",
+    "Entities": [
+      {
+        "Guid": "19ec0ebb-8756-410a-be17-035f5b26ee3d",
+        "Class": "tr_door",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "Model": {
+            "Type": "Model",
+            "Value": "\u0022models/condo/basic_condo_door.vmdl\u0022"
+          },
+          "_name": {
+            "Value": "\u0022Exit\u0022"
+          },
+          "_localposition": {
+            "Value": "\u00220,-220,-52\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,90,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          },
+          "OpenSound": {
+            "Type": "String",
+            "Value": "\u0022door_open\u0022"
+          },
+          "CloseSound": {
+            "Type": "String",
+            "Value": "\u0022door_close\u0022"
+          }
+        }
+      },
+      {
+        "Guid": "c946ba7e-9ef4-49c7-afd3-bf12f0b56923",
+        "Class": "BuyableDoor",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "Model": {
+            "Type": "Model",
+            "Value": "\u0022models/condo/basic_condo_door.vmdl\u0022"
+          },
+          "UpgradeCost": {
+            "Type": "Int32",
+            "Value": "1000"
+          },
+          "_name": {
+            "Value": "\u0022Bedroom\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022-36,82,-52\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,90,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          },
+          "YawOpenRotation": {
+            "Type": "Single",
+            "Value": "0"
+          },
+          "YawCloseRotation": {
+            "Type": "Single",
+            "Value": "90"
+          }
+        }
+      },
+      {
+        "Guid": "5656161c-80b3-4f71-9ad4-7eb7478a5598",
+        "Class": "BuyableDoor",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "Model": {
+            "Type": "Model",
+            "Value": "\u0022models/condo/basic_condo_door.vmdl\u0022"
+          },
+          "UpgradeCost": {
+            "Type": "Int32",
+            "Value": "750"
+          },
+          "_name": {
+            "Value": "\u0022Bathroom\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022128,68,-52\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,90,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          },
+          "YawOpenRotation": {
+            "Type": "Single",
+            "Value": "0"
+          },
+          "YawCloseRotation": {
+            "Type": "Single",
+            "Value": "90"
+          }
+        }
+      },
+      {
+        "Guid": "e302f294-298a-449c-9a56-4846e23b7296",
+        "Class": "CondoLight",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "LightColor": {
+            "Type": "Color",
+            "Value": "\u00221,1,1,1\u0022"
+          },
+          "LightRadius": {
+            "Type": "Single",
+            "Value": "256"
+          },
+          "_name": {
+            "Value": "\u0022Light 1\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022-57,-16,24\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,0,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          }
+        }
+      },
+      {
+        "Guid": "b189231a-7e21-4d68-8c8c-6312cea82947",
+        "Class": "CondoLight",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "LightColor": {
+            "Type": "Color",
+            "Value": "\u00221,1,1,1\u0022"
+          },
+          "LightRadius": {
+            "Type": "Single",
+            "Value": "148"
+          },
+          "_name": {
+            "Value": "\u0022Light 2\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022-60,162,24\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,0,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          }
+        }
+      },
+      {
+        "Guid": "699ec4b8-28d9-430f-ab87-1fff18c593cb",
+        "Class": "CondoLight",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "LightColor": {
+            "Type": "Color",
+            "Value": "\u00220.41176,1,0.92941,1\u0022"
+          },
+          "LightRadius": {
+            "Type": "Single",
+            "Value": "128"
+          },
+          "_name": {
+            "Value": "\u0022Light 3\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022151,122,24\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,0,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          }
+        }
+      },
+      {
+        "Guid": "ebc9d5e2-a18d-429e-8f63-c304d217bc68",
+        "Class": "CondoLight",
+        "Entities": [],
+        "Components": [],
+        "Keys": {
+          "LightColor": {
+            "Type": "Color",
+            "Value": "\u00221,1,1,1\u0022"
+          },
+          "LightRadius": {
+            "Type": "Single",
+            "Value": "112"
+          },
+          "_name": {
+            "Value": "\u0022Light 4\u0022"
+          },
+          "_localposition": {
+            "Value": "\u0022-25,-172,12\u0022"
+          },
+          "_localrotation": {
+            "Value": "\u00220,0,0\u0022"
+          },
+          "_scale": {
+            "Value": "1"
+          },
+          "_tags": {
+            "Value": "\u0022\u0022"
+          }
+        }
+      }
+    ],
+    "Components": [],
+    "Keys": {
+      "_name": {
+        "Value": "\u0022Condo\u0022"
+      },
+      "_localposition": {
+        "Value": "\u00220,0,0\u0022"
+      },
+      "_localrotation": {
+        "Value": "\u00220,0,0\u0022"
+      },
+      "_scale": {
+        "Value": "1"
+      },
+      "_tags": {
+        "Value": "\u0022\u0022"
+      },
+      "Model": {
+        "Type": "Model",
+        "Value": "\u0022models/condo/basic_condo.vmdl\u0022"
+      }
+    }
+  }
+}
