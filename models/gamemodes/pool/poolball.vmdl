@@ -107,6 +107,7 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
+						name = "cue_ball"
 						remaps = 
 						[
 							{
@@ -118,8 +119,92 @@
 						global_default_material = ""
 					},
 					{
+						_class = "Folder"
+						name = "solid"
+						children = 
+						[
+							{
+								_class = "MaterialGroup"
+								name = "1_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/1_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "2_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/2_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "3_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/3_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "4_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/4_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "5_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/5_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "6_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/6_ball_solid.vmat"
+									},
+								]
+							},
+							{
+								_class = "MaterialGroup"
+								name = "7_ball_solid"
+								remaps = 
+								[
+									{
+										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
+										to = "materials/gamemodes/pool/poolball/solid/7_ball_solid.vmat"
+									},
+								]
+							},
+						]
+					},
+					{
 						_class = "MaterialGroup"
-						name = "8_ball"
+						name = "8_ball_solid"
 						remaps = 
 						[
 							{
@@ -207,90 +292,6 @@
 									{
 										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
 										to = "materials/gamemodes/pool/poolball/stripe/15_ball_stripe.vmat"
-									},
-								]
-							},
-						]
-					},
-					{
-						_class = "Folder"
-						name = "solid"
-						children = 
-						[
-							{
-								_class = "MaterialGroup"
-								name = "1_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/1_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "2_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/2_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "3_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/3_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "4_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/4_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "5_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/5_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "6_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/6_ball_solid.vmat"
-									},
-								]
-							},
-							{
-								_class = "MaterialGroup"
-								name = "7_ball_solid"
-								remaps = 
-								[
-									{
-										from = "materials/gamemodes/pool/poolball/cue_ball.vmat"
-										to = "materials/gamemodes/pool/poolball/solid/7_ball_solid.vmat"
 									},
 								]
 							},
