@@ -150,7 +150,7 @@ public partial class LobbyPawn
 		{
 			Camera.Position = TraceCheck().EndPosition;
 			Camera.FirstPersonViewer = null;
-		} 
+		}
 		else
 		{
 			Camera.FirstPersonViewer = this;

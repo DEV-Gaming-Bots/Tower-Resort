@@ -1,123 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
-using TowerResort.Extensions;
-using TowerResort.Video;
+﻿using System.Linq;
 
 namespace TowerResort.UI;
 
-public class VideoStreamPanel : Panel
+public class VideoStreamPanel : WorldPanel
 {
-	public static VideoStreamPanel Instance { get; set; }
-	public Label DebugText { get; set; }
-		
-	public VideoPlayer Player { get; set; }
-	public VideoReceiver Receiver { get; set; }
-	public float FrameLoadTime { get; set; }
+	public static VideoStreamPanel Current;
+	public Action<Texture> OnFrameChange { get; set; }
+	public List<string> VideoQueue;
 
-	public float Throughput { get; set; }
+	CondoItemBase videoEntity;
+
+	public WebSurface Browser;
+	Texture screenTexture;
+
+	double forward;
+	double height;
 
 	public VideoStreamPanel()
 	{
-		DebugText = Add.Label( "DEBUG TEXT" );
+		Current?.Delete();
+		Current = null;
 
-		DebugText.Style.FontColor = Color.White;
-		DebugText.Style.MarginLeft = 20;
-		DebugText.Style.MarginTop = 20;
+		Current = this;
 
-		Instance = this;
+		VideoQueue = new List<string>();
+
+		Browser = Game.CreateWebSurface();
+		Browser.Size = new Vector2( 1024, 1024 );
+
+		Browser.Url = "www.youtube.com";
+
+		Browser.OnTexture = BrowserDataChanged;
 	}
-		
 
-	[Event.Client.Frame]
-	private void UpdateDebug()
+	public void AddVideo(string url)
 	{
-		if ( Player == null ) return;
-			
-		var builder = new StringBuilder();
-
-		var progress = Player.VideoProgress;
-		if ( progress != null )
-		{
-			builder.AppendLine( "VIDEO PROGRESS:" );
-			builder.AppendLine( "------------------------------" );
-				
-			builder.AppendLine( $"Is probing: {progress.IsProbing}" );
-			builder.AppendLine( $"Is downloading: {progress.IsDownloading}" );
-
-			if ( !progress.IsProbing && progress.VideoInfo != null )
-			{
-				builder.AppendLine();
-					
-				builder.AppendLine( $"### VIDEO INFO ###" );
-				builder.AppendLine( $"Video title: {progress.VideoInfo.Title}" );
-				builder.AppendLine( $"Channel name: {progress.VideoInfo.ChannelTitle}" );
-				builder.AppendLine( $"Published at: {progress.VideoInfo.PublishedAt}" );
-					
-				builder.AppendLine();
-			}
-				
-			if ( progress.IsDownloading )
-			{
-				builder.AppendLine( $"Download status: {progress.DownloadText}" );
-				builder.AppendLine( $"Download ETA: {progress.Eta}" );
-				builder.AppendLine( $"Download rate: {progress.DownloadRate}" );
-				builder.AppendLine( $"Video size: {progress.VideoSize}" );
-			}
-
-			builder.AppendLine( $"Is converting: {progress.IsConverting}" );
-			builder.AppendLine();
-		}
-
-		var videoData = Player.VideoData;
-
-		if ( videoData != null )
-		{
-			builder.AppendLine( "VIDEO DATA:" );
-			builder.AppendLine( "---------------------------" );
-				
-			builder.AppendLine( $"Total frames: {videoData?.FrameCount}" );
-			builder.AppendLine( $"Frame rate: {videoData?.FrameRate}" );
-			builder.AppendLine();
-				
-			builder.AppendLine( "PLAYER INFO:" );
-			builder.AppendLine( "---------------------------" );
-				
-			builder.AppendLine( $"Current frame: {Player.CurrentFrame}" );
-			builder.AppendLine( $"Is playing: {Player.IsPlaying}" );
-			builder.AppendLine( $"Is streaming: {Player.IsStreaming}" );
-			builder.AppendLine( $"Is buffering: {Player.IsBuffering || (!Player.IsPlaying && !Player.IsReady())}" );
-			builder.AppendLine();
-				
-			builder.AppendLine( "--------STATS--------" );
-				
-			builder.AppendLine( $"Frames lead: {Player.LoadedFrameCount - Player.CurrentFrame}" );
-			builder.AppendLine( $"Frame load time: {FrameLoadTime}ms" );
-			builder.AppendLine( $"Frame late diff: {TimeSpan.FromSeconds(Player.FrameLateDiff).TotalMilliseconds}ms" );
-			builder.AppendLine( $"Playback time: {TimeSpan.FromSeconds(Player.PlaybackStopwatch?.Elapsed.TotalSeconds ?? 0):mm\\:ss}/{TimeSpan.FromSeconds(videoData.DurationDouble):mm\\:ss}" );
-
-			//Throughput
-
-			double playbackProgress = (double) Player.CurrentFrame / videoData.FrameCount;
-			double frameRateFraction = 1 / videoData.FrameRate;
-				
-			double realDuration = videoData.FrameCount * frameRateFraction;
-			double realProgress = playbackProgress * realDuration;
-
-			builder.AppendLine( $"Real playback time: {TimeSpan.FromSeconds( realProgress ):mm\\:ss}/{TimeSpan.FromSeconds(realDuration):mm\\:ss}" );
-			builder.AppendLine( $"Throughput: {Receiver.Throughput.ToSize(IntExtensions.SizeUnits.MB)}mb/s" );
-			//builder.AppendLine( $"Throughput: {Receiver.Throughput.ToSize(IntExtensions.SizeUnits.MB)}mb/s" );
-		}
-
-		DebugText.Text = builder.ToString();
+		VideoQueue.Add( url );
+		Log.Info( url );
 	}
 
+	public VideoStreamPanel( CondoItemBase ent, double fPos, double hPos ) : this()
+	{
+		videoEntity = ent;
+		forward = fPos;
+		height = hPos;
+	}
+
+	public override void OnDeleted()
+	{
+		Browser?.Dispose();
+		Browser = null;
+
+		base.OnDeleted();
+	}
+
+	void BrowserDataChanged( ReadOnlySpan<byte> span, Vector2 size )
+	{
+		if ( screenTexture == null || screenTexture.Size != size )
+		{
+			screenTexture?.Dispose();
+			screenTexture = null;
+
+			screenTexture = Texture.Create( (int)size.x, (int)size.y, ImageFormat.BGRA8888 )
+										.WithName( "WebPanel" )
+										.Finish();
+
+			Style.SetBackgroundImage( screenTexture );
+		}
+
+		timeToChange = 5.0f;
+		screenTexture.Update( span, 0, 0, (int)size.x, (int)size.y );
+	}
+
+	int lastFrame;
+	TimeUntil timeToChange;
+
+	public override void Tick()
+	{
+		Browser.TellMouseButton( MouseButtons.Left, true );
+
+		Log.Info( timeToChange );
+
+		if( timeToChange <= 0.0f && VideoQueue.Count > 0 )
+		{
+			string newVideo = VideoQueue[0];
+			VideoQueue.RemoveAt( 0 );
+
+			Browser.Url = newVideo;
+		}
+
+		Position = videoEntity.Position + Vector3.Backward * (float)forward + Vector3.Up * (float)height;
+		Rotation = Rotation.LookAt( videoEntity.Rotation.Forward );
+	}
 }

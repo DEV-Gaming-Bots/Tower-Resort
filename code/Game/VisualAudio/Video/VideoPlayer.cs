@@ -11,10 +11,9 @@ namespace TowerResort.Video;
 public partial class VideoPlayer
 {
 	public Action<Texture> OnFrameChange { get; set; }
-		
 	public Texture ActiveTexture { get; set; }
-	public Entity PlayerEntity { get; set; }
-		
+	public Entity PropEntity { get; set; }
+	
 	private List<byte[]> Frames { get; set; } = new();
 	public int LoadedFrameCount => Frames.Count;
 
@@ -49,9 +48,9 @@ public partial class VideoPlayer
 			
 	}
 
-	public VideoPlayer( Entity playerEntity )
+	public VideoPlayer( Entity entity )
 	{
-		PlayerEntity = playerEntity;
+		PropEntity = entity;
 	}
 
 	public void Playback()
@@ -66,7 +65,7 @@ public partial class VideoPlayer
 			
 		sw.Stop();
 
-		VideoStreamPanel.Instance.FrameLoadTime = (float) sw.Elapsed.TotalMilliseconds;
+		//VideoStreamPanel.Instance.FrameLoadTime = (float) sw.Elapsed.TotalMilliseconds;
 	}
 
 	private async void Buffer(int time = 1)

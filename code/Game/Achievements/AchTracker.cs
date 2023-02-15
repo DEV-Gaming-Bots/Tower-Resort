@@ -39,16 +39,9 @@ public class AchTracker : EntityComponent<MainPawn>, ISingletonComponent
 	{
 		var ach = AchList.FirstOrDefault( x => x.GetType() == type );
 
-		if ( ach.PawnType != Entity.GetType() ) return;
+		if ( Entity == null || ach.PawnType != Entity.GetType() ) return;
 
 		ach.UpdateProgress( update );
-		
-		/*
-		if ( Entity.CurAchievements.FirstOrDefault( x => x == ach ) == null )
-			Entity.CurAchievements[Entity.CurAchievements.Length - 1] = ach;
-		else
-			Entity.CurAchievements.FirstOrDefault( x => x == ach ).Progress = ach.Progress;
-		*/
 
 		if ( ach.Progress % ach.PerUpdateNotify == 0 && !ach.IsSecret )
 			Entity.DisplayNotification( To.Single( Entity ), $"{ach.Name} - {ach.Progress}/{ach.Goal}", 7.5f );

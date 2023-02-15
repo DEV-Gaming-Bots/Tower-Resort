@@ -56,7 +56,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 
 		if(Asset.Type == CondoAssetBase.ItemEnum.Sound && Asset.CanUseHTTPMusic)
 		{
-			SetUpMusicPlayer();
+			//SetUpMusicPlayer();
 		}
 
 	}
@@ -87,6 +87,13 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	public void ParticleDestruction()
 	{
 		effects?.Destroy();
+	}
+
+	[ClientRpc]
+	public void DestroyClientside()
+	{
+		VideoPanel?.Delete();
+		VideoPanel = null;
 	}
 
 	[Event.Tick.Client]
@@ -132,6 +139,7 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 				Components.Get<PokerGame>().RemovePlayers();
 			}
 
+			DestroyClientside( To.Everyone );
 			ParticleDestruction( To.Everyone );
 		}
 	}
@@ -256,6 +264,11 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 						player.FocusedEntity.Components.Get<PokerGame>().LeaveTable( player );
 					break;
 			}
+		}
+
+		if(Asset.Type == CondoAssetBase.ItemEnum.Visual)
+		{
+			DoVideoActions(user as LobbyPawn);
 		}
 
 		if ( Asset.Type == CondoAssetBase.ItemEnum.Sittable )

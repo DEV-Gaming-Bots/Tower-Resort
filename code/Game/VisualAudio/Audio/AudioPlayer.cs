@@ -55,7 +55,7 @@ public partial class AudioPlayer
 
 		sw.Stop();
 
-		VideoStreamPanel.Instance.FrameLoadTime = (float)sw.Elapsed.TotalMilliseconds;
+		//VideoStreamPanel.Instance.FrameLoadTime = (float)sw.Elapsed.TotalMilliseconds;
 	}
 
 	private async void Buffer( int time = 1 )

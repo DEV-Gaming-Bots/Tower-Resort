@@ -83,8 +83,6 @@ public partial class BallPawn : MainPawn
 	{
 		Controller?.Simulate();
 
-		Position = Vector3.Zero;
-		Velocity = Vector3.Zero;
 
 		if (Game.IsServer)
 		{
@@ -96,6 +94,14 @@ public partial class BallPawn : MainPawn
 				return;
 			}
 
+			if(Ball == null)
+			{
+				OnKilled();
+				return;
+			}
+
+			Position = Ball.Position;
+			Velocity = Vector3.Zero;
 			Ball.Velocity += Controller.WishVelocity * Time.Delta * Controller.DefaultSpeed;
 		}
 	}
@@ -109,10 +115,10 @@ public partial class BallPawn : MainPawn
 
 	public override void OnKilled()
 	{
-		Particles.Create( "particles/confetti/confetti_splash.vpcf", Ball.Position );
+		Particles.Create( "particles/confetti/confetti_splash.vpcf", Position );
 
 		Controller = null;
-		Ball.Delete();
+		Ball?.Delete();
 		Ball = null;
 
 		timeDied = 0;

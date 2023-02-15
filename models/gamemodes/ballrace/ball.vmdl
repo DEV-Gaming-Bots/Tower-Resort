@@ -19,8 +19,8 @@
 						max_u = 1.0
 						max_v = 1.0
 						radius = 40.0
-						segments_u = 32
-						segments_v = 32
+						segments_u = 16
+						segments_v = 16
 					},
 				]
 			},

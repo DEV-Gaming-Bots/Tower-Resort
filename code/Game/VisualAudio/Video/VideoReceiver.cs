@@ -214,7 +214,7 @@ public class VideoReceiver
 		while ( !WebSocket.IsConnected )
 		{
 			await Task.Delay(5000);
-				
+			
 			Log.Info($"Trying to reconnect to Video Backend... Attempt number {retryNum}");
 			try
 			{

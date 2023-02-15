@@ -54,6 +54,10 @@
 								from = "kitchenblender_glass.vmat"
 								to = "materials/interactive/kitchen/kitchenblender/kitchenblender_glass.vmat"
 							},
+							{
+								from = "kitchenblender.vmat"
+								to = "materials/interactive/kitchen/kitchenblender/kitchenblender.vmat"
+							},
 						]
 						use_global_default = false
 						global_default_material = ""

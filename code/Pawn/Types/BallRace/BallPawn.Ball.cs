@@ -15,8 +15,9 @@ public partial class Ball : ModelEntity
 
 		SetModel( "models/gamemodes/ballrace/ball.vmdl" );
 		SetupPhysicsFromSphere( PhysicsMotionType.Dynamic, Vector3.Zero, 40f );
+		Tags.Add( "trball" );
 
-		Tags.Add( "ball" );
+		Health = 1;
 
 		PhysicsBody.DragEnabled = false;
 		PhysicsBody.AngularDamping = 0;
@@ -34,7 +35,7 @@ public partial class Ball : ModelEntity
 
 		LastSpeed = Math.Max( NewVelocity.Length, LastSpeed );
 
-		var TargetVelocity = NewVelocity * LastSpeed * 0.85f;
+		var TargetVelocity = NewVelocity * LastSpeed * 0.90f;
 		Velocity = TargetVelocity;
 	}
 }

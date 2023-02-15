@@ -44,6 +44,8 @@ public struct BallMoveHelper
 		Vector3 hitPos = Vector3.Zero;
 		float prevDot = 0f;
 
+		if ( Ball == null ) return 0.0f;
+
 		using var moveplanes = new BallVelocityClipPlanes( Ball.Velocity, 10 );
 
 		for ( int bump = 0; bump < moveplanes.Max; bump++ )

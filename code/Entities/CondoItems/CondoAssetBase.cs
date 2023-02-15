@@ -110,13 +110,10 @@ public class CondoAssetBase : GameResource
 	public string InteractAnimBool { get; set; }
 
 	[Category( "Visual Functionality" ), ShowIf( "Type", ItemEnum.Visual )]
-	public float ScreenScale { get; set; } = 1.0f;
+	public double ScreenForwardPosition { get; set; } = 5.0;
 
 	[Category( "Visual Functionality" ), ShowIf( "Type", ItemEnum.Visual )]
-	public Vector3 ScreenCenterPoint { get; set; }
-
-	[Category( "Visual Functionality" ), ShowIf( "Type", ItemEnum.Visual )]
-	public Rotation ScreenRotation { get; set; }
+	public double ScreenHeightPosition { get; set; } = 25.0;
 
 	[Category( "Unboxing Functionality" ), ShowIf( "Type", ItemEnum.Loot )]
 	public LootItem[] LootItems { get; set; }
