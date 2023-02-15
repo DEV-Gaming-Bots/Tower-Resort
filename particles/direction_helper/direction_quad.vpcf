@@ -267,12 +267,6 @@
 			}
 		},
 		{
-			_class = "C_INIT_CreateWithinBox"
-			m_vecMin = [ 0.0, 0.0, 0.15 ]
-			m_vecMax = [ 0.0, 0.0, 0.15 ]
-			m_bLocalSpace = true
-		},
-		{
 			_class = "C_INIT_InitFloatCollection"
 			m_InputValue = 
 			{
@@ -342,6 +336,14 @@
 					m_vDomainMins = [ 0.0, 0.0 ]
 					m_vDomainMaxs = [ 1.0, 1.0 ]
 				}
+			}
+		},
+		{
+			_class = "C_INIT_CreateSequentialPathV2"
+			m_PathParams = 
+			{
+				m_nEndControlPointNumber = 1
+				m_nBulgeControl = 2
 			}
 		},
 	]
