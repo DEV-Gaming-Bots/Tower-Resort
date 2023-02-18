@@ -36,7 +36,6 @@ public class VideoStreamPanel : WorldPanel
 	public void AddVideo(string url)
 	{
 		VideoQueue.Add( url );
-		Log.Info( url );
 	}
 
 	public VideoStreamPanel( CondoItemBase ent, double fPos, double hPos ) : this()
@@ -50,6 +49,7 @@ public class VideoStreamPanel : WorldPanel
 	{
 		Browser?.Dispose();
 		Browser = null;
+		VideoQueue.Clear();
 
 		base.OnDeleted();
 	}
@@ -68,18 +68,15 @@ public class VideoStreamPanel : WorldPanel
 			Style.SetBackgroundImage( screenTexture );
 		}
 
-		timeToChange = 5.0f;
+		timeToChange = 0.15f;
 		screenTexture.Update( span, 0, 0, (int)size.x, (int)size.y );
 	}
 
-	int lastFrame;
 	TimeUntil timeToChange;
 
 	public override void Tick()
 	{
 		Browser.TellMouseButton( MouseButtons.Left, true );
-
-		Log.Info( timeToChange );
 
 		if( timeToChange <= 0.0f && VideoQueue.Count > 0 )
 		{
