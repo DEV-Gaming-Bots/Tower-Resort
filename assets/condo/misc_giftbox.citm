@@ -1,14 +1,14 @@
 {
-  "Name": "Flatscreen TV",
+  "Name": "Giftbox",
   "Description": "",
   "Icon": null,
   "BaseCost": 1,
-  "ShopKeeper": "Electronic",
-  "Type": "Visual",
-  "ModelPath": "models/condo_items/interactive/television/flatscreen/flatscreen_tv.vmdl",
+  "ShopKeeper": "FunGames",
+  "Type": "Loot",
+  "ModelPath": "models/condo_items/interactive/special/gift/gift.vmdl",
   "IsInteractable": true,
   "Toggable": false,
-  "InteractCooldown": 0,
+  "InteractCooldown": 1,
   "OwnerOnly": false,
   "InteractionBodyGroup": -1,
   "InteractionMaterial": "",
@@ -16,12 +16,19 @@
   "InteractSound": null,
   "CanUseHTTPMusic": false,
   "AnimatingSound": null,
-  "UnboxSound": null,
+  "UnboxSound": "sound/interactives/gift_reveal.sound",
   "InteractAnimBool": "",
   "ScreenForwardPosition": 5,
   "ScreenHeightPosition": 25,
-  "LootItems": null,
-  "ParticleName": null,
+  "LootItems": [
+    {
+      "Item": "assets/condo/junk_soda.citm"
+    },
+    {
+      "Item": "assets/condo/junk_pillbottle.citm"
+    }
+  ],
+  "ParticleName": "particles/confetti/confetti_splash.vpcf",
   "GameType": "Unspecified",
   "SitHeight": 0,
   "Seats": null,

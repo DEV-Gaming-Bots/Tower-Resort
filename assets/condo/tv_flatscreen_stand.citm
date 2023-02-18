@@ -8,7 +8,7 @@
   "ModelPath": "models/condo_items/interactive/television/flatscreen/flatscreen_tv_standing.vmdl",
   "IsInteractable": true,
   "Toggable": false,
-  "InteractCooldown": 1,
+  "InteractCooldown": 0,
   "OwnerOnly": false,
   "InteractionBodyGroup": -1,
   "InteractionMaterial": "",

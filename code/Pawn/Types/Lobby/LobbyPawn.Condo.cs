@@ -143,6 +143,23 @@ public partial class LobbyPawn
 		TRGame.Instance.DoSave( Client );
 	}
 
+	//Loads any owned condos by players
+	public void LoadOwnedCondos()
+	{
+		var condos = All.OfType<CondoRoom>().OrderBy( c => Guid.NewGuid() ).ToList();
+
+		foreach ( var condo in condos )
+		{
+			if ( condo.Owner != null )
+			{
+				foreach ( var child in condo.Children )
+				{
+					if ( child is CondoLight light )
+						condo.PlaceLights( To.Single(this), light.Position, light.LightRadius, light.LightColor );
+				}
+			}
+		}
+	}
 
 	//BELOW IS TEMPORARY, Used for condo testing, might have a use later
 

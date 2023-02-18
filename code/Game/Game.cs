@@ -106,6 +106,7 @@ public partial class TRGame : GameManager
 		var pawn = new LobbyPawn(cl.IsUsingVr);
 		cl.Pawn = pawn;
 
+		pawn.LoadOwnedCondos();
 		pawn.SetUpPlayerStats();
 
 		if ( !LoadSave( cl ) )
@@ -114,7 +115,6 @@ public partial class TRGame : GameManager
 		//This seems to be not working as intended (for non-devs joining a dev even if its bots)
 		//if( !Game.IsDedicatedServer && !DevIDs.Contains(Game.Clients.First().SteamId) )
 			//ForceShutdown();
-
 	}
 
 	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )

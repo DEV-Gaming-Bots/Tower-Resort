@@ -12,10 +12,11 @@ namespace TowerResort.Player;
 public partial class LobbyPawn : MainPawn
 {
 	public CondoItemBase SittingChair;
+	public TimeSince TimeSatDown;
 
 	public void SimulateSittingOnObject()
 	{
-		if ( Game.IsServer )
+		if ( Game.IsServer && TimeSatDown > 0.2f )
 		{
 			if ( Input.Pressed( InputButton.Use ) || Input.Pressed( InputButton.Jump ) )
 			{

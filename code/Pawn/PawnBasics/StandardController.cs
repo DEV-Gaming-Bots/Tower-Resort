@@ -105,7 +105,7 @@ public partial class StandardController : BaseNetworkable
 	{
 		if ( Owner.FreezeMovement != MainPawn.FreezeEnum.Movement && Owner.FreezeMovement != MainPawn.FreezeEnum.MoveAndAnim )
 		{
-			if ( (Owner as LobbyPawn).IsSitting )
+			if ( (Owner as LobbyPawn).SittingChair != null )
 				return;
 
 			if ( Unstuck.TestAndFix() )

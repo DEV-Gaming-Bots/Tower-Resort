@@ -18,6 +18,7 @@ public partial class LobbyPawn : MainPawn
 	[Net] public Entity FocusedEntity { get; set; }
 	public bool IsSitting;
 	[Net] public string CurZoneLocation { get; set; } = "Somewhere";
+	[Net] public CondoItemBase WatchingEntity { get; set; }
 
 	public LobbyPawn()
 	{

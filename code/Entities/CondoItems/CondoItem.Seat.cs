@@ -30,9 +30,11 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 			if ( Input.Down( InputButton.Duck ) )
 				Input.SuppressButton( InputButton.Duck );
 
+			player.TimeSatDown = 0;
+
 			Sitter = player;
 			player.SittingChair = this;
-			//player.Position = Position;
+			player.Position = Position;
 			player.Rotation = Rotation;
 			player.SetViewAngles( Rotation.Angles() );
 			player.IsSitting = true;
@@ -68,6 +70,8 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 	[Event.Tick.Server]
 	protected void SitTick()
 	{
+		if ( Asset.Type != CondoAssetBase.ItemEnum.Sittable ) return;
+
 		if ( Sitter is LobbyPawn player && player.LifeState != LifeState.Alive )
 		{
 			RemoveSittingPlayer( player );

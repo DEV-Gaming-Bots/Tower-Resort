@@ -139,6 +139,14 @@ public partial class CondoItemBase : AnimatedEntity, IUse
 				Components.Get<PokerGame>().RemovePlayers();
 			}
 
+			if ( Asset.Type == CondoAssetBase.ItemEnum.Visual )
+			{
+				foreach ( var player in WatchingPlayers.ToArray() )
+					player.WatchingEntity = null;
+
+				WatchingPlayers.Clear();
+			}
+
 			DestroyClientside( To.Everyone );
 			ParticleDestruction( To.Everyone );
 		}
