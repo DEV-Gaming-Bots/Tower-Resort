@@ -190,7 +190,7 @@ public partial class BallController : StandardController
 
 	public override void Move()
 	{
-		BallMoveHelper mover = new BallMoveHelper( Owner.Position, Owner.Velocity, (Owner as BallPawn).Ball );
+		BallMoveHelper mover = new BallMoveHelper( Owner.Position, Owner.Velocity, (Owner as BallPawn).PlayerBall );
 		mover.Trace = mover.Trace.Size( 40.0f ).Ignore( Owner );
 		//mover.MaxStandableAngle = GroundAngle;
 

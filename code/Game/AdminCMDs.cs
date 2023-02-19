@@ -270,7 +270,7 @@ public partial class TRGame
 				newPawn.SetUpPlayerStats();
 
 			if ( newPawn is BallPawn ball )
-				ball.Ball.Position = newPawn.Position;
+				ball.PlayerBall.Position = newPawn.Position;
 
 			oldPawn.Delete();
 		}

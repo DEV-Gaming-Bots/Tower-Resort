@@ -1,26 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-using TowerResort.Entities.Hammer;
-
-namespace TowerResort.Player;
+﻿namespace TowerResort.Player;
 
 public partial class BallPawn : MainPawn
 {
-	[Net] public ModelEntity Ball { get; set; }
+	[Net] public ModelEntity PlayerBall { get; set; }
 
 	TimeSince timeDied;
 
 	public BallPawn()
 	{
 		//The ball shouldn't spawn but it does, just delete it
-		if ( Ball != null )
+		if ( PlayerBall != null )
 		{
-			Ball.Delete();
-			Ball = null;
+			PlayerBall.Delete();
+			PlayerBall = null;
 		}
 	}
 
@@ -33,8 +25,8 @@ public partial class BallPawn : MainPawn
 		{
 			var tx = spawnpoint.Transform;
 			tx.Position = tx.Position + Vector3.Up * 50.0f;
-			Ball.Transform = tx;
-			Ball.ResetInterpolation();
+			PlayerBall.Transform = tx;
+			PlayerBall.ResetInterpolation();
 		}
 	}
 
@@ -42,9 +34,9 @@ public partial class BallPawn : MainPawn
 	{
 		PhysicsClear();
 
-		Ball = new Ball();
+		PlayerBall = new Ball();
 
-		Ball.Owner = this;
+		PlayerBall.Owner = this;
 		Controller = new BallController( this );
 
 		FreezeMovement = FreezeEnum.MoveAndAnim;
@@ -54,8 +46,8 @@ public partial class BallPawn : MainPawn
 	{
 		if ( Game.IsServer )
 		{
-			Ball.Delete();
-			Ball = null;
+			PlayerBall.Delete();
+			PlayerBall = null;
 		}
 
 		base.OnDestroy();
@@ -94,15 +86,15 @@ public partial class BallPawn : MainPawn
 				return;
 			}
 
-			if(Ball == null)
+			if(PlayerBall == null)
 			{
 				OnKilled();
 				return;
 			}
 
-			Position = Ball.Position;
+			Position = PlayerBall.Position;
 			Velocity = Vector3.Zero;
-			Ball.Velocity += Controller.WishVelocity * Time.Delta * Controller.DefaultSpeed;
+			PlayerBall.Velocity += Controller.WishVelocity * Time.Delta * Controller.DefaultSpeed;
 		}
 	}
 
@@ -118,8 +110,8 @@ public partial class BallPawn : MainPawn
 		Particles.Create( "particles/confetti/confetti_splash.vpcf", Position );
 
 		Controller = null;
-		Ball?.Delete();
-		Ball = null;
+		PlayerBall?.Delete();
+		PlayerBall = null;
 
 		timeDied = 0;
 		LifeState = LifeState.Dead;

@@ -10,7 +10,7 @@ public partial class BallPawn
 {
 	public TraceResult TraceCheck()
 	{
-		var tr = Trace.Ray( Ball.Position, Ball.Position + EyeRotation.Backward * 105 )
+		var tr = Trace.Ray( PlayerBall.Position, PlayerBall.Position + EyeRotation.Backward * 105 )
 			.WithTag( "solid" )
 			.Ignore( this )
 			.Size( 26.0f )
@@ -27,7 +27,7 @@ public partial class BallPawn
 
 	public void FrameCamera()
 	{
-		if ( Ball == null ) return;
+		if ( PlayerBall == null ) return;
 
 		Camera.Position = TraceCheck().EndPosition;
 		Camera.Rotation = ViewAngles.ToRotation();
