@@ -23,9 +23,9 @@ public class CondoDoorTeleporter : DoorTeleporter, IUse
 
 	public override bool CanUse( Entity user )
 	{
-		/*var targetCondo = CondoArea.GetTarget( null ) as CondoRoom;
+		var targetCondo = CondoArea.GetTarget( null ) as CondoRoom;
 		if ( !targetCondo.IsLoaded ) return false;
-*/
+
 		return base.CanUse( user );
 	}
 
@@ -52,8 +52,6 @@ public class CondoDoorTeleporter : DoorTeleporter, IUse
 		string condoLocation = targetCondo.Name.Replace( "_", " " );
 
 		opener.CurZoneLocation = condoLocation;
-
-
 		opener.FreezeMovement = MainPawn.FreezeEnum.None;
 	}
 }

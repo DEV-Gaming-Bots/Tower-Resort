@@ -1,0 +1,108 @@
+﻿@using Sandbox
+@using Sandbox.UI
+@using Sandbox.UI.Construct
+
+@namespace TowerResort.UI
+
+@inherits Panel
+
+<style>
+    PlayerPanel {
+        min-width: 250px;
+        position: absolute;
+        bottom: 48px;
+        left: 34px;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        font-size: 32px;
+        color: white;
+        text-shadow: 2px, 4px, 0px, 0px, black;
+    }
+
+    .panel {
+        height: 92px;
+        border-radius: 8px;
+        box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.6);
+        border: 3px solid #2384E5;
+        background-image: linear-gradient(to right, rgb(90, 173, 255), rgb(55, 137, 219));
+    }
+
+    .playerIcon {
+        position: absolute;
+        transform: translateY(-65%);
+        margin-left: -32px;
+        border: 3px solid #2384E5;
+        width: 98px;
+        height: 98px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 50%;
+    }
+
+    .credits {
+        position: relative;
+        margin-left: 54px;
+        flex-direction: column;
+        z-index: 2;
+        font-family: Oswald-Medium;
+    }
+
+    .location {
+        position: absolute;
+        left: 32px;
+        top: 54px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+</style>
+
+<root>
+    <div class="panel">
+        <div class="playerIcon" style="background-image: url(@(LoadAvatarIcon() ))"</div>
+        <div class="credits">@( FormatCredits() )</div>
+        <div class="location">@( GetLocation() )</div>
+    </div>
+</root>
+
+@code {
+
+    public int GetPlayerCredits()
+    {
+        var pawn = Game.LocalPawn as LobbyPawn;
+        if (pawn == null) return -1;
+
+        return pawn.GetCredits();
+    }
+
+    public string FormatCredits()
+    {
+        int credits = GetPlayerCredits();
+
+        return $"{credits:C0}";
+    }
+
+    public string GetLocation()
+    {
+        var pawn = Game.LocalPawn as LobbyPawn;
+        if (pawn == null) return "Unknown";
+
+        return pawn.CurZoneLocation;
+    }
+
+    public string LoadAvatarIcon()
+    {
+        var image = Texture.Load(FileSystem.Mounted, $"avatarbig:{Game.LocalClient.SteamId}");
+        return image.ResourcePath.ToString();
+    }
+
+    protected override int BuildHash()
+    {
+        int hash = GetPlayerCredits().GetHashCode();
+
+        hash += GetLocation().GetHashCode();
+
+        return hash;
+    }
+}

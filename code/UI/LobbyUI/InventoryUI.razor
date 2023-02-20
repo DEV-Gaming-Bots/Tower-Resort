@@ -1,0 +1,40 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@namespace TowerResort.UI
+
+@inherits Panel
+
+<style>
+	Inventory {
+		pointer-events: all;
+	}
+
+	.panel {
+		margin: 100px;
+		font-size: 32px;
+		color: white;
+		text-shadow: 2px 2px 10px black;
+	}
+
+	.invSlot {
+
+	}
+</style>
+
+<root>
+	<panel class="panel">
+		[Insert Inventory Here]
+	</panel>
+</root>
+
+@code {
+	const int invSlots = 30;
+
+	public void UpdateInventory()
+	{
+		
+	}
+}

@@ -15,11 +15,8 @@ public class BaseHud : RootPanel
 	public TRBaseUIComponents.ThemePanel CurrentTheme; 
 	public BaseHud()
 	{
-		if ( Current != null )
-		{
-			Current.Delete();
-			Current = null;
-		}
+		Current?.Delete();
+		Current = null;	
 
 		NotificationManager = new();
 		AddChild( NotificationManager );
@@ -28,8 +25,10 @@ public class BaseHud : RootPanel
 		StyleSheet.Load( "/UI/Styles/TRHud.scss" );
 		
 		AddChild<TRChat>();
-		AddChild<HudTracker>();
+		AddChild<PlayerPanel>();
 		AddChild<Scoreboard>();
-		AddChild<TRHudTest>();
+		AddChild<InventoryUI>();
+
+		//AddChild<TRHudTest>();
 	}
 }
