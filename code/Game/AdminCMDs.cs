@@ -300,7 +300,7 @@ public partial class TRGame
 		Instance.DoSave(ConsoleSystem.Caller);
 	}
 
-	[ConCmd.Admin( "tr.poker.admin.start" )]
+	[ConCmd.Server( "tr.poker.admin.start" )]
 	public static void PokerAdminStart()
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -316,8 +316,7 @@ public partial class TRGame
 		c.UpdateState();
 	}
 
-
-	[ConCmd.Admin( "tr.poker.admin.update" )]
+	[ConCmd.Server( "tr.poker.admin.update" )]
 	public static void PokerAdminNextState()
 	{
 		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
@@ -330,5 +329,17 @@ public partial class TRGame
 		var c = player.CurPokerTable.Components.Get<PokerGame>();
 
 		c.UpdateState();
+	}
+
+	[ConCmd.Server( "tr.inventory.add" )]
+	public static void AddItemCMDAdmin(string itemName)
+	{
+		if ( !DevIDs.Contains( ConsoleSystem.Caller.SteamId ) ) return;
+
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
+		if ( player == null ) return;
+
+		if(ResourceLibrary.TryGet($"assets/condo/{itemName}.citm", out CondoAssetBase item))
+			player.Inventory.AddItem( item );
 	}
 }

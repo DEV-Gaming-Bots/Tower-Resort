@@ -1,7 +1,4 @@
 ﻿using TowerResort.Entities.Base;
-using Sandbox;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace TowerResort.Player;
 
@@ -13,17 +10,17 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 
 	[Net] protected IList<CondoAssetBase> CondoItemAssets { get; set; }
 
-	[Net] public int MaxSlots { get; set; } = 30;
+	[Net] public int MaxSlots { get; set; } = 32;
 	[Net] public int MaxHotarSlots { get; set; } = 9;
 
-	public int GetCurrentSlot()
+	public int GetSlotCount()
 	{
 		return CondoItemAssets.Count() + Items.Count();
 	}
 
 	public bool AddItem( Entity entity, bool makeActive = true )
 	{
-		if ( GetCurrentSlot() >= MaxSlots ) return false;
+		if ( GetSlotCount() >= MaxSlots ) return false;
 
 		if ( entity is WeaponBase wep )
 		{
@@ -39,7 +36,7 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 
 	public bool AddItem(CondoAssetBase asset)
 	{
-		if ( GetCurrentSlot() >= MaxSlots ) return false;
+		if ( GetSlotCount() >= MaxSlots ) return false;
 
 		CondoItemAssets.Add( asset );
 
@@ -156,5 +153,16 @@ public partial class LobbyInventory : EntityComponent<MainPawn>, ISingletonCompo
 	public void FrameSimulate( IClient cl )
 	{
 		ActiveWeapon?.FrameSimulate( cl );
+	}
+
+	[ConCmd.Server("tr.inventory.select")]
+	public static void SelectItemCMD(int index = 0)
+	{
+		if ( ConsoleSystem.Caller.Pawn == null || ConsoleSystem.Caller.Pawn is not LobbyPawn player )
+			return;
+
+		if ( player.Inventory.GetSlotCount() <= 0 ) return;
+
+		player.StartPlacing( player.Inventory.CondoItemAssets[index] );
 	}
 }

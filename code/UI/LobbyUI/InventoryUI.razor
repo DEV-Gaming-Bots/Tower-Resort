@@ -8,33 +8,65 @@
 @inherits Panel
 
 <style>
-	Inventory {
-		pointer-events: all;
-	}
-
-	.panel {
-		margin: 100px;
+	.inventory {
 		font-size: 32px;
 		color: white;
 		text-shadow: 2px 2px 10px black;
+		pointer-events: all;
+		transform: translateX(-50%);
+	}
+
+	.invPanel {
+		width: 128px;
+		height: 92px;
+		background-color: rgb(35, 195, 255);
 	}
 
 	.invSlot {
-
+		width: 64px;
+		height: 64px;
+		background-color: rgb(90, 173, 255);
+		border: 2px solid #2384E5;
 	}
+
 </style>
 
 <root>
-	<panel class="panel">
-		[Insert Inventory Here]
-	</panel>
+	@if(show)
+	{
+		<div class="inventory">
+			Test
+			<div class="invPanel">
+				<div class="invSlot" onclick="@(SelectItem)">
+
+				</div>
+			</div>
+		</div>
+	}
 </root>
 
 @code {
-	const int invSlots = 30;
+
+	bool show => Input.Down(InputButton.Menu);
+	const int invSlots = 32;
 
 	public void UpdateInventory()
 	{
-		
+
+	}
+
+	public void GetSlotPosition()
+	{
+
+	}
+
+	public void SelectItem()
+	{
+		ConsoleSystem.Run("tr.inventory.select");
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Time.Now);
 	}
 }

@@ -27,7 +27,7 @@ public partial class LobbyPawn
 				FreezeMovement = FreezeEnum.None;
 		}
 					
-		if ( LastActiveWeapon is PhysGun && IsValid )
+		if ( (LastActiveWeapon is PhysGun || IsPreviewing ) && IsValid )
 		{
 			ThirdCamOffset = 25.0f;
 			InThird = false;
@@ -68,6 +68,8 @@ public partial class LobbyPawn
 
 	public void DoZoomingCamera()
 	{
+		if ( IsPreviewing ) return;
+
 		if ( InThird )
 		{
 			zoom = 0;

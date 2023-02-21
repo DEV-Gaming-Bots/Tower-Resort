@@ -121,6 +121,7 @@ public partial class LobbyPawn : MainPawn
 		}
 
 		TickPlayerUse();
+		SimulatePlacement();
 
 		if (Drunkiness > 0.0 && Game.IsServer && LifeState == LifeState.Alive)
 		{
